@@ -7,6 +7,9 @@ int main()
 	shape.setOrigin(20,20);
     	shape.setFillColor(sf::Color::Red);
 	const float PI = 3.14159265;
+
+	sf::CircleShape enemy(20.f);
+	enemy.setFillColor(sf::Color::Green);
     	while (window.isOpen())
     	{
         sf::Event event;
@@ -18,6 +21,7 @@ int main()
 
         window.clear();
         window.draw(shape);
+	window.draw(enemy);
         window.display();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
 		shape.move(1,0);
@@ -33,6 +37,7 @@ int main()
 	}
 	sf::Vector2f shapepos = shape.getPosition();
 	sf::Vector2i mousepos = sf::Mouse::getPosition(window);
+	//sf::Vector2f enemypos = enemy.getPosition();
 	float dx = shapepos.x - mousepos.x;
 	float dy = shapepos.y - mousepos.y;
 	float rotation = (atan2(dy,dx)) * 180 / PI;
