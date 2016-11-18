@@ -1,0 +1,4 @@
++ Good ideas/selections for file formats and algorithms
+- Classes and respective interfaces poorly described
+- Division of work not included
+- Character leveling (skills / abilities) only mentioned conditionally (listed on minimum requirements!)
