@@ -23,16 +23,16 @@ int main()
         window.draw(shape);
 	window.draw(enemy);
         window.display();
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
 		shape.move(1,0);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
 		shape.move(-1,0);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
 		shape.move(0,1);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
 		shape.move(0,-1);
 	}
 	sf::Vector2f shapepos = shape.getPosition();
