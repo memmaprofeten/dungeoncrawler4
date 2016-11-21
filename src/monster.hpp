@@ -4,6 +4,8 @@
 /*The basic class for monsters/enemies*/
 class Monster{
 public:
+  Monster(){};
+  ~Monster(){};
 /*Constructor similar to the character
 each monster assigned random item at creation
 
@@ -21,8 +23,8 @@ General "return value" functions.
   int getxponkill();
   int getattackdamage();
   float getmovespeed();
-  Weapon getcarriedweapon();
-  Item getcarrieditem();
+  //Weapon getcarriedweapon();
+  //Item getcarrieditem();
   int getaggrorange();
   int getxpos();
   int getypos();
@@ -50,8 +52,8 @@ protected:
   int xponkill; //Experience given to player when killed.
   int attackdamage; //Damage dealt on attack.
   float movespeed; //Movementspeed of enemy.
-  Item carrieditem; //Item to be carried. Dropped on death.
-  Weapon carriedweapon; //Weapon carried. Dropped on death.
+  //Item carrieditem; //Item to be carried. Dropped on death.
+  //Weapon carriedweapon; //Weapon carried. Dropped on death.
   int aggrorange; //AI Parameter. How close the player will have to be for the monster to move towards them.
   int xpos;
   int ypos;
@@ -62,12 +64,13 @@ level
 weapon
 item (to be picked up by character after death
 isAlive)
-*/};
+*/
+};
 
 class RangedMonster : public Monster {
 public:
   //void monsterattack(Character player);
-  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, Item carreditemi, Weapon carriedweaponi, int aggrorangei, float projectilespeedi, float projectilerangei);
+  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float projectilerangei);
   
 private:
   float projectilespeed; //How fast the projectile fired by the enemy moves.
@@ -77,7 +80,7 @@ private:
 class MeleeMonster : public Monster{
 public:
   //void monsterattack(Character player);
-  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, Item carrieditemi, Weapon carriedweaponi, int aggrorangei, int attackrangei, int attackarci);
+  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, int attackarci);
 
 private:
   int attackrange; //Radius of the enemy's attack swing
