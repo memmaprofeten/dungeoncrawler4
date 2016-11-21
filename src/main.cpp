@@ -5,7 +5,10 @@
 #include <iostream>
 #include <stdexcept>
 
-#define characterRtationOffset 270
+#define PI 3.14159265
+// TODO: Move some of these out to configuration files:
+#define characterRotationOffset 270
+#define characterTextureFile "../resources/character_128.png"
 
 int main()
 {
@@ -23,22 +26,21 @@ int main()
 
 
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
-    	//sf::CircleShape shape(20,3);
-        sf::Texture texture;
-        if (!texture.loadFromFile("../resources/character_128.png")) {
-            throw std::runtime_error("Could not load character picture.");
-        }
-        sf::Sprite shape;
-        shape.setTexture(texture);
-        shape.setRotation(270);
-	shape.setOrigin(20,20);
-    	//shape.setFillColor(sf::Color::Red);
-	const float PI = 3.14159265;
+	//sf::CircleShape shape(20,3);
+    sf::Texture characterTexture;
+    if (!characterTexture.loadFromFile(characterTextureFile)) {
+        throw std::runtime_error("Could not load character picture.");
+    }
+    sf::Sprite characterSprite;
+    characterSprite.setTexture(characterTexture);
+    characterSprite.setRotation(270);
+	characterSprite.setOrigin(20,20);
+    //shape.setFillColor(sf::Color::Red);
 
 	sf::CircleShape enemy(20.f);
 	enemy.setFillColor(sf::Color::Green);
-    	while (window.isOpen())
-    	{
+	while (window.isOpen())
+	{
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -47,28 +49,28 @@ int main()
         }
 
         window.clear();
-        window.draw(shape);
-	window.draw(enemy);
-        window.display();
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-		shape.move(1,0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-		shape.move(-1,0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-		shape.move(0,1);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-		shape.move(0,-1);
-	}
-	sf::Vector2f shapepos = shape.getPosition();
-	sf::Vector2i mousepos = sf::Mouse::getPosition(window);
-	//sf::Vector2f enemypos = enemy.getPosition();
-	float dx = shapepos.x - mousepos.x;
-	float dy = shapepos.y - mousepos.y;
-	float rotation = (atan2(dy,dx)) * 180 / PI;
-	shape.setRotation(rotation+characterRotationOffset);
+        window.draw(characterSprite);
+    	window.draw(enemy);
+            window.display();
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+    		characterSprite.move(1,0);
+    	}
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+    		characterSprite.move(-1,0);
+    	}
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+    		characterSprite.move(0,1);
+    	}
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+    		characterSprite.move(0,-1);
+    	}
+    	sf::Vector2f shapepos = characterSprite.getPosition();
+    	sf::Vector2i mousepos = sf::Mouse::getPosition(window);
+    	//sf::Vector2f enemypos = enemy.getPosition();
+    	float dx = shapepos.x - mousepos.x;
+    	float dy = shapepos.y - mousepos.y;
+    	float rotation = (atan2(dy,dx)) * 180 / PI;
+    	characterSprite.setRotation(rotation+characterRotationOffset);
     }
 
     return 0;
