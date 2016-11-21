@@ -31,3 +31,5 @@ private:
 };
 
 //void createprojectile(bool isfiredbyplayer, int xpos, int ypos,  int xspeed, int yspeed, int damage, int radius);
+
+#endif
