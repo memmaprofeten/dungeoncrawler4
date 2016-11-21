@@ -1,2 +1,2 @@
 src/dungeon
-src/main.o
+src/*.o

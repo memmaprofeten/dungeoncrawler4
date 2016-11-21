@@ -1,7 +1,13 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include "room.hpp"
+#include <string>
+#include <iostream>
+
 int main()
 {
+    const std::string testFile = "test";
+    Room testRoom(testFile);
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
     	sf::CircleShape shape(20,3);
 	shape.setOrigin(20,20);
