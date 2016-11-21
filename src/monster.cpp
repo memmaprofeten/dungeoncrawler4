@@ -32,7 +32,7 @@ int Monster::getattackdamage(){
 float Monster::getmovespeed(){
   return movespeed;
 }
-
+/*
 Weapon Monster::getcarriedweapon(){
   return carriedweapon;
 }
@@ -40,7 +40,7 @@ Weapon Monster::getcarriedweapon(){
 Item Monster::getcarrieditem(){
   return carrieditem;
 }
-
+*/
 int Monster::getaggrorange(){
   return aggrorange;
 }
@@ -90,27 +90,27 @@ int Monster::reducehealth(int reducedby){
 }
 
 // Constructors for melee and ranged monster classes.
-RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, Item carrieditemi, Weapon carriedweaponi, int aggrorangei, float projectilespeedi, float projectilerangei){
+RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float projectilerangei){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
   attackdamage = attackdamagei;
   movespeed = movespeedi;
-  carrieditem = carrieditemi;
-  carriedweapon = carriedweaponi;
+  //carrieditem = carrieditemi;
+  //carriedweapon = carriedweaponi;
   aggrorange = aggrorangei;
   projectilespeed = projectilespeedi;
   projectilerange = projectilerangei;
 }
 
-MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, Item carrieditemi, Weapon carriedweaponi, int aggrorangei, int attackrangei, int attackarci){
+MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, int attackarci){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
   attackdamage = attackdamagei;
   movespeed = movespeedi;
-  carrieditem = carrieditemi;
-  carriedweapon = carriedweaponi;
+  //carrieditem = carrieditemi;
+  //carriedweapon = carriedweaponi;
   aggrorange = aggrorangei;
   attackrange = attackrangei;
   attackarc = attackarci;
