@@ -1,14 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include "room.hpp"
 #include <string>
 #include <iostream>
 #include <stdexcept>
+#include "room.hpp"
+#include "character.hpp"
 
 #define PI 3.14159265
 // TODO: Move some of these out to configuration files:
-#define characterRotationOffset 270
 #define characterTextureFile "../resources/character_128.png"
+#define characterRotationOffset 270
 
 int main()
 {
@@ -26,16 +27,15 @@ int main()
 
 
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
-	//sf::CircleShape shape(20,3);
+
+    Character character("Test man", true, characterTextureFile);
     sf::Texture characterTexture;
-    if (!characterTexture.loadFromFile(characterTextureFile)) {
+    if (!characterTexture.loadFromFile(character.getTexture())) {
         throw std::runtime_error("Could not load character picture.");
     }
-    sf::Sprite characterSprite;
-    characterSprite.setTexture(characterTexture);
-    characterSprite.setRotation(270);
-	characterSprite.setOrigin(20,20);
-    //shape.setFillColor(sf::Color::Red);
+    character.sprite.setTexture(characterTexture);
+    character.sprite.setRotation(270);
+	character.sprite.setOrigin(20,20);
 
 	sf::CircleShape enemy(20.f);
 	enemy.setFillColor(sf::Color::Green);
@@ -49,28 +49,28 @@ int main()
         }
 
         window.clear();
-        window.draw(characterSprite);
+        window.draw(character.sprite);
     	window.draw(enemy);
             window.display();
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-    		characterSprite.move(1,0);
+    		character.sprite.move(1,0);
     	}
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-    		characterSprite.move(-1,0);
+    		character.sprite.move(-1,0);
     	}
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-    		characterSprite.move(0,1);
+    		character.sprite.move(0,1);
     	}
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-    		characterSprite.move(0,-1);
+    		character.sprite.move(0,-1);
     	}
-    	sf::Vector2f shapepos = characterSprite.getPosition();
+    	sf::Vector2f shapepos = character.sprite.getPosition();
     	sf::Vector2i mousepos = sf::Mouse::getPosition(window);
     	//sf::Vector2f enemypos = enemy.getPosition();
     	float dx = shapepos.x - mousepos.x;
     	float dy = shapepos.y - mousepos.y;
     	float rotation = (atan2(dy,dx)) * 180 / PI;
-    	characterSprite.setRotation(rotation+characterRotationOffset);
+    	character.sprite.setRotation(rotation+characterRotationOffset);
     }
 
     return 0;
