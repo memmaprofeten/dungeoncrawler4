@@ -10,7 +10,12 @@ int main()
     const std::string testFile = "test";
     Room testRoom(testFile);
     testRoom.print();
-    std::cout << testRoom.getTile(1, 1).toString() << std::endl;
+    std::cout << testRoom.getTile(2, 2).toString() << std::endl;
+    std::vector<sf::Vector2i> neighbours = testRoom.getNeighbours(0, 0, true, true, true);
+    for (unsigned i = 0; i < neighbours.size(); ++i) {
+        std::cout << "(" << neighbours[i].x << ", " << neighbours[i].y << ")" << std::endl;
+    }
+
     // Testing ends here
 
 
