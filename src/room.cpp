@@ -1,6 +1,26 @@
 #include "room.hpp"
+#include <fstream>
+#include <iostream>
+#include <functional>
 
 Room::Room(std::string const file) {
+	int x = 0;
+	int y = 0;
+	std::string line;
+	std::ifstream myfile (file);
+	std::vector<std::vector<Tile>> room2(80, std::vector<Tile>(60, Tile(0,sf::Vector2f(0,0), std::make_tuple (0,0))));
+	room = room2;
+	if (myfile.is_open()){
+		while(getline(myfile, line)){
+			x=0;
+			for(unsigned int i = 0; i < line.size(); i++){
+				getTile(x,y) = Tile((int)line[i]-48, sf::Vector2f(10*x,10*y), std::make_tuple (x,y));
+				x++;
+			}
+		y++;
+		}
+	}
+/*
     (void)file; // TODO: Parse and load file
     std::cout << "test" << std::endl;
     std::vector<Tile> temp;
@@ -19,8 +39,10 @@ Room::Room(std::string const file) {
     temp.push_back(Tile(0, sf::Vector2<int>(2,2)));
     room.push_back(temp);
     temp.clear();
-    width = 3;
-    height = 3;
+*/
+    width = 80;
+    height = 60;
+
 }
 
 bool Room::hasCoordinate(int x, int y) {
