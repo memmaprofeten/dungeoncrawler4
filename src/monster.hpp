@@ -1,3 +1,6 @@
+#ifndef MONSTER_HH
+#define MONSTER_HH
+
 #include "weapon.hpp"
 #include "item.hpp"
 #include <string>
