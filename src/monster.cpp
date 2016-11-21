@@ -94,7 +94,7 @@ RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int 
   //carriedweapon = carriedweaponi;
   aggrorange = aggrorangei;
 projectilespeed = projectilespeedi;
-  attackerange = attackrangei;
+  attackrange = attackrangei;
 aggrostate = false;
 }
 
