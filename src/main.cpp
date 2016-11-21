@@ -3,6 +3,9 @@
 #include "room.hpp"
 #include <string>
 #include <iostream>
+#include <stdexcept>
+
+#define characterRtationOffset 270
 
 int main()
 {
@@ -20,9 +23,16 @@ int main()
 
 
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
-    	sf::CircleShape shape(20,3);
+    	//sf::CircleShape shape(20,3);
+        sf::Texture texture;
+        if (!texture.loadFromFile("../resources/character_128.png")) {
+            throw std::runtime_error("Could not load character picture.");
+        }
+        sf::Sprite shape;
+        shape.setTexture(texture);
+        shape.setRotation(270);
 	shape.setOrigin(20,20);
-    	shape.setFillColor(sf::Color::Red);
+    	//shape.setFillColor(sf::Color::Red);
 	const float PI = 3.14159265;
 
 	sf::CircleShape enemy(20.f);
@@ -58,7 +68,7 @@ int main()
 	float dx = shapepos.x - mousepos.x;
 	float dy = shapepos.y - mousepos.y;
 	float rotation = (atan2(dy,dx)) * 180 / PI;
-	shape.setRotation(rotation+30);
+	shape.setRotation(rotation+characterRotationOffset);
     }
 
     return 0;
