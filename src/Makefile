@@ -1,8 +1,8 @@
 LIBS=-lsfml-graphics -lsfml-window -lsfml-system
 CC=g++
 CPPFLAGS=-c -g -std=c++0x -Wall -Wextra -pedantic
-SOURCES=main.cpp
-OBJECTS=main.o
+SOURCES=item.hpp main.cpp map.hpp monster.hpp room.cpp room.hpp tile.cpp tile.hpp weapon.hpp
+OBJECTS=main.o room.o tile.o
 EXECUTABLE=dungeon
 all: $(EXECUTABLE)
 
