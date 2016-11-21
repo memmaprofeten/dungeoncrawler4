@@ -1,3 +1,5 @@
+#ifndef PROJECTILE_HH
+#define PROJECTILE_HH
 /*Base class, for projectile attacks fired by player or by enemies.
 */
 
