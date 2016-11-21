@@ -41,7 +41,7 @@ Monster attack function virtual so ranged and melee monsters attack differently.
 
   virtual void monsterattack() = 0; //Handles attack by the monster.
   void monstermove(int xdir, int ydir); //Handles movement.
-  bool monsteraggrocheck(Character player);//Checks if player is within range of monster.
+  //bool monsteraggrocheck(Character player);//Checks if player is within range of monster.
  
 private:
   std::string name; //Enemy name.
@@ -65,7 +65,7 @@ isAlive)
 
 class RangedMonster : public Monster {
 public:
-  void monsterattack(int playerxpos, int playerypos);
+  //void monsterattack(int playerxpos, int playerypos);
   RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, Item carreditemi, Weapon carriedweaponi, int aggrorangei, float projectilespeedi, float projectilerangei);
   
 private:
@@ -75,7 +75,7 @@ private:
 
 class MeleeMonster : public Monster{
 public:
-  void monsterattack(Character player);
+  //void monsterattack(Character player);
   MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, Item carrieditemi, Weapon carriedweaponi, int aggrorangei, int attackrangei, int attackarci);
 
 private:
