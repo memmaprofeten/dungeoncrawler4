@@ -10,7 +10,7 @@ a couple tiles per room has some kind of item on them
 
 bool isPenetrable; that returns if characters can walk over this tile*/
 
-	Tile(int type, sf::Vector position);
+	Tile(int type, sf::Vector2f position);
 	bool isPenetrable() const;
 	drawTile(sf::RenderWindow window);
 private:
