@@ -5,7 +5,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#define characterRtationOffset 270
+#define characterRotationOffset 270
 
 int main()
 {
