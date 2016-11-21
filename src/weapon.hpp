@@ -1,17 +1,39 @@
-/*Base class, should we maybe have subclasses for other weapons?*/
+#include <string>
+#include <vector>
+#include <iostream>
 
 class Weapon {
 public:
-/*Constructor
+	Weapon(const bool t, const int d, int r) :
+	type(t), damage(d), range(r) { }
 
-Attack
-deal out damage to enemies in range
-*/
+	const bool getType() const { return type; }
+	const int getDamage() const { return damage; }
+	const int getRange() const { return range; }
+	const int getProjectilespeed() const { return projectilespeed; }
+	
+	virtual void attack() {}
+
 private:
-/*
-type
-damage
-range
-lifespan?(do people like this kind of feature?)
-*/
+	bool type; //True = Ranged, False = Melee.
+	int damage;
+	int range;
+	float projectilespeed;
+	//lifespan?(do people like this kind of feature?)
+};
+
+
+class RangedWeapon : public Weapon {
+public:
+	RangedWeapon() : Weapon(true, 0, 10) { }
+
+	virtual void attack() { }
+};
+
+
+class MeleeWeapon : public Weapon {
+public:
+	MeleeWeapon() : Weapon(false, 0, 50) { }
+
+	virtual void attack() { }
 };
