@@ -1,6 +1,7 @@
-#include <monster.hpp>
-#include <weapon.hpp>
-#include <item.hpp>
+#include "monster.hpp"
+#include <math.h>
+#include <string.h>
+
 /*
 Basic functions. There's probably some brainfarting going on since I have the memory of a goldfish.
 
@@ -13,42 +14,42 @@ General AI requires above things to be complete.
 
 Ranged monster attack requires code for projectiles, which has yet to be implemented.
  */
-const std::string returnname(){
-  return name;
+std::string Monster::getname(){
+  return monstername;
 }
-const int Monster::returnhealth(){
+int Monster::gethealth(){
   return health;
 }
 
-const int Monster::returnxponkill(){
+int Monster::getxponkill(){
   return xponkill;
 }
 
-const int Monster::returnattackdamage(){
+int Monster::getattackdamage(){
   return attackdamage;
 }
 
-const float Monster::returnmovespeed(){
+float Monster::getmovespeed(){
   return movespeed;
 }
 
-const Weapon Monster::returncarriedweapon(){
+Weapon Monster::getcarriedweapon(){
   return carriedweapon;
 }
 
-const Item Monster::returncarrieditem(){
+Item Monster::getcarrieditem(){
   return carrieditem;
 }
 
-const int Monster::returnaggrorange(){
+int Monster::getaggrorange(){
   return aggrorange;
 }
 
-const int Monster::returnxpos(){
+int Monster::getxpos(){
   return xpos;
 }
 
-const int Monster::returnypos(){
+int Monster::getypos(){
   return ypos;
 }
 
@@ -73,7 +74,7 @@ Should enable movement in 8 directions.
 Does not handle collision, as I have no idea how.
 */ 
 void Monster::monstermove(int xdir, int ydir){
-  changexypos(std::floor(xdir*movespeed), std::floor(ydir*movespeed));
+  changexypos(floor(xdir*movespeed), floor(ydir*movespeed));
 }
 
 //Returns true if player is within range of monster defined by aggrorange variable. Will be done once the player character class is more defined.
@@ -89,8 +90,8 @@ int Monster::reducehealth(int reducedby){
 }
 
 // Constructors for melee and ranged monster classes.
-RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, Item carreditemi, Weapon carriedweaponi, int aggrorangei, float projectilespeedi, float projectilerangei){
-  name = namei
+RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, Item carrieditemi, Weapon carriedweaponi, int aggrorangei, float projectilespeedi, float projectilerangei){
+  monstername = namei;
   health = healthi;
   xponkill = xponkilli;
   attackdamage = attackdamagei;
@@ -103,7 +104,7 @@ RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int 
 }
 
 MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, Item carrieditemi, Weapon carriedweaponi, int aggrorangei, int attackrangei, int attackarci){
-  name = namei
+  monstername = namei;
   health = healthi;
   xponkill = xponkilli;
   attackdamage = attackdamagei;
@@ -112,7 +113,7 @@ MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int at
   carriedweapon = carriedweaponi;
   aggrorange = aggrorangei;
   attackrange = attackrangei;
-  attackarc = attackarci
+  attackarc = attackarci;
 }
 
 /*
@@ -123,7 +124,7 @@ Ranged enemies will, if the player is within their attack range, fire a projecti
 Potential issues: Will attack every time function is called. Requires whatever AI function is calling it to limit how often the monster can attack.
 */
 /*
-void Rangedmonster::monsterattack(int playerxpos, int playerypos){
+void Rangedmonster::monsterattack(Character player){
 }
 
 void MeleeMonster::monsterattack(Character player){

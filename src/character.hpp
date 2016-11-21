@@ -1,5 +1,7 @@
-#include <weapon.hpp>
-#include <item.hpp>
+#include "weapon.hpp"
+#include "item.hpp"
+#include <string>
+#include <list>
 
 /*Can it be made so that only one instance of character can
 be created?*/
@@ -20,4 +22,17 @@ name
 type
 level
 list of weapons
-list of other items*/}
+list of other items
+
+Basic variables. Possibly forgetting something though.*/
+  std::string name; //Name of player. User input or based on class?
+  int level; //Character level of player. Starts at 1
+  std::list<Weapon> weapons; //List of weapons carried by player.
+  std::list<Item> items; //List of items carried by player.
+  Weapon equippedweapon; //currently equipped weapon.
+  int maxhealth; //Player's maximum health.
+  int health; //Player's current health.
+  float movespeed; //Players movement speed.
+  int xp; //Player's current experience amount.
+  int xpfornextlevel; //amount required for player to level up.
+};

@@ -10,11 +10,11 @@ Functions to access said values.
 Function to iterate per tick that moves projectile, then checks for collision.
 Function that can be called by player or monster attack that creates the projectile.
 */
-  const bool isfiredbyplayer();
-  const int returnxpos();
-  const int returnypos();
-  const int returndamage();
-  const int returnradius();
+  bool isfiredbyplayer();
+  int getxpos();
+  int getypos();
+  int getdamage();
+  int getradius();
   void projectiletick();
   Projectile(bool shotbyplayer, int xposin, int yposin, int xspeedin, int yspeedin, int damagein, int radiusin);
   
