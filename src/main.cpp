@@ -39,8 +39,19 @@ int main()
 
 	sf::CircleShape enemy(20.f);
 	enemy.setFillColor(sf::Color::Green);
+
+    sf::Clock frameClock;
+    float elapsed;
+
+    // Mock parameters start here:
+    float characterSpeed = 100.0f;
+    // Mock parameters end here
+
+    // The main game loop:
 	while (window.isOpen())
 	{
+        elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame.
+        //sf::sleep(sf::seconds(0.05f));                // Uncomment this to simulate worse fps.
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -51,18 +62,19 @@ int main()
         window.clear();
         window.draw(character.sprite);
     	window.draw(enemy);
-            window.display();
+        window.display();
+        float characterDistance = elapsed * characterSpeed;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-    		character.sprite.move(1,0);
+    		character.sprite.move(characterDistance, 0);
     	}
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-    		character.sprite.move(-1,0);
+    		character.sprite.move(-characterDistance, 0);
     	}
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-    		character.sprite.move(0,1);
+    		character.sprite.move(0, characterDistance);
     	}
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-    		character.sprite.move(0,-1);
+    		character.sprite.move(0, -characterDistance);
     	}
     	sf::Vector2f shapepos = character.sprite.getPosition();
     	sf::Vector2i mousepos = sf::Mouse::getPosition(window);
