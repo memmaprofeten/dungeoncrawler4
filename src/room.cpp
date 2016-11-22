@@ -1,22 +1,24 @@
 #include "room.hpp"
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <functional>
 
 Room::Room(std::string const file) {
 	int x = 0;
 	int y = 0;
-	width = 80;			// TODO: Find out the width from the map file!
-	height = 60;		// TODO: Find out the height from the map file!
 	std::string line;
 	std::ifstream mapFile (file);
 	if (mapFile.is_open()){
-		std::vector<std::vector<Tile>> room2(80, std::vector<Tile>(60, Tile(0,sf::Vector2f(0,0), std::make_tuple (0,0))));
-		room = room2;
+		getline(mapFile, line);
+		std::istringstream iss(line);
+		iss >> width >> height;
+		room = std::vector<std::vector<Tile>>(width, std::vector<Tile>(height, Tile(0,sf::Vector2f(0,0), std::make_tuple (0,0))));
 		while(getline(mapFile, line)){
+			std::cout << line << std::endl;
 			x=0;
 			for(unsigned int i = 0; i < line.size(); i++){
-				getTile(x,y) = Tile((int)line[i]-48, sf::Vector2f(10*x,10*y), std::make_tuple (x,y));
+				getTile(x,y) = Tile((int)line[i]-48, sf::Vector2f(10*x,10*y), std::make_tuple (x,y));		// TODO: Define the block dimensions properly
 				x++;
 			}
 			y++;
@@ -25,27 +27,6 @@ Room::Room(std::string const file) {
 	} else {
 		throw std::runtime_error(std::string("Could not find or open file '") + file + "'.");
 	}
-
-	/*
-		(void)file; // TODO: Parse and load file
-		std::cout << "test" << std::endl;
-		std::vector<Tile> temp;
-		temp.push_back(Tile(1, sf::Vector2<int>(0,0)));
-		temp.push_back(Tile(0, sf::Vector2<int>(0,1)));
-		temp.push_back(Tile(0, sf::Vector2<int>(0,2)));
-		room.push_back(temp);
-		temp.clear();
-		temp.push_back(Tile(1, sf::Vector2<int>(1,0)));
-		temp.push_back(Tile(1, sf::Vector2<int>(1,1)));
-		temp.push_back(Tile(0, sf::Vector2<int>(1,2)));
-		room.push_back(temp);
-		temp.clear();
-		temp.push_back(Tile(0, sf::Vector2<int>(2,0)));
-		temp.push_back(Tile(1, sf::Vector2<int>(2,1)));
-		temp.push_back(Tile(0, sf::Vector2<int>(2,2)));
-		room.push_back(temp);
-		temp.clear();
-	*/
 }
 
 bool Room::hasCoordinate(int x, int y) {

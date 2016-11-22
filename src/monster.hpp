@@ -79,7 +79,6 @@ public:
   //void monsterai();
   RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei);
 
->>>>>>> a9b18265b9434b42aa4ea0bedad0011ee17712ab
 private:
   float projectilespeed; //How fast the projectile fired by the enemy moves.
   float attackrange; //At what distance the enemy attacks.

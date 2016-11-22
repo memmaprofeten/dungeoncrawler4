@@ -9,7 +9,7 @@ class Room {
 public:
 
 	/**
-	 * Constructor creating room from an array of strings.
+	 * Constructor creating the room by loading it from the given file.
 	 */
 	Room(std::string const file);
 
