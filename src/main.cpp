@@ -6,7 +6,7 @@
 #include "room.hpp"
 #include "character.hpp"
 
-#define PI 3.14159265
+#define PI 3.14159265358979323846F
 // TODO: Move some of these out to configuration files:
 #define characterTextureFile "../resources/img/character_128.png"
 #define characterRotationOffset 270
@@ -40,8 +40,13 @@ int main()
 	sf::CircleShape enemy(20.f);
 	enemy.setFillColor(sf::Color::Green);
 
+
     sf::Clock frameClock;
     float elapsed;
+    bool keyIsPressed_W = false;
+    bool keyIsPressed_A = false;
+    bool keyIsPressed_S = false;
+    bool keyIsPressed_D = false;
 
     // Mock parameters start here:
     float characterSpeed = 100.0f;
@@ -65,17 +70,29 @@ int main()
         window.display();
         float characterDistance = elapsed * characterSpeed;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-    		character.sprite.move(characterDistance, 0);
+            keyIsPressed_D = true;
+    		//character.sprite.move(characterDistance, 0);
     	}
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-    		character.sprite.move(-characterDistance, 0);
+            keyIsPressed_A = true;
+    		//character.sprite.move(-characterDistance, 0);
     	}
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-    		character.sprite.move(0, characterDistance);
+            keyIsPressed_S = true;
+    		//character.sprite.move(0, characterDistance);
     	}
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-    		character.sprite.move(0, -characterDistance);
+            keyIsPressed_W = true;
+    		//character.sprite.move(0, -characterDistance);
     	}
+        sf::Vector2f dpos(0, 0);
+        if (keyIsPressed_W) dpos.y -= 1;
+        if (keyIsPressed_A) dpos.x -= 1;
+        if (keyIsPressed_S) dpos.y += 1;
+        if (keyIsPressed_D) dpos.x += 1;
+        character.sprite.move(dpos.x * characterDistance, dpos.y * characterDistance);  // TODO: Normalize
+        keyIsPressed_W = keyIsPressed_A = keyIsPressed_S = keyIsPressed_D = false;
+
     	sf::Vector2f shapepos = character.sprite.getPosition();
     	sf::Vector2i mousepos = sf::Mouse::getPosition(window);
     	//sf::Vector2f enemypos = enemy.getPosition();
