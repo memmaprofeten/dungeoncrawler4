@@ -15,7 +15,6 @@ Room::Room(std::string const file) {
 		iss >> width >> height;
 		room = std::vector<std::vector<Tile>>(width, std::vector<Tile>(height, Tile(0,sf::Vector2f(0,0), std::make_tuple (0,0))));
 		while(getline(mapFile, line)){
-			std::cout << line << std::endl;
 			x=0;
 			for(unsigned int i = 0; i < line.size(); i++){
 				getTile(x,y) = Tile((int)line[i]-48, sf::Vector2f(10*x,10*y), std::make_tuple (x,y));		// TODO: Define the block dimensions properly
@@ -30,18 +29,6 @@ Room::Room(std::string const file) {
 }
 
 bool Room::hasCoordinate(int x, int y) {
-	if (x < 0) {
-		std::cout << "--x<0" << std::endl;
-	}
-	if (y < 0) {
-		std::cout << "--y<0" << std::endl;
-	}
-	if (x >= width) {
-		std::cout << "--x >= width" << std::endl;
-	}
-	if (y >= height) {
-		std::cout << "--y >= height" << std::endl;
-	}
     if (x < 0 || y < 0 || x >= width || y >= height) {
         return false;
     }

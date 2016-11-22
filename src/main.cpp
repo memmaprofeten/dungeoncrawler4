@@ -17,7 +17,7 @@ int main()
     // Testing starts here
 
     Room testRoom("../resources/rooms/room.txt");
-    testRoom.print();
+    //testRoom.print();
     /*std::cout << testRoom.getTile(2, 2).toString() << std::endl;
     std::vector<sf::Vector2i> neighbours = testRoom.getNeighbours(0, 0, true, true, true);
     for (unsigned i = 0; i < neighbours.size(); ++i) {
@@ -44,10 +44,6 @@ int main()
 
     sf::Clock frameClock;
     float elapsed;
-    bool keyIsPressed_W = false;
-    bool keyIsPressed_A = false;
-    bool keyIsPressed_S = false;
-    bool keyIsPressed_D = false;
 
     // Mock parameters start here:
     float characterSpeed = 100.0f;
@@ -69,30 +65,14 @@ int main()
         window.draw(character.sprite);
     	window.draw(enemy);
         window.display();
-        float characterDistance = elapsed * characterSpeed;
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-            keyIsPressed_D = true;
-    		//character.sprite.move(characterDistance, 0);
-    	}
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-            keyIsPressed_A = true;
-    		//character.sprite.move(-characterDistance, 0);
-    	}
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-            keyIsPressed_S = true;
-    		//character.sprite.move(0, characterDistance);
-    	}
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-            keyIsPressed_W = true;
-    		//character.sprite.move(0, -characterDistance);
-    	}
+
         sf::Vector2f dpos(0, 0);
-        if (keyIsPressed_W) dpos.y -= 1;
-        if (keyIsPressed_A) dpos.x -= 1;
-        if (keyIsPressed_S) dpos.y += 1;
-        if (keyIsPressed_D) dpos.x += 1;
-        character.sprite.move(dpos.x * characterDistance, dpos.y * characterDistance);  // TODO: Normalize
-        keyIsPressed_W = keyIsPressed_A = keyIsPressed_S = keyIsPressed_D = false;
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dpos.x += 1;
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dpos.x -= 1;
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dpos.y += 1;
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dpos.y -= 1;
+        dpos = elapsed * characterSpeed * cv::normalized(dpos);
+        character.sprite.move(dpos.x, dpos.y);
 
     	sf::Vector2f shapepos = character.sprite.getPosition();
     	sf::Vector2i mousepos = sf::Mouse::getPosition(window);

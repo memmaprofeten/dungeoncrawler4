@@ -17,10 +17,13 @@ namespace cv
     }
 
     /**
-     * Returns a new vector that is the parameter vector normalized.
+     * Returns a new vector that is the parameter vector v normalized.
+     * If the norm of v is zero, returns the zero vector.
      */
     sf::Vector2f normalized(sf::Vector2f v) {
-        return v / norm(v);
+        float d = norm(v);
+        if (d == 0.0f) return sf::Vector2f(0, 0);
+        return v / d;
     }
 
 }
