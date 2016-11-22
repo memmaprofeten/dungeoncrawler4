@@ -1,3 +1,6 @@
+#ifndef ITEM_HH
+#define ITEM_HH
+
 /*examples of item types:
 -gold
 -potions
@@ -15,3 +18,5 @@ private:
 type
 value(maybe?)
 */};
+
+#endif

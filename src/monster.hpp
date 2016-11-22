@@ -3,6 +3,7 @@
 
 #include "weapon.hpp"
 #include "item.hpp"
+#include "character.hpp"
 #include <string>
 /*The basic class for monsters/enemies*/
 class Monster{
@@ -44,8 +45,9 @@ Reduce monster health. To be called by whatever handles the monster getting hit.
 Functions to be called by the AI code. In theory, handle movement and attacking.
 Monster attack function virtual so ranged and melee monsters attack differently.
 */
-
+  int getdistancetoplayer(Character player);
   virtual void monsterattack() = 0; //Handles attack by the monster.
+  virtual void monsterai() = 0; //Handles monster AI.
   void monstermove(int xdir, int ydir); //Handles movement.
   //bool monsteraggrocheck(Character player);//Checks if player is within range of monster.
 
@@ -57,9 +59,10 @@ protected:
   float movespeed; //Movementspeed of enemy.
   //Item carrieditem; //Item to be carried. Dropped on death.
   //Weapon carriedweapon; //Weapon carried. Dropped on death.
-  int aggrorange; //AI Parameter. How close the player will have to be for the monster to move towards them.
+  int aggrorange; //AI Parameter. How close the player has to be for the AI to aggro.
   int xpos;
   int ypos;
+  bool aggrostate; //If the monster is actively chasing/attacking the player.
 /*
 type
 health
@@ -73,23 +76,24 @@ isAlive)
 class RangedMonster : public Monster {
 public:
   //void monsterattack(Character player);
-  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float projectilerangei);
+  //void monsterai();
+  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei);
 
+>>>>>>> a9b18265b9434b42aa4ea0bedad0011ee17712ab
 private:
   float projectilespeed; //How fast the projectile fired by the enemy moves.
-  float projectilerange; //How far the projectile travels / is active.
+  float attackrange; //At what distance the enemy attacks.
 };
 
 class MeleeMonster : public Monster{
 public:
   //void monsterattack(Character player);
-  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, int attackarci);
+  //void monsterai();
+  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei);
 
 private:
   int attackrange; //Radius of the enemy's attack swing
-  int attackarc; //How wide the swing is.
 
-  /*Essentially, the way I thought of the monsters attack is as a semicircle with an arc and a radius. If the player is within that radius, they'll get hit. Should also hepl with graphics, depending on how we choose to represent an enemy's attack. */
 
 };
 

@@ -77,20 +77,14 @@ void Monster::monstermove(int xdir, int ydir){
   changexypos(floor(xdir*movespeed), floor(ydir*movespeed));
 }
 
-//Returns true if player is within range of monster defined by aggrorange variable. Will be done once the player character class is more defined.
-/*
-bool Monster::monsteraggrocheck(Character player){
-}
-*/
-
 //Reduces health by given amount. Then returns health so function that calls it can check if the monster died.
 int Monster::reducehealth(int reducedby){
   health -= reducedby;
-  return health;
+return health;
 }
 
 // Constructors for melee and ranged monster classes.
-RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float projectilerangei){
+RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
@@ -99,11 +93,12 @@ RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int 
   //carrieditem = carrieditemi;
   //carriedweapon = carriedweaponi;
   aggrorange = aggrorangei;
-  projectilespeed = projectilespeedi;
-  projectilerange = projectilerangei;
+projectilespeed = projectilespeedi;
+  attackrange = attackrangei;
+aggrostate = false;
 }
 
-MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, int attackarci){
+MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
@@ -113,7 +108,7 @@ MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int at
   //carriedweapon = carriedweaponi;
   aggrorange = aggrorangei;
   attackrange = attackrangei;
-  attackarc = attackarci;
+aggrostate = false;
 }
 
 /*
@@ -124,9 +119,117 @@ Ranged enemies will, if the player is within their attack range, fire a projecti
 Potential issues: Will attack every time function is called. Requires whatever AI function is calling it to limit how often the monster can attack.
 */
 /*
-void Rangedmonster::monsterattack(Character player){
+int Monster::getdistancetoplayer(Character player){
+return sqrt(pow((xpos - player.),2) + pow((ypos - player.),2));
 }
 
-void MeleeMonster::monsterattack(Character player){
+//Returns true if player is within rangedefined by aggrorange variable. 
+//Will be done once the player character class is more defined.
+
+bool Monster::monsteraggrocheck(Character player){
+if (getdistancetoplayer(player) < aggrorange){
+return true;
 }
+else {
+return false;
+}
+
+//Ranged monster attack.
+void RangedMonster::monsterattack(Character player){
+if (getdistancetoplayer < attackrange){
+createprojectile(false, xpos, ypos, *projectilespeed x*, *projectile speed y*, attackdamage, 10);
+}
+}
+
+//Melee monster attack.
+//If player is within range, deals damage to player equal to attack damgae.
+void MeleeMonster::monsterattack(Character player){
+if (getdistancetoplayer <= attackrange){
+player. (attackdamage);
+}
+}
+
+/*
+Code for the AI of the monsters. Essentially. It first checks if the player is within aggrorange. If it is, it flips the aggrostate to true. 
+Then, the monster will move towards the player.
+After that, it attacks the player if it is within range.
+*/
+
+/*
+void RangedMonster::monsterai(Character player){
+int xdir, ydir;
+
+if(monsteraggrocheck(player)){
+aggrostate = true;
+}
+
+if(aggrostate) (
+
+//Determines direction. Will be replaced by pathfinding later.
+if (xpos < player. ){
+xdir = 1;
+}
+else if (xpos > player. ){
+xdir = -1;
+}
+else {
+xdir = 0;
+}
+if (ypos < player. ){
+ydir = 1;
+}
+else if (ypos > player. ){
+ydir = -1;
+}
+else {
+ydir = 0;
+}
+
+//Moves enemy in chosen direction.
+monstermove(xdir, ydir);
+
+//Attacks player if in range.
+if (getdistancetoplayer(player)<attackrange){
+monsterattack(player);
+}
+}
+}
+
+void MeleeMonster::monsterai(){
+int xdir, ydir;
+
+if(monsteraggrocheck(player) == true){
+aggrostate = true;
+}
+
+if(aggrostate){
+//Determines direction. Will be replaced by pathfinding later.
+if (xpos < player. ){
+xdir = 1;
+}
+else if (xpos > player. ){
+xdir = -1;
+}
+else {
+xdir = 0;
+}
+if (ypos < player. ){
+ydir = 1;
+}
+else if (ypos > player. ){
+ydir = -1;
+}
+else {
+ydir = 0;
+}
+
+//Moves enemy in chosen direction.
+monstermove(xdir, ydir);
+
+//Attacks player if in range.
+if (getdistancetoplayer(player)<attackrange){
+monsterattack(player);
+}
+}
+
 */
