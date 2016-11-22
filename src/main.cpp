@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include "room.hpp"
 #include "character.hpp"
+#include "convenience.hpp"
 
 #define PI 3.14159265358979323846F
 // TODO: Move some of these out to configuration files:
