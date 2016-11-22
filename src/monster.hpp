@@ -37,7 +37,7 @@ General "return value" functions.
 /*
 Reduce monster health. To be called by whatever handles the monster getting hit.
 */
-  
+
   int reducehealth(int reducedby);
 
 /*
@@ -48,7 +48,7 @@ Monster attack function virtual so ranged and melee monsters attack differently.
   virtual void monsterattack() = 0; //Handles attack by the monster.
   void monstermove(int xdir, int ydir); //Handles movement.
   //bool monsteraggrocheck(Character player);//Checks if player is within range of monster.
- 
+
 protected:
   std::string monstername; //Enemy name.
   int health; //Enemy health.
@@ -74,7 +74,7 @@ class RangedMonster : public Monster {
 public:
   //void monsterattack(Character player);
   RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float projectilerangei);
-  
+
 private:
   float projectilespeed; //How fast the projectile fired by the enemy moves.
   float projectilerange; //How far the projectile travels / is active.
@@ -92,3 +92,5 @@ private:
   /*Essentially, the way I thought of the monsters attack is as a semicircle with an arc and a radius. If the player is within that radius, they'll get hit. Should also hepl with graphics, depending on how we choose to represent an enemy's attack. */
 
 };
+
+#endif

@@ -19,7 +19,7 @@ Function that can be called by player or monster attack that creates the project
   int getradius();
   void projectiletick();
   Projectile(bool shotbyplayer, int xposin, int yposin, int xspeedin, int yspeedin, int damagein, int radiusin);
-  
+
 private:
   bool firedbyplayer; //Player projectiles damage enemies and vice versa.
   int xpos; //position on x axis
@@ -31,3 +31,5 @@ private:
 };
 
 //void createprojectile(bool isfiredbyplayer, int xpos, int ypos,  int xspeed, int yspeed, int damage, int radius);
+
+#endif

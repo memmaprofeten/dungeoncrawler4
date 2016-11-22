@@ -8,13 +8,13 @@ class Weapon {
 public:
 	Weapon(const std::string n, const bool t, const int d, int r) :
 	name(n), type(t), damage(d), range(r) { }
-	
-	const std::string getName() { return name; }
-	const bool getType() const { return type; }
-	const int getDamage() const { return damage; }
-	const int getRange() const { return range; }
-	const int getProjectilespeed() const { return projectilespeed; }
-	
+
+	std::string getName() const { return name; }
+	bool getType() const { return type; }
+	int getDamage() const { return damage; }
+	int getRange() const { return range; }
+	int getProjectilespeed() const { return projectilespeed; }
+
 	virtual void attack() {}
 
 private:

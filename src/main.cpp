@@ -8,20 +8,20 @@
 
 #define PI 3.14159265
 // TODO: Move some of these out to configuration files:
-#define characterTextureFile "../resources/character_128.png"
+#define characterTextureFile "../resources/img/character_128.png"
 #define characterRotationOffset 270
 
 int main()
 {
     // Testing starts here
-    const std::string testFile = "test";
-    Room testRoom(testFile);
+
+    Room testRoom("../resources/rooms/room.txt");
     testRoom.print();
-    std::cout << testRoom.getTile(2, 2).toString() << std::endl;
+    /*std::cout << testRoom.getTile(2, 2).toString() << std::endl;
     std::vector<sf::Vector2i> neighbours = testRoom.getNeighbours(0, 0, true, true, true);
     for (unsigned i = 0; i < neighbours.size(); ++i) {
         std::cout << "(" << neighbours[i].x << ", " << neighbours[i].y << ")" << std::endl;
-    }
+    }*/
 
     // Testing ends here
 
