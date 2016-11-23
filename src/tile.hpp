@@ -13,9 +13,9 @@ a couple tiles per room has some kind of item on them
 
 bool isPenetrable; that returns if characters can walk over this tile*/
 
-	Tile(int type, sf::Vector2f position, std::tuple<int,int> index);
+	Tile(int type, sf::Vector2f position, sf::Vector2i index);
 	bool isPenetrable() const;
-	void drawTile(sf::RenderWindow window);
+	void draw(sf::RenderWindow& window, float blockDim);
 	std::string toString() const;
 private:
 /*boolean telling if the tile is penetrabble
@@ -26,5 +26,5 @@ position in room
 	bool penetrable;
 	sf::Color tileColor;
 	sf::Vector2f tilePosition;
-	std::tuple<int,int> tileIndex;
+	sf::Vector2i tileIndex;
 };

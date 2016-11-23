@@ -13,11 +13,11 @@ Room::Room(std::string const file) {
 		getline(mapFile, line);
 		std::istringstream iss(line);
 		iss >> width >> height;
-		room = std::vector<std::vector<Tile>>(width, std::vector<Tile>(height, Tile(0,sf::Vector2f(0,0), std::make_tuple (0,0))));
+		room = std::vector<std::vector<Tile>>(width, std::vector<Tile>(height, Tile(0,sf::Vector2f(0,0), sf::Vector2i(0,0))));
 		while(getline(mapFile, line)){
 			x=0;
 			for(unsigned int i = 0; i < line.size(); i++){
-				getTile(x,y) = Tile((int)line[i]-48, sf::Vector2f(10*x,10*y), std::make_tuple (x,y));		// TODO: Define the block dimensions properly
+				getTile(x,y) = Tile((int)line[i]-48, sf::Vector2f(10*x,10*y), sf::Vector2i(x,y));		// TODO: Define the block dimensions properly
 				x++;
 			}
 			y++;
@@ -55,6 +55,14 @@ std::vector<sf::Vector2i> Room::getNeighbours(int x, int y, bool includingSelf, 
         }
     }
     return res;
+}
+
+void Room::draw(sf::RenderWindow& window, float blockDim) {
+	for (int j = 0; j < height; ++j) {
+        for (int i = 0; i < width; ++i) {
+			getTile(i, j).draw(window, blockDim);
+        }
+    }
 }
 
 void Room::print() {

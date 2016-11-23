@@ -35,7 +35,7 @@ public:
 	/**
 	 * Draws the room.
 	 */
-	void draw(sf::RenderWindow window);
+	void draw(sf::RenderWindow& window, float blockDim);
 
 	/**
 	 * Prints the room to std::cout.

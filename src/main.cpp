@@ -62,6 +62,7 @@ int main()
         }
 
         window.clear();
+        testRoom.draw(window, 10.0f);
         window.draw(character.sprite);
     	window.draw(enemy);
         window.display();
