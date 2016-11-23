@@ -1,15 +1,29 @@
 #include "projectile.hpp"
+
+
 // Basic functions to retrieve values from the projectile and the consturctor.
 bool Projectile::isfiredbyplayer(){
   return firedbyplayer;
 }
 
-int Projectile::getxpos(){
-  return xpos;
+sf::Vector2f Projectile::getPosition() {
+  return pos;
 }
 
-int Projectile::getypos(){
-  return ypos;
+void Projectile::setPosition(sf::Vector2f position) {
+  pos = position;
+}
+
+sf::Vector2f Projectile::getVelocity() {
+  return dir * speed;
+}
+
+void Projectile::setDirection(sf::Vector2f direction) {
+    dir = direction;
+}
+
+void Projectile::setSpeed(float newSpeed) {
+  speed = newSpeed;
 }
 
 int Projectile::getdamage(){
@@ -20,12 +34,20 @@ int Projectile::getradius(){
   return radius;
 }
 
-Projectile::Projectile(bool shotbyplayer, int xposin, int yposin, int xspeedin, int yspeedin, int damagein, int radiusin){
+void Projectile::draw(sf::RenderWindow& window, float elapsed) {
+    pos += speed * elapsed * dir;
+    sf::CircleShape tile(2.0f);
+    tile.setOrigin(1.0f, 1.0f);
+    tile.setPosition(pos.x, pos.y);
+    tile.setFillColor(sf::Color::Red);
+    window.draw(tile);
+}
+
+Projectile::Projectile(bool shotbyplayer, int damagein, int radiusin, float speedin){
   firedbyplayer = shotbyplayer;
-  xpos = xposin;
-  ypos = yposin;
-  xspeed = xspeedin;
-  yspeed = yspeedin;
+  pos = sf::Vector2f(0, 0);
+  dir = sf::Vector2f(0, 0);
+  speed = speedin;
   damage = damagein;
   radius = radiusin;
 }
@@ -45,7 +67,7 @@ Projectile::projectiletick(){
 /*
 Function to create a new projectile (fired by player or enemy)
 Calls constructor, then saves projectile in a list or somesuch.
-That somesuch can be iterated through, calling projectiletick for each projectile for each loop/tick. 
+That somesuch can be iterated through, calling projectiletick for each projectile for each loop/tick.
 
 */
 

@@ -1,5 +1,8 @@
 #ifndef PROJECTILE_HH
 #define PROJECTILE_HH
+
+#include <SFML/Graphics.hpp>
+
 /*Base class, for projectile attacks fired by player or by enemies.
 */
 
@@ -13,19 +16,29 @@ Function to iterate per tick that moves projectile, then checks for collision.
 Function that can be called by player or monster attack that creates the projectile.
 */
   bool isfiredbyplayer();
-  int getxpos();
-  int getypos();
+  sf::Vector2f getPosition();
+  void setPosition(sf::Vector2f position);
+  sf::Vector2f getVelocity();
+  void setDirection(sf::Vector2f direction);
+  void setSpeed(float newSpeed);
   int getdamage();
   int getradius();
-  void projectiletick();
-  Projectile(bool shotbyplayer, int xposin, int yposin, int xspeedin, int yspeedin, int damagein, int radiusin);
+
+  /**
+   * Performs necessary calculations, such as computing its new position, and
+   * draws itself.
+   * The method takes as input a reference to the window to which it needs to
+   * draw itself and a float defining the time elapsed since the last frame.
+   */
+  void draw(sf::RenderWindow& window, float elapsed);
+
+  Projectile(bool shotbyplayer, int damagein, int radiusin, float speed);
 
 private:
   bool firedbyplayer; //Player projectiles damage enemies and vice versa.
-  int xpos; //position on x axis
-  int ypos; // position on y axis
-  int xspeed; //How much the projectile moves per tick on the x axis.
-  int yspeed; //How much the projectile moves per tick on the y axis.
+  sf::Vector2f pos;     // The projectile's position in world space
+  sf::Vector2f dir;     // The 2D direction in which the projectile is moving
+  float speed;          // The absolute speed that the projectile has
   int damage; //Damage dealt by projectile.
   int radius; //Radius of projectile for drawing / hit detection.
 };

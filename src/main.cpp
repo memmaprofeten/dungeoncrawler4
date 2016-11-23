@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include "room.hpp"
 #include "character.hpp"
+#include "projectile.hpp"
 #include "convenience.hpp"
 
 #define PI 3.14159265358979323846F
@@ -41,6 +42,9 @@ int main()
 	sf::CircleShape enemy(20.f);
 	enemy.setFillColor(sf::Color::Green);
 
+    Projectile testProjectile(false, 5, 2, 250.0f);
+    testProjectile.setPosition(sf::Vector2f(100, 100));
+    testProjectile.setDirection(cv::normalized(sf::Vector2f(1, 1)));
 
     sf::Clock frameClock;
     float elapsed;
@@ -65,6 +69,7 @@ int main()
         testRoom.draw(window, 10.0f);
         window.draw(character.sprite);
     	window.draw(enemy);
+        testProjectile.draw(window, elapsed);
         window.display();
 
         sf::Vector2f dpos(0, 0);
