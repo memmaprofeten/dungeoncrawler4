@@ -42,12 +42,13 @@ int main()
 	sf::CircleShape enemy(20.f);
 	enemy.setFillColor(sf::Color::Green);
 
-    Projectile testProjectile(false, 5, 2, 250.0f);
-    testProjectile.setPosition(sf::Vector2f(100, 100));
-    testProjectile.setDirection(cv::normalized(sf::Vector2f(1, 1)));
+    //Projectile testProjectile(false, 5, 2, 250.0f);
+    //testProjectile.setPosition(sf::Vector2f(100, 100));
+    //testProjectile.setDirection(cv::normalized(sf::Vector2f(1, 1)));
 
     sf::Clock frameClock;
     float elapsed;
+    std::vector<Projectile> projectiles;        // TODO: Replace with a more efficient solution
 
     // Mock parameters start here:
     float characterSpeed = 100.0f;
@@ -69,7 +70,9 @@ int main()
         testRoom.draw(window, 10.0f);
         window.draw(character.sprite);
     	window.draw(enemy);
-        testProjectile.draw(window, elapsed);
+        for (auto& p : projectiles) {
+            p.draw(window, elapsed);
+        }
         window.display();
 
         sf::Vector2f dpos(0, 0);
@@ -87,6 +90,13 @@ int main()
     	float dy = shapepos.y - mousepos.y;
     	float rotation = (atan2(dy,dx)) * 180 / PI;
     	character.sprite.setRotation(rotation+characterRotationOffset);
+
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            Projectile projectile(false, 5, 2, 250.0f);
+            projectile.setPosition(shapepos);
+            projectile.setDirection(sf::Vector2f(mousepos) - shapepos);
+            projectiles.push_back(projectile);
+        }
     }
 
     return 0;

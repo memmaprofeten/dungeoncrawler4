@@ -1,5 +1,5 @@
 #include "projectile.hpp"
-
+#include "convenience.hpp"
 
 // Basic functions to retrieve values from the projectile and the consturctor.
 bool Projectile::isfiredbyplayer(){
@@ -19,7 +19,7 @@ sf::Vector2f Projectile::getVelocity() {
 }
 
 void Projectile::setDirection(sf::Vector2f direction) {
-    dir = direction;
+    dir = cv::normalized(direction);
 }
 
 void Projectile::setSpeed(float newSpeed) {
@@ -35,6 +35,8 @@ int Projectile::getradius(){
 }
 
 void Projectile::draw(sf::RenderWindow& window, float elapsed) {
+    // TODO: Check if projectile has hit a target or a wall
+    // TODO: Check if projectile has reached out of bounds (and destroy, or hide for reuse)
     pos += speed * elapsed * dir;
     sf::CircleShape tile(2.0f);
     tile.setOrigin(1.0f, 1.0f);

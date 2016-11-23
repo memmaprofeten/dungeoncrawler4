@@ -16,12 +16,37 @@ Function to iterate per tick that moves projectile, then checks for collision.
 Function that can be called by player or monster attack that creates the projectile.
 */
   bool isfiredbyplayer();
+
+  /**
+   * Returns the current position of the projectile in worldspace.
+   */
   sf::Vector2f getPosition();
+
+  /**
+   * Sets the projectile's position in worldspace to the position given as
+   * parameter.
+   */
   void setPosition(sf::Vector2f position);
+
+  /**
+   * Returns the current velocity of the projectile.
+   */
   sf::Vector2f getVelocity();
+
+  /**
+   * Sets the projectile's velocity direction to the direction given as
+   * parameter. The direction is defined as a 2D unit vector, so the given
+   * vector will be normalized.
+   */
   void setDirection(sf::Vector2f direction);
+
+  /**
+   * Sets the projectile's speed.
+   */
   void setSpeed(float newSpeed);
+
   int getdamage();
+
   int getradius();
 
   /**

@@ -1,4 +1,6 @@
-#include <cmath>
+#ifndef CONVENIENCE_HH
+#define CONVENIENCE_HH
+
 #include <SFML/Graphics.hpp>
 
 /**
@@ -12,18 +14,14 @@ namespace cv
     /**
      * Calculates the norm, or length, of a vector.
      */
-    float norm(sf::Vector2f v) {
-        return sqrt(v.x * v.x + v.y * v.y);
-    }
+    float norm(sf::Vector2f v);
 
     /**
      * Returns a new vector that is the parameter vector v normalized.
      * If the norm of v is zero, returns the zero vector.
      */
-    sf::Vector2f normalized(sf::Vector2f v) {
-        float d = norm(v);
-        if (d == 0.0f) return sf::Vector2f(0, 0);
-        return v / d;
-    }
+    sf::Vector2f normalized(sf::Vector2f v);
 
 }
+
+#endif
