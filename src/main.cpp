@@ -48,17 +48,21 @@ int main()
 
     sf::Clock frameClock;
     float elapsed;
+    float elapsedSinceLastShot = 1000.0f;
     std::vector<Projectile> projectiles;        // TODO: Replace with a more efficient solution
 
     // Mock parameters start here:
     float characterSpeed = 100.0f;
+    float projectileCooldown = 0.3f;        // In seconds
     // Mock parameters end here
 
     // The main game loop:
 	while (window.isOpen())
 	{
-        elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame.
-        //sf::sleep(sf::seconds(0.05f));                // Uncomment this to simulate worse fps.
+        elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame
+        elapsedSinceLastShot += elapsed;                // The time elapsed since player's last shot
+        //sf::sleep(sf::seconds(0.05f));                // Uncomment this to simulate worse fps
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -92,10 +96,13 @@ int main()
     	character.sprite.setRotation(rotation+characterRotationOffset);
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            Projectile projectile(false, 5, 2, 250.0f);
-            projectile.setPosition(shapepos);
-            projectile.setDirection(sf::Vector2f(mousepos) - shapepos);
-            projectiles.push_back(projectile);
+            if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
+                elapsedSinceLastShot = 0.0f;
+                Projectile projectile(false, 5, 2, 250.0f);
+                projectile.setPosition(shapepos);
+                projectile.setDirection(sf::Vector2f(mousepos) - shapepos);
+                projectiles.push_back(projectile);
+            }
         }
     }
 
