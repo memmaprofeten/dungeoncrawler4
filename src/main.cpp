@@ -29,6 +29,7 @@ int main()
 
 
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
+    sf::View view(sf::Vector2f(0, 0), sf::Vector2f(200, 150));
 
     Character character("Test man", true, characterTextureFile);
     sf::Texture characterTexture;
@@ -37,7 +38,7 @@ int main()
     }
     character.sprite.setTexture(characterTexture);
     character.sprite.setRotation(270);
-	character.sprite.setOrigin(20,20);
+	character.sprite.setOrigin(16,16);
 
 	sf::CircleShape enemy(20.f);
 	enemy.setFillColor(sf::Color::Green);
@@ -86,9 +87,10 @@ int main()
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dpos.y -= 1;
         dpos = elapsed * characterSpeed * cv::normalized(dpos);
         character.sprite.move(dpos.x, dpos.y);
+        view.move(dpos.x, dpos.y);
 
     	sf::Vector2f shapepos = character.sprite.getPosition();
-    	sf::Vector2i mousepos = sf::Mouse::getPosition(window);
+    	sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     	//sf::Vector2f enemypos = enemy.getPosition();
     	float dx = shapepos.x - mousepos.x;
     	float dy = shapepos.y - mousepos.y;
@@ -104,6 +106,8 @@ int main()
                 projectiles.push_back(projectile);
             }
         }
+
+        window.setView(view);
     }
 
     return 0;
