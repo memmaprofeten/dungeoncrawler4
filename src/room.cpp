@@ -28,6 +28,14 @@ Room::Room(std::string const file) {
 	}
 }
 
+int Room::getWidth() const {
+	return width;
+}
+
+int Room::getHeight() const {
+	return height;
+}
+
 bool Room::hasCoordinate(int x, int y) {
     if (x < 0 || y < 0 || x >= width || y >= height) {
         return false;

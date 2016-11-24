@@ -10,8 +10,9 @@
 
 #define PI 3.14159265358979323846F
 // TODO: Move some of these out to configuration files:
-#define characterTextureFile "../resources/img/character_128.png"
+#define characterTextureFile "../resources/img/character_32.png"
 #define characterRotationOffset 270
+#define blockDim 10.0f
 
 int main()
 {
@@ -38,14 +39,11 @@ int main()
     }
     character.sprite.setTexture(characterTexture);
     character.sprite.setRotation(270);
-	character.sprite.setOrigin(16,16);
+    character.sprite.setOrigin(16, 16);
+    character.sprite.setScale(sf::Vector2f(blockDim / 32.0f, blockDim / 32.0f));
 
 	sf::CircleShape enemy(20.f);
 	enemy.setFillColor(sf::Color::Green);
-
-    //Projectile testProjectile(false, 5, 2, 250.0f);
-    //testProjectile.setPosition(sf::Vector2f(100, 100));
-    //testProjectile.setDirection(cv::normalized(sf::Vector2f(1, 1)));
 
     sf::Clock frameClock;
     float elapsed;
@@ -67,18 +65,31 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
-                window.close();
+            switch (event.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::Resized:
+                {
+                    //std::cout << "Resized! " << event.size.width << ", " << event.size.height;
+                    float newViewWidth = (float)event.size.width / (float)event.size.height * view.getSize().y;
+                    view.setSize(newViewWidth, view.getSize().y);
+                    //std::cout << " | " << newViewWidth << ", " << view.getSize().y << std::endl;
+                    break;
+                }
+                default:
+                    break;
+            }
+
         }
 
         window.clear();
-        testRoom.draw(window, 10.0f);
+        testRoom.draw(window, blockDim);
         window.draw(character.sprite);
     	window.draw(enemy);
         for (auto& p : projectiles) {
             p.draw(window, elapsed);
         }
-        window.display();
 
         sf::Vector2f dpos(0, 0);
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dpos.x += 1;
@@ -103,11 +114,15 @@ int main()
                 Projectile projectile(false, 5, 2, 250.0f);
                 projectile.setPosition(shapepos);
                 projectile.setDirection(sf::Vector2f(mousepos) - shapepos);
+                if (cv::norm(projectile.getVelocity()) == 0.0f) {      // If mousepos == shapepos, there is no valid direction. In this case, simply fire the projectile in a default direction (the direction of the x axis).
+                    projectile.setDirection(sf::Vector2f(1, 0));
+                }
                 projectiles.push_back(projectile);
             }
         }
 
         window.setView(view);
+        window.display();
     }
 
     return 0;

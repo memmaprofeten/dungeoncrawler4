@@ -14,6 +14,16 @@ public:
 	Room(std::string const file);
 
 	/**
+	 * Returns the width of the room (in blocks)
+	 */
+	int getWidth() const;
+
+	/**
+	 * Returns the height of the room (in blocks)
+	 */
+	int getHeight() const;
+
+	/**
 	 * Checks whether the room contains the coordinates at (x, y) (= not out of bounds).
 	 */
 	bool hasCoordinate(int x, int y);
