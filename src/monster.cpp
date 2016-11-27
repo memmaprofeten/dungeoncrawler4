@@ -149,7 +149,7 @@ player. (attackdamage);
 }
 }
 
-/*
+
 Code for the AI of the monsters. Essentially. It first checks if the player is within aggrorange. If it is, it flips the aggrostate to true. 
 Then, the monster will move towards the player.
 After that, it attacks the player if it is within range.

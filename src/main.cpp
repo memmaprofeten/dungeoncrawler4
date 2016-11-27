@@ -42,8 +42,8 @@ int main()
     character.sprite.setOrigin(16, 16);
     character.sprite.setScale(sf::Vector2f(blockDim / 32.0f, blockDim / 32.0f));
 
-	sf::CircleShape enemy(20.f);
-	enemy.setFillColor(sf::Color::Green);
+	//sf::CircleShape enemy(20.f);
+	//enemy.setFillColor(sf::Color::Green);
 
     sf::Clock frameClock;
     float elapsed;
@@ -86,7 +86,7 @@ int main()
         window.clear();
         testRoom.draw(window, blockDim);
         window.draw(character.sprite);
-    	window.draw(enemy);
+    	//window.draw(enemy);
         for (auto& p : projectiles) {
             p.draw(window, elapsed);
         }

@@ -24,7 +24,8 @@ position in room
 */
 	TileType material;
 	bool penetrable;
-	sf::Color tileColor;
 	sf::Vector2f tilePosition;
 	sf::Vector2i tileIndex;
+	sf::Texture texture;
+	sf::Sprite sprite;
 };
