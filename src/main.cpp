@@ -38,10 +38,14 @@ int main()
     float elapsedSinceLastShot = 1000.0f;
     std::vector<Projectile> projectiles;        // TODO: Replace with a more efficient solution
     std::vector<MeleeMonster> meleemonsters; //Also replace maybe
+    std::vector<RangedMonster> rangedmonsters; //this too
 
     //CREATE TEST MONSTER. COMMENT OUT LATER
     meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 5, 20, 1));
-    meleemonsters.begin()->setxypos(50,50);
+    meleemonsters.begin()->setxypos(150,50);
+    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 10.0, 50, 100.0, 80.0, &projectiles));
+    rangedmonsters.begin()->setxypos(50,150);
+
     //std::cout << monsters.begin()->getname() << std::endl;
 
     // Mock parameters start here:
@@ -81,6 +85,9 @@ int main()
         }
 	for (auto& p : meleemonsters) {
 	  p.monsterai(character, window, elapsed);
+	}
+	for (auto& p : rangedmonsters){
+	  p.monsterai(character,window,elapsed);
 	}
 
         sf::Vector2f cDir(0, 0);
