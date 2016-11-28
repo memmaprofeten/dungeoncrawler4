@@ -1,5 +1,7 @@
 #ifndef ROOM_HH
 #define ROOM_HH
+
+
 #include "tile.hpp"
 #include <vector>
 #include <SFML/Graphics.hpp>
@@ -35,6 +37,12 @@ public:
 	 * If (x, y) are invalid coordinates, an error is thrown.
 	 */
 	Tile& getTile(int x, int y);
+
+	/**
+	 * Returns a reference to the tile at position pos.
+	 * If pos is out of bounds, an error is thrown.
+	 */
+	Tile& getTile(sf::Vector2f pos);
 
 	/**
 	 * Returns a vector of neighbour coordinates to teh coordinate at (x, y).

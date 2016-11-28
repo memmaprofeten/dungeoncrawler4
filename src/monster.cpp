@@ -1,6 +1,7 @@
 #include "monster.hpp"
 #include <math.h>
 #include <string.h>
+#include "convenience.hpp"
 
 /*
 Basic functions. There's probably some brainfarting going on since I have the memory of a goldfish.
@@ -56,7 +57,7 @@ void Monster::setxypos(int x, int y){
 }
 
 //Change x and y coordinates by input amount. Direction handled by negative input value.
-void Monster::changexypos(int xchange, int ychange){
+void Monster::changexypos(float xchange, float ychange){
   position.x += xchange;
   position.y += ychange;
 }
@@ -69,8 +70,8 @@ Basically iterates x and y positions based on movespeed in directions given by i
 Should enable movement in 8 directions.
 Does not handle collision, as I have no idea how.
 */ 
-void Monster::monstermove(int xdir, int ydir, float elapsed){
-  changexypos(xdir*movespeed*elapsed, ydir*movespeed*elapsed);
+void Monster::monstermove(sf::Vector2f direction, float elapsed){
+  changexypos(direction.x*movespeed*elapsed, direction.y*movespeed*elapsed);
 }
 
 //Reduces health by given amount. Then returns health so function that calls it can check if the monster died.
@@ -143,6 +144,7 @@ void RangedMonster::monsterattack(Character player){
 void MeleeMonster::monsterattack(Character player){
   if (getdistancetoplayer(player) <= attackrange){
     player.reducehealth(attackdamage);
+    //std::cout << "ding" <<std::endl;
   }
 }
 
@@ -154,35 +156,21 @@ After that, it attacks the player if it is within range.
 
 
 void RangedMonster::monsterai(Character player, sf::RenderWindow& window, float elapsed){
-  int xdir, ydir;
-  bool aggrostate;
-  
-  aggrostate = monsteraggrocheck(player);
+  sf::Vector2f direction;
 
+  if (monsteraggrocheck(player)){
+    aggrostate = true;
+  }
+  
   if(aggrostate) {
 
 //Determines direction. Will be replaced by pathfinding later.
-    if (position.x < player.getPosition().x ){
-      xdir = 1;
-    }
-    else if (position.x > player.getPosition().x ){
-      xdir = -1;
-    }
-    else {
-      xdir = 0;
-    }
-    if (position.y < player.getPosition().y){
-      ydir = 1;
-    }
-    else if (position.y > player.getPosition().y ){
-      ydir = -1;
-    }
-    else {
-      ydir = 0;
-    }
+    direction.x = player.getPosition().x - position.x;
+    direction.y = player.getPosition().y - position.y;
+    direction = cv::normalized(direction);
 
 //Moves enemy in chosen direction.
-    monstermove(xdir, ydir, elapsed);
+    monstermove(direction, elapsed);
 
 //Attacks player if in range.
     if (getdistancetoplayer(player)<attackrange){
@@ -194,34 +182,20 @@ void RangedMonster::monsterai(Character player, sf::RenderWindow& window, float 
 }
 
 void MeleeMonster::monsterai(Character player, sf::RenderWindow& window, float elapsed){
-  int xdir, ydir;
-  bool aggrostate;
-
-  aggrostate = monsteraggrocheck(player);
+  sf::Vector2f direction;
+  
+  if (monsteraggrocheck(player)){
+    aggrostate = true;
+  }
 
   if(aggrostate){
 //Determines direction. Will be replaced by pathfinding later.
-    if (position.x < player.getPosition().x ){
-      xdir = 1;
-    }
-    else if (position.x > player.getPosition().x ){
-      xdir = -1;
-    }
-    else {
-      xdir = 0;
-    }
-    if (position.y < player.getPosition().y ){
-      ydir = 1;
-    }
-    else if (position.y > player.getPosition().y ){
-      ydir = -1;
-    }
-    else {
-      ydir = 0;
-    }
+    direction.x = player.getPosition().x - position.x;
+    direction.y = player.getPosition().y - position.y;
+    direction = cv::normalized(direction);
 
 //Moves enemy in chosen direction.
-    monstermove(xdir, ydir, elapsed);
+    monstermove(direction, elapsed);    
 
 //Attacks player if in range.
     if (getdistancetoplayer(player)<attackrange){
@@ -239,4 +213,3 @@ void Monster::draw(sf::RenderWindow& window){
   tile.setFillColor(sf::Color::Blue);
   window.draw(tile);
 }
-

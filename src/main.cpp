@@ -9,9 +9,8 @@
 #include "projectile.hpp"
 #include "convenience.hpp"
 #include "monster.hpp"
+
 #define PI 3.14159265358979323846F
-// TODO: Move some of these out to configuration files:
-//#define characterTextureFile "../resources/img/character_32.png"
 
 int main()
 {
@@ -31,10 +30,8 @@ int main()
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
 
-    Character character("Test man", true, s::characterTextureFile);
-
-	//sf::CircleShape enemy(20.f);
-	//enemy.setFillColor(sf::Color::Green);
+    Character character("Test man", true, 100.0f, s::characterTextureFile);
+    character.setRoom(&testRoom);
 
     sf::Clock frameClock;
     float elapsed;
@@ -48,7 +45,6 @@ int main()
     //std::cout << monsters.begin()->getname() << std::endl;
 
     // Mock parameters start here:
-    float characterSpeed = 100.0f;
     float projectileCooldown = 0.3f;        // In seconds
     // Mock parameters end here
 
@@ -68,10 +64,8 @@ int main()
                     break;
                 case sf::Event::Resized:
                 {
-                    //std::cout << "Resized! " << event.size.width << ", " << event.size.height;
                     float newViewWidth = (float)event.size.width / (float)event.size.height * view.getSize().y;
                     view.setSize(newViewWidth, view.getSize().y);
-                    //std::cout << " | " << newViewWidth << ", " << view.getSize().y << std::endl;
                     break;
                 }
                 default:
@@ -82,7 +76,6 @@ int main()
 
         window.clear();
         testRoom.draw(window, s::blockDim);
-    	//window.draw(enemy);
         for (auto& p : projectiles) {
             p.draw(window, elapsed, testRoom);
         }
@@ -90,18 +83,15 @@ int main()
 	  p.monsterai(character, window, elapsed);
 	}
 
-        sf::Vector2f dpos(0, 0);
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dpos.x += 1;
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) dpos.x -= 1;
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dpos.y += 1;
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dpos.y -= 1;
-        dpos = elapsed * characterSpeed * cv::normalized(dpos);
-        character.move(dpos);
-        view.move(dpos.x, dpos.y);
+        sf::Vector2f cDir(0, 0);
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) cDir.x += 1;
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) cDir.y += 1;
+    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) cDir.y -= 1;
+        character.move(cv::normalized(cDir), elapsed, view);
 
     	sf::Vector2f shapepos = character.getPosition();
     	sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-    	//sf::Vector2f enemypos = enemy.getPosition();
     	float dx = shapepos.x - mousepos.x;
     	float dy = shapepos.y - mousepos.y;
     	float rotation = (atan2(dy,dx)) * 180 / PI;
