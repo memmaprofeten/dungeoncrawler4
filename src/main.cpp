@@ -79,7 +79,7 @@ int main()
         testRoom.draw(window, blockDim);
     	//window.draw(enemy);
         for (auto& p : projectiles) {
-            p.draw(window, elapsed);
+            p.draw(window, elapsed, testRoom);
         }
 
         sf::Vector2f dpos(0, 0);
