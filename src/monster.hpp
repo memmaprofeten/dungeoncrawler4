@@ -7,6 +7,9 @@
 #include "character.hpp"
 #include <string>
 /*The basic class for monsters/enemies*/
+struct RangedMonster;
+struct MeleeMonster;
+
 class Monster{
 public:
   Monster(){};
@@ -38,8 +41,7 @@ General "return value" functions.
 /*
 Reduce monster health. To be called by whatever handles the monster getting hit.
 */
-
-  int reducehealth(int reducedby);
+  virtual int reducehealth(int reducedby)=0;
 
 /*
 Functions to be called by the AI code. In theory, handle movement and attacking.
@@ -61,8 +63,6 @@ protected:
   int xponkill; //Experience given to player when killed.
   int attackdamage; //Damage dealt on attack.
   float movespeed; //Movementspeed of enemy.
-  //Item carrieditem; //Item to be carried. Dropped on death.
-  //Weapon carriedweapon; //Weapon carried. Dropped on death.
   int aggrorange; //AI Parameter. How close the player has to be for the AI to aggro.
   sf::Vector2f position;
   bool aggrostate; //If the monster is actively chasing/attacking the player.
@@ -80,24 +80,34 @@ isAlive)
 
 class RangedMonster : public Monster {
 public:
+  //Virtual functions from Monster.
   void monsterattack(Character player);
   void monsterai(Character player, sf::RenderWindow& window, float elapsed);
-  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectiles, float timebetweenattacksi);
-
+  int reducehealth(int reducedby);
+  //Constructor
+  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectiles, float timebetweenattacksi, std::vector<RangedMonster>* rangedmonstersi);
+  //bool operator==(const RangedMonster inp) const;
+  //bool operator==(const MeleeMonster inp) const;
 private:
   float projectilespeed; //How fast the projectile fired by the enemy moves.
   float attackrange; //At what distance the enemy attacks.
-  std::vector<Projectile>* projectiles;
+  std::vector<Projectile>* projectiles;//Pointer to projectile vector to make creating new projectiles easier.
+  std::vector<RangedMonster>* monsters;//Pointer to ranged monsters vector so it can erase itself from it.
 };
 
 class MeleeMonster : public Monster{
 public:
+  //Virtual functions from Monster.
   void monsterattack(Character player);
   void monsterai(Character player, sf::RenderWindow& window, float elapsed);
-  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, float timebetweenattacksi);
-
+  int reducehealth(int reducedby);
+  //Constructor
+  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, float timebetweenattacksi, std::vector<MeleeMonster>* meleemonstersi);
+  //bool operator==(const MeleeMonster inp) const;
+  //bool operator==(const RangedMonster inp) const;
 private:
   int attackrange; //Radius of the enemy's attack swing
+  std::vector<MeleeMonster>* monsters; //pointer to list containing all melee monsters so it can erase itself when dying.
 
 
 };

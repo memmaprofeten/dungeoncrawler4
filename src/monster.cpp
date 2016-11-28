@@ -2,6 +2,7 @@
 #include <math.h>
 #include <string.h>
 #include "convenience.hpp"
+#include <vector>
 
 /*
 Basic functions. There's probably some brainfarting going on since I have the memory of a goldfish.
@@ -10,10 +11,9 @@ Todo: Aggrocheck. General AI including pathfinding. Collision for movement. Atta
 
 Collision requires some way to tie xy position to specific tile on map.
 Pathfinding requires some shenaniganry and/or googling the algorithms.
-Aggrocheck requires way to get position of player.
-General AI requires above things to be complete.
-
-Ranged monster attack requires code for projectiles, which has yet to be implemented.
+Aggrocheck requires way to get position of player. **DONE**
+General AI requires above things to be complete. **DONE**
+Ranged monster attack requires code for projectiles, which has yet to be implemented. **DONE**
  */
 std::string Monster::getname(){
   return monstername;
@@ -63,25 +63,56 @@ void Monster::changexypos(float xchange, float ychange){
 }
 
 /*
-xdir, 1 if moving right, -1 if moving left. 
-ydir, 1 if moving up, -1 if moving down. 
-0 for either if not moving along that axis. 
-Basically iterates x and y positions based on movespeed in directions given by inputs. 
-Should enable movement in 8 directions.
+Basically iterates x and y positions based on movespeed in directions given by inputs.Takes in a normalized vector based on player's position relative to monster. 
 Does not handle collision, as I have no idea how.
 */ 
 void Monster::monstermove(sf::Vector2f direction, float elapsed){
   changexypos(direction.x*movespeed*elapsed, direction.y*movespeed*elapsed);
 }
 
-//Reduces health by given amount. Then returns health so function that calls it can check if the monster died.
-int Monster::reducehealth(int reducedby){
+//Reduces health by given amount. Then checks if health is below 0. If it is, it searches the vectors containing the monster for itself, erases itself, and then returns the amount of experience the player gains.
+int MeleeMonster::reducehealth(int reducedby){
   health -= reducedby;
-  return health;
+  if(health <= 0){
+    int temp = xponkill;
+
+    for(auto iter=monsters->begin(); iter != monsters->end(); iter++){
+      //if (monstername == iter->getname()){
+      if (this == &(*iter)){ //Yes, this works.
+	//std::cout << "DING DING DING"<<std::endl;
+	monsters->erase(iter);
+	return temp;
+      }
+    }  
+  }
+  else{
+    return 0;
+  }
+  return 0;
+}
+
+int RangedMonster::reducehealth(int reducedby){
+  health -= reducedby;
+  if(health <= 0){
+    int temp = xponkill;
+
+    for(auto iter=monsters->begin(); iter != monsters->end(); iter++){
+      //if (monstername == iter->getname()){
+      if (this == &(*iter)){
+	//std::cout << "DING DING DING" << std::endl;
+	monsters->erase(iter);
+	return temp;
+      }
+    }
+  }
+  else{
+    return 0;
+  }
+  return 0;
 }
 
 // Constructors for melee and ranged monster classes.
-RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectilesi, float timebetweenattacksi){
+RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectilesi, float timebetweenattacksi,std::vector<RangedMonster>* rangedmonstersi){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
@@ -96,9 +127,10 @@ RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int 
   projectiles = projectilesi;
   timebetweenattacks = timebetweenattacksi;
   attacktimer = 0.0;
+  monsters = rangedmonstersi;
 }
 
-MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, float timebetweenattacksi){
+MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, float timebetweenattacksi, std::vector<MeleeMonster>* meleemonstersi){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
@@ -111,6 +143,7 @@ MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int at
   aggrostate = false;
   timebetweenattacks = timebetweenattacksi;
   attacktimer = 0.0;
+  monsters = meleemonstersi;
 }
 
 /*
@@ -141,9 +174,9 @@ void RangedMonster::monsterattack(Character player){
   if (getdistancetoplayer(player) < attackrange){
     Projectile monsterprojectile (false, 5, 2, 200.0f);
     monsterprojectile.setPosition(position);
-monsterprojectile.setDirection(cv::normalized(player.getPosition() - position));
+    monsterprojectile.setDirection(cv::normalized(player.getPosition() - position));
     projectiles->push_back(monsterprojectile);
-    std::cout<<"boo"<<std::endl;
+    //std::cout<<"boo"<<std::endl;
  }
 }
 
@@ -152,7 +185,7 @@ monsterprojectile.setDirection(cv::normalized(player.getPosition() - position));
 void MeleeMonster::monsterattack(Character player){
   if (getdistancetoplayer(player) <= attackrange){
     player.reducehealth(attackdamage);
-    std::cout << "ding" <<std::endl;
+    //std::cout << "ding" <<std::endl;
   }
 }
 
@@ -225,3 +258,21 @@ void Monster::draw(sf::RenderWindow& window){
   tile.setFillColor(sf::Color::Blue);
   window.draw(tile);
 }
+
+/*
+bool MeleeMonster::operator==(const MeleeMonster inp) const{
+  return bool(&inp==this);
+}
+
+bool RangedMonster::operator==(const RangedMonster inp) const{
+  return bool(&inp==this);
+}
+
+bool MeleeMonster::operator==(const RangedMonster inp) const{
+  return false;
+}
+
+bool RangedMonster::operator==(const MeleeMonster inp) const{
+  return false;
+}
+*/
