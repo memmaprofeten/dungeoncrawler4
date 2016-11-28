@@ -38,7 +38,7 @@ void Tile::draw(sf::RenderWindow& window, float blockDim){
 		sprite.setPosition(tileIndex.x * blockDim, tileIndex.y * blockDim); 
 		sprite.setScale(sf::Vector2f(blockDim / 32.0f, blockDim / 32.0f));
 		window.draw(sprite);
-//	}
+	//	}
 }
 
 std::string Tile::toString() const {
