@@ -87,17 +87,16 @@ int main()
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dpos.y += 1;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dpos.y -= 1;
         dpos = elapsed * characterSpeed * cv::normalized(dpos);
-        //character.sprite.move(dpos.x, dpos.y);
         character.move(dpos);
         view.move(dpos.x, dpos.y);
 
-    	sf::Vector2f shapepos = character.sprite.getPosition();
+    	sf::Vector2f shapepos = character.getPosition();
     	sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     	//sf::Vector2f enemypos = enemy.getPosition();
     	float dx = shapepos.x - mousepos.x;
     	float dy = shapepos.y - mousepos.y;
     	float rotation = (atan2(dy,dx)) * 180 / PI;
-    	character.sprite.setRotation(rotation + s::characterRotationOffset);
+    	character.setRotation(rotation);
         character.draw(window);
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
