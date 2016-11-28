@@ -8,7 +8,7 @@
 #include "character.hpp"
 #include "projectile.hpp"
 #include "convenience.hpp"
-
+#include "monster.hpp"
 #define PI 3.14159265358979323846F
 // TODO: Move some of these out to configuration files:
 //#define characterTextureFile "../resources/img/character_32.png"
@@ -41,6 +41,12 @@ int main()
     float elapsed;
     float elapsedSinceLastShot = 1000.0f;
     std::vector<Projectile> projectiles;        // TODO: Replace with a more efficient solution
+    std::vector<MeleeMonster> meleemonsters; //Also replace maybe
+
+    //CREATE TEST MONSTER. COMMENT OUT LATER
+    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 5, 20, 1));
+    meleemonsters.begin()->setxypos(50,50);
+    //std::cout << monsters.begin()->getname() << std::endl;
 
     // Mock parameters start here:
     float characterSpeed = 100.0f;
@@ -79,8 +85,11 @@ int main()
         testRoom.draw(window, s::blockDim);
     	//window.draw(enemy);
         for (auto& p : projectiles) {
-            p.draw(window, elapsed);
+            p.draw(window, elapsed, testRoom);
         }
+	for (auto& p : meleemonsters) {
+	  p.monsterai(character, window, elapsed);
+	}
 
         sf::Vector2f dpos(0, 0);
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) dpos.x += 1;
