@@ -32,7 +32,7 @@ General "return value" functions.
   int getaggrorange();
   sf::Vector2f getPosition();
   void setxypos(int x, int y);
-  void changexypos(int xchange, int ychange);
+  void changexypos(float xchange, float ychange);
 
 /*
 Reduce monster health. To be called by whatever handles the monster getting hit.
@@ -48,7 +48,7 @@ Monster attack function virtual so ranged and melee monsters attack differently.
   int getdistancetoplayer(Character player);
   virtual void monsterattack(Character player) =0; //Handles attack by the monster.
   virtual void monsterai(Character player, sf::RenderWindow& window, float elapsed) =0; //Handles monster AI.
-  void monstermove(int xdir, int ydir, float elapsed); //Handles movement.
+  void monstermove(sf::Vector2f direction, float elapsed); //Handles movement.
   //bool monsteraggrocheck(Character player);//Checks if player is within range of monster.
 
   //For drawing the monster.
