@@ -22,12 +22,19 @@ void Character::move(sf::Vector2f dpos, sf::View& view) {
     if (room == NULL) {
         throw std::runtime_error("Character has no room assigned!");
     }
-    sf::Vector2f newPos = pos + dpos;
-    Tile& tile = room->getTile(newPos);
-    if (tile.isPenetrable()) {
-        pos += dpos;
-        sprite.move(dpos.x, dpos.y);
-        view.move(dpos.x, dpos.y);
+    sf::Vector2f dposHor = sf::Vector2f(dpos.x, 0);
+    sf::Vector2f dposVer = sf::Vector2f(0, dpos.y);
+    Tile& horTile = room->getTile(pos + dposHor);
+    Tile& verTile = room->getTile(pos + dposVer);
+    if (horTile.isPenetrable()) {
+        pos += dposHor;
+        sprite.move(dpos.x, 0);
+        view.move(dpos.x, 0);
+    }
+    if (verTile.isPenetrable()) {
+        pos += dposVer;
+        sprite.move(0, dpos.y);
+        view.move(0, dpos.y);
     }
 }
 
