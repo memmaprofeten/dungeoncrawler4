@@ -139,7 +139,7 @@ bool Monster::monsteraggrocheck(Character player){
 //Ranged monster attack.
 void RangedMonster::monsterattack(Character player){
   if (getdistancetoplayer(player) < attackrange){
-    Projectile monsterprojectile (true, 5, 2, 200.0f);
+    Projectile monsterprojectile (false, 5, 2, 200.0f);
     monsterprojectile.setPosition(position);
 monsterprojectile.setDirection(cv::normalized(player.getPosition() - position));
     projectiles->push_back(monsterprojectile);
