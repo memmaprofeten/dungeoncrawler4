@@ -1,6 +1,7 @@
 #include "projectile.hpp"
 #include "convenience.hpp"
 #include "tile.hpp"
+#include "settings.hpp"
 // Basic functions to retrieve values from the projectile and the consturctor.
 bool Projectile::isfiredbyplayer(){
   return firedbyplayer;
@@ -35,18 +36,20 @@ int Projectile::getradius(){
 }
 
 void Projectile::draw(sf::RenderWindow& window, float elapsed, Room& currentRoom) {
-    }// TODO: Check if projectile has hit a target or a wall
+    // TODO: Check if projectile has hit a target or a wall
     // TODO: Check if projectile has reached out of bounds (and destroy, or hide for reuse)
-   	if(!currentRoom.getTile((int)this->getPosition().x/10,(int)this->getPosition().y/10).isPenetrable()){
-		this->setSpeed(0.0f);
-		return;
 	    	pos += speed * elapsed * dir;
+	if(!currentRoom.hasCoordinate((int)pos.x/s::blockDim,(int)pos.y/s::blockDim)){
+		this->setSpeed(0.0f);
+	}
+   	else if(!currentRoom.getTile((int)pos.x/s::blockDim,(int)pos.y/s::blockDim).isPenetrable()){
+		this->setSpeed(0.0f);
+	}
 	    	sf::CircleShape tile(2.0f);
 	    	tile.setOrigin(1.0f, 1.0f);
 	    	tile.setPosition(pos.x, pos.y);
 		tile.setFillColor(sf::Color::Red);
 	    	window.draw(tile);
-	}
 }
 
 Projectile::Projectile(bool shotbyplayer, int damagein, int radiusin, float speedin){
