@@ -1,3 +1,6 @@
+#ifndef ROOM_HH
+#define ROOM_HH
+
 #include "tile.hpp"
 #include <vector>
 #include <SFML/Graphics.hpp>
@@ -35,6 +38,12 @@ public:
 	Tile& getTile(int x, int y);
 
 	/**
+	 * Returns a reference to the tile at position pos.
+	 * If pos is out of bounds, an error is thrown.
+	 */
+	Tile& getTile(sf::Vector2f pos);
+
+	/**
 	 * Returns a vector of neighbour coordinates to teh coordinate at (x, y).
 	 * If 'includingSelf' is true, the original coordinate is included.
 	 * If 'includingDiagonals' is true, the diagonal neighbours are included.
@@ -57,3 +66,5 @@ private:
 	int height;
 	std::vector<std::vector<Tile>> room;	// 2D-array of tile-objects mapping the game room.
 };
+
+#endif

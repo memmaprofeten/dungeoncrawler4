@@ -32,6 +32,7 @@ int main()
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
 
     Character character("Test man", true, s::characterTextureFile);
+    character.setRoom(&testRoom);
 
 	//sf::CircleShape enemy(20.f);
 	//enemy.setFillColor(sf::Color::Green);
@@ -87,8 +88,7 @@ int main()
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dpos.y += 1;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dpos.y -= 1;
         dpos = elapsed * characterSpeed * cv::normalized(dpos);
-        character.move(dpos);
-        view.move(dpos.x, dpos.y);
+        character.move(dpos, view);
 
     	sf::Vector2f shapepos = character.getPosition();
     	sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));

@@ -1,5 +1,6 @@
 #include "character.hpp"
 #include "settings.hpp"
+#include "tile.hpp"
 
 Character::Character(const std::string& n, bool t, const std::string& txtrPath, int l) : name(n), type(t), level(l), texturePath(txtrPath) {
     if (!texture.loadFromFile(texturePath)) {
@@ -10,16 +11,24 @@ Character::Character(const std::string& n, bool t, const std::string& txtrPath, 
     sprite.setOrigin(16, 16);
     sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
     pos = sf::Vector2f(0, 0);
+    room = NULL;
 }
 
 std::string Character::getName() const { return name; }
 
 sf::Vector2f Character::getPosition() const { return pos; }
 
-void Character::move(sf::Vector2f dpos) {
-    // TODO: Check collisions
-    pos += dpos;
-    sprite.move(dpos.x, dpos.y);
+void Character::move(sf::Vector2f dpos, sf::View& view) {
+    if (room == NULL) {
+        throw std::runtime_error("Character has no room assigned!");
+    }
+    sf::Vector2f newPos = pos + dpos;
+    Tile& tile = room->getTile(newPos);
+    if (tile.isPenetrable()) {
+        pos += dpos;
+        sprite.move(dpos.x, dpos.y);
+        view.move(dpos.x, dpos.y);
+    }
 }
 
 int Character::getRotation() { return rotation; }
@@ -28,6 +37,10 @@ void Character::setRotation(int angle) {
     rotation = s::characterRotationOffset + angle;
     sprite.setRotation(rotation);
 }
+
+Room* Character::getRoom() { return room; }
+
+void Character::setRoom(Room* r) { room = r; }
 
 void Character::draw(sf::RenderWindow& window) {
     // TODO: Check if charecter would go through impenetrable obstacle

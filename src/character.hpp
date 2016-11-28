@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "room.hpp"
 //#include "weapon.hpp"
 #include "item.hpp"
 
@@ -20,11 +21,15 @@ public:
 
 	sf::Vector2f getPosition() const;
 
-	void move(sf::Vector2f dpos);
+	void move(sf::Vector2f dpos, sf::View& view);
 
 	int getRotation();
 
 	void setRotation(int angle);
+
+	Room* getRoom();
+
+	void setRoom(Room* r);
 
 	void draw(sf::RenderWindow& window);
 
@@ -46,6 +51,7 @@ private:
 	int xp; //Player's current experience amount.
 	int xpfornextlevel; //amount required for player to level up.
 
+	Room* room;
 	sf::Vector2f pos;
 	int rotation;
 

@@ -1,3 +1,6 @@
+#ifndef TILE_HH
+#define TILE_HH
+
 #include <SFML/Graphics.hpp>
 #include <string>
 enum TileType{
@@ -29,3 +32,5 @@ position in room
 	sf::Texture texture;
 	sf::Sprite sprite;
 };
+
+#endif

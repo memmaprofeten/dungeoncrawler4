@@ -1,4 +1,5 @@
 #include "room.hpp"
+#include "settings.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -48,6 +49,10 @@ Tile& Room::getTile(int x, int y) {
         return room[x][y];
     }
     throw std::runtime_error(std::string("The coordinates (") + std::to_string(x) + ", " + std::to_string(y) + ") are out of bounds!");
+}
+
+Tile& Room::getTile(sf::Vector2f pos) {
+	return getTile((int)pos.x / s::blockDim, (int)pos.y / s::blockDim);
 }
 
 std::vector<sf::Vector2i> Room::getNeighbours(int x, int y, bool includingSelf, bool includingDiagonals, bool includingOutsiders) {
