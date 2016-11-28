@@ -3,6 +3,7 @@
 
 #include "weapon.hpp"
 #include "item.hpp"
+#include "projectile.hpp"
 #include "character.hpp"
 #include <string>
 /*The basic class for monsters/enemies*/
@@ -78,12 +79,13 @@ isAlive)
 class RangedMonster : public Monster {
 public:
   void monsterattack(Character player);
-  void monsterai(Character player, sf::RenderWindow&, float elapsed);
-  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei);
+  void monsterai(Character player, sf::RenderWindow& window, float elapsed);
+  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectiles);
 
 private:
   float projectilespeed; //How fast the projectile fired by the enemy moves.
   float attackrange; //At what distance the enemy attacks.
+  std::vector<Projectile>* projectiles;
 };
 
 class MeleeMonster : public Monster{
