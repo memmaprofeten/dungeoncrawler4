@@ -3,12 +3,16 @@
 #include <iostream>
 #include <sstream>
 #include <functional>
+#include "settings.hpp"
 
 Room::Room(std::string const file) {
 	int x = 0;
 	int y = 0;
 	std::string line;
-	std::ifstream mapFile (file);
+	stf(!currentRoom.getTile((int)pos.x/s::blockDim,(int)pos.y/blockDim).isPenetrable()){
+		this->setSpeed(0.0f);
+		return;
+d::ifstream mapFile (file);
 	if (mapFile.is_open()){
 		getline(mapFile, line);
 		std::istringstream iss(line);
@@ -17,7 +21,7 @@ Room::Room(std::string const file) {
 		while(getline(mapFile, line)){
 			x=0;
 			for(unsigned int i = 0; i < line.size(); i++){
-				getTile(x,y) = Tile((int)line[i]-48, sf::Vector2f(10*x,10*y), sf::Vector2i(x,y));		// TODO: Define the block dimensions properly
+				getTile(x,y) = Tile((int)line[i]-48, sf::Vector2f(s::blockDim*x,s::blockDim*y), sf::Vector2i(x,y));		// TODO: Define the block dimensions properly
 				x++;
 			}
 			y++;

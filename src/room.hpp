@@ -1,3 +1,5 @@
+#ifndef ROOM_HH
+#define ROOM_HH
 #include "tile.hpp"
 #include <vector>
 #include <SFML/Graphics.hpp>
@@ -57,3 +59,5 @@ private:
 	int height;
 	std::vector<std::vector<Tile>> room;	// 2D-array of tile-objects mapping the game room.
 };
+
+#endif
