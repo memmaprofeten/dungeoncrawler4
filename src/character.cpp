@@ -2,7 +2,7 @@
 #include "settings.hpp"
 #include "tile.hpp"
 
-Character::Character(const std::string& n, bool t, float s, const std::string& txtrPath, int l) : name(n), type(t), level(l), speed(s), texturePath(txtrPath) {
+Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, const std::string& txtrPath, int l) : name(n), type(t), level(l), speed(s), pos(p), texturePath(txtrPath) {
     if (!texture.loadFromFile(texturePath)) {
         throw std::runtime_error("Could not load character texture.");
     }
@@ -10,8 +10,9 @@ Character::Character(const std::string& n, bool t, float s, const std::string& t
     setRotation(s::characterRotationOffset);
     sprite.setOrigin(16, 16);
     sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
-    pos = sf::Vector2f(0, 0);
+    //pos = sf::Vector2f(0, 0);
     room = NULL;
+    sprite.setPosition(p);
 }
 
 std::string Character::getName() const { return name; }

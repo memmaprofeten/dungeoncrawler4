@@ -16,7 +16,7 @@ int main()
 {
     // Testing starts here
 
-    Room testRoom("../resources/rooms/room.txt");
+    Room testRoom("../resources/rooms/room2.txt");
     //testRoom.print();
     /*std::cout << testRoom.getTile(2, 2).toString() << std::endl;
     std::vector<sf::Vector2i> neighbours = testRoom.getNeighbours(0, 0, true, true, true);
@@ -30,8 +30,9 @@ int main()
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
 
-    Character character("Test man", true, 100.0f, s::characterTextureFile);
+    Character character("Test man", true, 100.0f, sf::Vector2f(30.0f, 30.0f), s::characterTextureFile);
     character.setRoom(&testRoom);
+    view.move(character.getPosition().x, character.getPosition().y);
 
     sf::Clock frameClock;
     float elapsed;
@@ -78,18 +79,6 @@ int main()
 
         }
 
-        window.clear();
-        testRoom.draw(window, s::blockDim);
-        for (auto& p : projectiles) {
-            p.draw(window, elapsed, testRoom);
-        }
-	for (auto& p : meleemonsters) {
-	  p.monsterai(character, window, elapsed);
-	}
-	for (auto& p : rangedmonsters){
-	  p.monsterai(character,window,elapsed);
-	}
-
         sf::Vector2f cDir(0, 0);
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) cDir.x += 1;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
@@ -104,9 +93,6 @@ int main()
     	float rotation = (atan2(dy,dx)) * 180 / PI;
     	character.setRotation(rotation);
 
-        window.setView(view);
-        character.draw(window);
-
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
                 elapsedSinceLastShot = 0.0f;
@@ -120,6 +106,21 @@ int main()
             }
         }
 
+        window.clear();
+        testRoom.draw(window, s::blockDim);
+
+        for (auto& p : projectiles) {
+            p.draw(window, elapsed, testRoom);
+        }
+    	for (auto& p : meleemonsters) {
+    	  p.monsterai(character, window, elapsed);
+    	}
+    	for (auto& p : rangedmonsters){
+    	  p.monsterai(character,window,elapsed);
+    	}
+        
+        window.setView(view);
+        character.draw(window);
         window.display();
     }
 

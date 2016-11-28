@@ -15,7 +15,7 @@ public:
 	/*Constructor taking name, type and level with default value 1
 	This can be used to initiate higher level characters if we decide
 	to implement a save feature */
-	Character(const std::string& n, bool t, float s, const std::string& txtrPath, int l = 1);
+	Character(const std::string& n, bool t, float s, sf::Vector2f p, const std::string& txtrPath, int l = 1);
 
 	std::string getName() const;
 
