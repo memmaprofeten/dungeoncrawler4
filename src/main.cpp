@@ -1,8 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <stdexcept>
+#include <locale>
 #include "settings.hpp"
 #include "room.hpp"
 #include "character.hpp"
@@ -11,10 +13,16 @@
 #include "monster.hpp"
 
 #define PI 3.14159265358979323846F
+#define FPS_SAMPLE_COUNT 80
 
 int main()
 {
     // Testing starts here
+
+    sf::Font standardFont;
+    if (!standardFont.loadFromFile("../resources/fonts/Sansation-Regular.ttf")) {
+        throw std::runtime_error("Could not load font.");
+    }
 
     Room testRoom("../resources/rooms/room2.txt");
     //testRoom.print();
@@ -29,24 +37,39 @@ int main()
 
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
-    sf::View guiView(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
+    sf::View guiView(sf::Vector2f(window.getSize()) / 2.0f, sf::Vector2f(window.getSize()));
 
+    /* === CHARACTER === */
     Character character("Test man", true, 100.0f, sf::Vector2f(30.0f, 30.0f), s::characterTextureFile, s::characterShadowFile);
     character.setRoom(&testRoom);
     view.move(character.getPosition().x, character.getPosition().y);
 
-    guiView.setCenter(guiView.getSize() / 2.0f);
-    sf::RectangleShape healthBar(sf::Vector2f(0.5f * guiView.getSize().y, 0.02f * guiView.getSize().y));
+    /* === GUI === */
+    sf::RectangleShape healthBar(sf::Vector2f(300, 20));
     healthBar.setOrigin(healthBar.getSize());
     healthBar.setFillColor(sf::Color(100, 20, 20));
-    healthBar.setPosition((sf::Vector2f)guiView.getSize() - sf::Vector2f(5.0f, 5.0f));
+    healthBar.setPosition(sf::Vector2f(window.getSize()) - sf::Vector2f(15, 15));
+    sf::Text fpsIndicator;
+    fpsIndicator.setFont(standardFont);
+    fpsIndicator.setCharacterSize(256);
+    fpsIndicator.scale(20.0f / 256.0f * sf::Vector2f(1, 1));
+    fpsIndicator.setColor(sf::Color::Green);
+    fpsIndicator.setPosition(sf::Vector2f(10, 10));
 
+    /* === FUNCTIONALITY === */
     sf::Clock frameClock;
     float elapsed;
     float elapsedSinceLastShot = 1000.0f;
-    std::vector<Projectile> projectiles;        // TODO: Replace with a more efficient solution
-    std::vector<MeleeMonster> meleemonsters; //Also replace maybe
-    std::vector<RangedMonster> rangedmonsters; //this too
+    float fpsSamples[FPS_SAMPLE_COUNT];
+    float fpsValue = 0;
+    int fpsIndex = 0;
+    bool fpsIsCounting = false;
+    for (auto i=0; i<FPS_SAMPLE_COUNT; ++i) fpsSamples[i] = 0;
+
+    /* === CONTAINERS === */        // TODO: Move these out, e.g. into the Room class.
+    std::vector<Projectile> projectiles;
+    std::vector<MeleeMonster> meleemonsters;
+    std::vector<RangedMonster> rangedmonsters;
 
     //Monster test code. Comment out later.
     // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
@@ -56,7 +79,6 @@ int main()
     rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 10.0, 50, 100.0, 80.0, &projectiles, 1.0, &rangedmonsters));
     rangedmonsters.begin()->setxypos(50,150);
     std::cout<< meleemonsters.front().reducehealth(1) << std::endl;
-
     //std::cout << monsters.begin()->getname() << std::endl;
 
     // Mock parameters start here:
@@ -64,14 +86,31 @@ int main()
     // Mock parameters end here
 
     window.setView(view);
-    // The main game loop:
+    /* === THE MAIN GAME LOOP === */
 	while (window.isOpen())
 	{
-        window.setView(view);
         elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame
         elapsedSinceLastShot += elapsed;                // The time elapsed since player's last shot
         //sf::sleep(sf::seconds(0.05f));                // Uncomment this to simulate worse fps
 
+        /* === FPS COUNTER === */
+        fpsValue -= fpsSamples[fpsIndex];
+        fpsValue += elapsed;
+        fpsSamples[fpsIndex] = elapsed;
+        fpsIndex = (fpsIndex + 1) % FPS_SAMPLE_COUNT;
+        if (fpsIndex == 0) fpsIsCounting = true;
+        std::stringstream fpsSs;
+        if (fpsIsCounting) {
+            fpsSs << int(round(FPS_SAMPLE_COUNT / fpsValue)) << " fps";
+            fpsIndicator.setString(fpsSs.str());
+        } else {
+            fpsSs << "Counting...";
+            fpsIndicator.setString(fpsSs.str());
+        }
+
+        window.setView(view);
+
+        /* === GENERAL EVENT HANDLING === */
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -81,8 +120,12 @@ int main()
                     break;
                 case sf::Event::Resized:
                 {
-                    float newViewWidth = (float)event.size.width / (float)event.size.height * view.getSize().y;
+                    sf::Vector2f eventSize(event.size.width, event.size.height);
+                    float newViewWidth = eventSize.x / eventSize.y * view.getSize().y;
                     view.setSize(newViewWidth, view.getSize().y);
+                    guiView.setSize(eventSize);
+                    guiView.setCenter(eventSize / 2.0f);
+                    healthBar.setPosition(eventSize - sf::Vector2f(15, 15));
                     break;
                 }
                 default:
@@ -91,6 +134,7 @@ int main()
 
         }
 
+        /* === EVENT HANDLING FOR MOVEMENT === */
         sf::Vector2f cDir(0, 0);
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) cDir.x += 1;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
@@ -98,6 +142,7 @@ int main()
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) cDir.y -= 1;
         character.move(cv::normalized(cDir), elapsed, view);
 
+        /* === EVENT HANDLING FOR TURNING === */
     	sf::Vector2f shapepos = character.getPosition();
     	sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     	float dx = shapepos.x - mousepos.x;
@@ -105,6 +150,7 @@ int main()
     	float rotation = (atan2(dy,dx)) * 180 / PI;
     	character.setRotation(rotation);
 
+        /* === EVENT HANDLING FOR SHOOTING === */
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
                 elapsedSinceLastShot = 0.0f;
@@ -118,7 +164,7 @@ int main()
             }
         }
 
-
+        /* === RENDERING === */
 
         window.clear();
         window.setView(view);
@@ -139,6 +185,7 @@ int main()
         /* === GUI === */
         window.setView(guiView);
         window.draw(healthBar);
+        window.draw(fpsIndicator);
 
         window.display();
     }
