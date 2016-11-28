@@ -66,6 +66,8 @@ protected:
   int aggrorange; //AI Parameter. How close the player has to be for the AI to aggro.
   sf::Vector2f position;
   bool aggrostate; //If the monster is actively chasing/attacking the player.
+  float attacktimer; //Amount of time inbetween attacks.
+  float timebetweenattacks; //explanatory
 /*
 type
 health
@@ -80,7 +82,7 @@ class RangedMonster : public Monster {
 public:
   void monsterattack(Character player);
   void monsterai(Character player, sf::RenderWindow& window, float elapsed);
-  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectiles);
+  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectiles, float timebetweenattacksi);
 
 private:
   float projectilespeed; //How fast the projectile fired by the enemy moves.
@@ -92,7 +94,7 @@ class MeleeMonster : public Monster{
 public:
   void monsterattack(Character player);
   void monsterai(Character player, sf::RenderWindow& window, float elapsed);
-  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei);
+  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, float timebetweenattacksi);
 
 private:
   int attackrange; //Radius of the enemy's attack swing

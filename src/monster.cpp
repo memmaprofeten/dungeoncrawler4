@@ -81,7 +81,7 @@ int Monster::reducehealth(int reducedby){
 }
 
 // Constructors for melee and ranged monster classes.
-RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectilesi){
+RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectilesi, float timebetweenattacksi){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
@@ -93,10 +93,12 @@ RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int 
   projectilespeed = projectilespeedi;
   attackrange = attackrangei;
   aggrostate = false;
-projectiles = projectilesi;
+  projectiles = projectilesi;
+  timebetweenattacks = timebetweenattacksi;
+  attacktimer = 0.0;
 }
 
-MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei){
+MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, float timebetweenattacksi){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
@@ -107,6 +109,8 @@ MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int at
   aggrorange = aggrorangei;
   attackrange = attackrangei;
   aggrostate = false;
+  timebetweenattacks = timebetweenattacksi;
+  attacktimer = 0.0;
 }
 
 /*
@@ -139,7 +143,7 @@ void RangedMonster::monsterattack(Character player){
     monsterprojectile.setPosition(position);
 monsterprojectile.setDirection(cv::normalized(player.getPosition() - position));
     projectiles->push_back(monsterprojectile);
-    //std::cout<<"boo"<<std::endl;
+    std::cout<<"boo"<<std::endl;
  }
 }
 
@@ -148,7 +152,7 @@ monsterprojectile.setDirection(cv::normalized(player.getPosition() - position));
 void MeleeMonster::monsterattack(Character player){
   if (getdistancetoplayer(player) <= attackrange){
     player.reducehealth(attackdamage);
-    //std::cout << "ding" <<std::endl;
+    std::cout << "ding" <<std::endl;
   }
 }
 
@@ -176,8 +180,10 @@ void RangedMonster::monsterai(Character player, sf::RenderWindow& window, float 
 //Moves enemy in chosen direction.
     monstermove(direction, elapsed);
 
-//Attacks player if in range.
-    if (getdistancetoplayer(player)<attackrange){
+//Attacks player if in range, then for timer.
+    attacktimer += elapsed;
+    if (getdistancetoplayer(player)<attackrange && attacktimer >= timebetweenattacks){
+      attacktimer = 0.0;
       monsterattack(player);
     }
   }
@@ -202,8 +208,10 @@ void MeleeMonster::monsterai(Character player, sf::RenderWindow& window, float e
     monstermove(direction, elapsed);    
 
 //Attacks player if in range.
-    if (getdistancetoplayer(player)<attackrange){
-monsterattack(player);
+    attacktimer += elapsed;
+    if (getdistancetoplayer(player)<attackrange && attacktimer >= timebetweenattacks){
+      attacktimer = 0.0;
+      monsterattack(player);
     }
   }
 
