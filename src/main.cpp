@@ -33,14 +33,6 @@ int main()
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(200, 150));
 
     Character character("Test man", true, characterTextureFile);
-    sf::Texture characterTexture;
-    if (!characterTexture.loadFromFile(character.getTexture())) {
-        throw std::runtime_error("Could not load character picture.");
-    }
-    character.sprite.setTexture(characterTexture);
-    character.sprite.setRotation(270);
-    character.sprite.setOrigin(16, 16);
-    character.sprite.setScale(sf::Vector2f(blockDim / 32.0f, blockDim / 32.0f));
 
 	//sf::CircleShape enemy(20.f);
 	//enemy.setFillColor(sf::Color::Green);
@@ -85,7 +77,6 @@ int main()
 
         window.clear();
         testRoom.draw(window, blockDim);
-        window.draw(character.sprite);
     	//window.draw(enemy);
         for (auto& p : projectiles) {
             p.draw(window, elapsed);
@@ -97,7 +88,8 @@ int main()
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) dpos.y += 1;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) dpos.y -= 1;
         dpos = elapsed * characterSpeed * cv::normalized(dpos);
-        character.sprite.move(dpos.x, dpos.y);
+        //character.sprite.move(dpos.x, dpos.y);
+        character.move(dpos);
         view.move(dpos.x, dpos.y);
 
     	sf::Vector2f shapepos = character.sprite.getPosition();
@@ -107,6 +99,7 @@ int main()
     	float dy = shapepos.y - mousepos.y;
     	float rotation = (atan2(dy,dx)) * 180 / PI;
     	character.sprite.setRotation(rotation+characterRotationOffset);
+        character.draw(window);
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
