@@ -15,13 +15,13 @@ public:
 	/*Constructor taking name, type and level with default value 1
 	This can be used to initiate higher level characters if we decide
 	to implement a save feature */
-	Character(const std::string& n, bool t, const std::string& txtrPath, int l = 1);
+	Character(const std::string& n, bool t, float s, const std::string& txtrPath, int l = 1);
 
 	std::string getName() const;
 
 	sf::Vector2f getPosition() const;
 
-	void move(sf::Vector2f dpos, sf::View& view);
+	void move(sf::Vector2f dir, float elapsed, sf::View& view);
 
 	int getRotation();
 
@@ -49,7 +49,7 @@ private:
 	//Weapon equippedweapon; //currently equipped weapon.
 	int maxhealth; //Player's maximum health.
 	int health; //Player's current health.
-	float movespeed; //Players movement speed.
+	float speed; //Players movement speed.
 	int xp; //Player's current experience amount.
 	int xpfornextlevel; //amount required for player to level up.
 
