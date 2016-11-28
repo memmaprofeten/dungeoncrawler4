@@ -41,9 +41,9 @@ int main()
     std::vector<RangedMonster> rangedmonsters; //this too
 
     //CREATE TEST MONSTER. COMMENT OUT LATER
-    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 5, 20, 1));
+    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 20.0, 20, 4, 1.0));
     meleemonsters.begin()->setxypos(150,50);
-    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 10.0, 50, 100.0, 80.0, &projectiles));
+    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 10.0, 50, 100.0, 80.0, &projectiles, 1.0));
     rangedmonsters.begin()->setxypos(50,150);
 
     //std::cout << monsters.begin()->getname() << std::endl;
