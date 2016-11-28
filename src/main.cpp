@@ -29,10 +29,17 @@ int main()
 
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
+    sf::View guiView(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
 
     Character character("Test man", true, 100.0f, sf::Vector2f(30.0f, 30.0f), s::characterTextureFile, s::characterShadowFile);
     character.setRoom(&testRoom);
     view.move(character.getPosition().x, character.getPosition().y);
+
+    guiView.setCenter(guiView.getSize() / 2.0f);
+    sf::RectangleShape healthBar(sf::Vector2f(0.5f * guiView.getSize().y, 0.02f * guiView.getSize().y));
+    healthBar.setOrigin(healthBar.getSize());
+    healthBar.setFillColor(sf::Color(100, 20, 20));
+    healthBar.setPosition((sf::Vector2f)guiView.getSize() - sf::Vector2f(5.0f, 5.0f));
 
     sf::Clock frameClock;
     float elapsed;
@@ -56,9 +63,11 @@ int main()
     float projectileCooldown = 0.3f;        // In seconds
     // Mock parameters end here
 
+    window.setView(view);
     // The main game loop:
 	while (window.isOpen())
 	{
+        window.setView(view);
         elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame
         elapsedSinceLastShot += elapsed;                // The time elapsed since player's last shot
         //sf::sleep(sf::seconds(0.05f));                // Uncomment this to simulate worse fps
@@ -109,7 +118,10 @@ int main()
             }
         }
 
+
+
         window.clear();
+        window.setView(view);
         testRoom.draw(window, s::blockDim);
 
         for (auto& p : projectiles) {
@@ -118,13 +130,16 @@ int main()
     	for (auto& p : meleemonsters) {
     	  p.monsterai(character, window, elapsed);
     	}
-    	for (auto& p : rangedmonsters){
+    	for (auto& p : rangedmonsters) {
     	  p.monsterai(character,window,elapsed);
     	}
 
-        window.setView(view);
-        //window.draw(testShadowSprite);
         character.draw(window);
+
+        /* === GUI === */
+        window.setView(guiView);
+        window.draw(healthBar);
+
         window.display();
     }
 
