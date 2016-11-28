@@ -42,9 +42,9 @@ int main()
     std::vector<RangedMonster> rangedmonsters; //this too
 
     //CREATE TEST MONSTER. COMMENT OUT LATER
-    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 5, 20, 1));
+    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 20.0, 20, 4, 1.0));
     meleemonsters.begin()->setxypos(150,50);
-    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 10.0, 50, 100.0, 80.0, &projectiles));
+    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 10.0, 50, 100.0, 80.0, &projectiles, 1.0));
     rangedmonsters.begin()->setxypos(50,150);
 
     //std::cout << monsters.begin()->getname() << std::endl;
@@ -111,7 +111,7 @@ int main()
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
                 elapsedSinceLastShot = 0.0f;
-                Projectile projectile(false, 5, 2, 250.0f);
+                Projectile projectile(true, 5, 2, 250.0f);
                 projectile.setPosition(shapepos);
                 projectile.setDirection(sf::Vector2f(mousepos) - shapepos);
                 if (cv::norm(projectile.getVelocity()) == 0.0f) {      // If mousepos == shapepos, there is no valid direction. In this case, simply fire the projectile in a default direction (the direction of the x axis).

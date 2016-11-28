@@ -46,7 +46,10 @@ void Projectile::draw(sf::RenderWindow& window, float elapsed, Room& currentRoom
 	}
    	else if(!currentRoom.getTile((int)pos.x/s::blockDim,(int)pos.y/s::blockDim).isPenetrable()){
 		this->setSpeed(0.0f);
-	}	
+		if(!firedbyplayer){	
+			return;
+		}
+	 }	
 		sprite.setTexture(texture);
 		sprite.setPosition(pos.x, pos.y);
 		sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
