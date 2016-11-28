@@ -32,6 +32,10 @@ public:
 
 	//item pickup
 
+	sf::Sprite sprite;
+
+  void reducehealth(int damage);
+
 
 private:
 	std::string name; //Name of player. User input or based on class?

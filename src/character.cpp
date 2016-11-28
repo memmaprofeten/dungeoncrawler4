@@ -33,3 +33,7 @@ void Character::draw(sf::RenderWindow& window) {
     // TODO: Check if charecter would go through impenetrable obstacle
     window.draw(sprite);
 }
+
+void Character::reducehealth(int damage){
+  health -= damage;
+}

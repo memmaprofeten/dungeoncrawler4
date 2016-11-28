@@ -30,8 +30,7 @@ General "return value" functions.
   //Weapon getcarriedweapon();
   //Item getcarrieditem();
   int getaggrorange();
-  int getxpos();
-  int getypos();
+  sf::Vector2f getPosition();
   void setxypos(int x, int y);
   void changexypos(int xchange, int ychange);
 
@@ -45,11 +44,15 @@ Reduce monster health. To be called by whatever handles the monster getting hit.
 Functions to be called by the AI code. In theory, handle movement and attacking.
 Monster attack function virtual so ranged and melee monsters attack differently.
 */
+  bool monsteraggrocheck(Character player);
   int getdistancetoplayer(Character player);
-  virtual void monsterattack() = 0; //Handles attack by the monster.
-  virtual void monsterai() = 0; //Handles monster AI.
-  void monstermove(int xdir, int ydir); //Handles movement.
+  virtual void monsterattack(Character player) =0; //Handles attack by the monster.
+  virtual void monsterai(Character player, sf::RenderWindow& window, float elapsed) =0; //Handles monster AI.
+  void monstermove(int xdir, int ydir, float elapsed); //Handles movement.
   //bool monsteraggrocheck(Character player);//Checks if player is within range of monster.
+
+  //For drawing the monster.
+  void draw(sf::RenderWindow& window);
 
 protected:
   std::string monstername; //Enemy name.
@@ -60,8 +63,7 @@ protected:
   //Item carrieditem; //Item to be carried. Dropped on death.
   //Weapon carriedweapon; //Weapon carried. Dropped on death.
   int aggrorange; //AI Parameter. How close the player has to be for the AI to aggro.
-  int xpos;
-  int ypos;
+  sf::Vector2f position;
   bool aggrostate; //If the monster is actively chasing/attacking the player.
 /*
 type
@@ -75,8 +77,8 @@ isAlive)
 
 class RangedMonster : public Monster {
 public:
-  //void monsterattack(Character player);
-  //void monsterai();
+  void monsterattack(Character player);
+  void monsterai(Character player, sf::RenderWindow&, float elapsed);
   RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei);
 
 private:
@@ -86,8 +88,8 @@ private:
 
 class MeleeMonster : public Monster{
 public:
-  //void monsterattack(Character player);
-  //void monsterai();
+  void monsterattack(Character player);
+  void monsterai(Character player, sf::RenderWindow& window, float elapsed);
   MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei);
 
 private:
