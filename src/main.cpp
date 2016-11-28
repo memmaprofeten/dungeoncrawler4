@@ -96,6 +96,8 @@ int main()
     	float dy = shapepos.y - mousepos.y;
     	float rotation = (atan2(dy,dx)) * 180 / PI;
     	character.setRotation(rotation);
+
+        window.setView(view);
         character.draw(window);
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -111,7 +113,6 @@ int main()
             }
         }
 
-        window.setView(view);
         window.display();
     }
 
