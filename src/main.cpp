@@ -16,7 +16,7 @@ int main()
 {
     // Testing starts here
 
-    Room testRoom("../resources/rooms/room.txt");
+    Room testRoom("../resources/rooms/room2.txt");
     //testRoom.print();
     /*std::cout << testRoom.getTile(2, 2).toString() << std::endl;
     std::vector<sf::Vector2i> neighbours = testRoom.getNeighbours(0, 0, true, true, true);
@@ -30,8 +30,9 @@ int main()
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
 
-    Character character("Test man", true, 100.0f, s::characterTextureFile);
+    Character character("Test man", true, 100.0f, sf::Vector2f(30.0f, 30.0f), s::characterTextureFile);
     character.setRoom(&testRoom);
+    view.move(character.getPosition().x, character.getPosition().y);
 
     sf::Clock frameClock;
     float elapsed;
