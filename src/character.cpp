@@ -20,7 +20,6 @@ std::string Character::getName() const { return name; }
 sf::Vector2f Character::getPosition() const { return pos; }
 
 void Character::move(sf::Vector2f dir, float elapsed, sf::View& view) {
-    std::cout << pos.x << ", " << pos.y << std::endl;
     sf::Vector2f dpos = elapsed * speed * dir;
     if (room == NULL) {
         throw std::runtime_error("Character has no room assigned!");

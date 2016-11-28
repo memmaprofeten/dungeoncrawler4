@@ -79,18 +79,6 @@ int main()
 
         }
 
-        window.clear();
-        testRoom.draw(window, s::blockDim);
-        for (auto& p : projectiles) {
-            p.draw(window, elapsed, testRoom);
-        }
-	for (auto& p : meleemonsters) {
-	  p.monsterai(character, window, elapsed);
-	}
-	for (auto& p : rangedmonsters){
-	  p.monsterai(character,window,elapsed);
-	}
-
         sf::Vector2f cDir(0, 0);
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) cDir.x += 1;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
@@ -105,9 +93,6 @@ int main()
     	float rotation = (atan2(dy,dx)) * 180 / PI;
     	character.setRotation(rotation);
 
-        window.setView(view);
-        character.draw(window);
-
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
                 elapsedSinceLastShot = 0.0f;
@@ -121,6 +106,21 @@ int main()
             }
         }
 
+        window.clear();
+        testRoom.draw(window, s::blockDim);
+
+        for (auto& p : projectiles) {
+            p.draw(window, elapsed, testRoom);
+        }
+    	for (auto& p : meleemonsters) {
+    	  p.monsterai(character, window, elapsed);
+    	}
+    	for (auto& p : rangedmonsters){
+    	  p.monsterai(character,window,elapsed);
+    	}
+        
+        window.setView(view);
+        character.draw(window);
         window.display();
     }
 
