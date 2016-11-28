@@ -110,7 +110,7 @@ int main()
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
                 elapsedSinceLastShot = 0.0f;
-                Projectile projectile(false, 5, 2, 250.0f);
+                Projectile projectile(true, 5, 2, 250.0f);
                 projectile.setPosition(shapepos);
                 projectile.setDirection(sf::Vector2f(mousepos) - shapepos);
                 if (cv::norm(projectile.getVelocity()) == 0.0f) {      // If mousepos == shapepos, there is no valid direction. In this case, simply fire the projectile in a default direction (the direction of the x axis).
