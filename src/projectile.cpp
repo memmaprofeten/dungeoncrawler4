@@ -21,6 +21,7 @@ sf::Vector2f Projectile::getVelocity() {
 
 void Projectile::setDirection(sf::Vector2f direction) {
     dir = cv::normalized(direction);
+    rotation = (atan2(dir.y,dir.x)) * 180 / s::PI;
 }
 
 void Projectile::setSpeed(float newSpeed) {
@@ -45,12 +46,20 @@ void Projectile::draw(sf::RenderWindow& window, float elapsed, Room& currentRoom
 	}
    	else if(!currentRoom.getTile((int)pos.x/s::blockDim,(int)pos.y/s::blockDim).isPenetrable()){
 		this->setSpeed(0.0f);
-	}
-	    	sf::CircleShape tile(2.0f);
+	}	
+		sprite.setTexture(texture);
+		sprite.setPosition(pos.x, pos.y);
+		sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
+		sprite.setOrigin(16.0f,16.0f);
+		sprite.setRotation(rotation+90);
+		window.draw(sprite);
+/*
+	    	sf::Texture arrow;
 	    	tile.setOrigin(1.0f, 1.0f);
 	    	tile.setPosition(pos.x, pos.y);
 		tile.setFillColor(sf::Color::Red);
 	    	window.draw(tile);
+*/
 }
 
 Projectile::Projectile(bool shotbyplayer, int damagein, int radiusin, float speedin){
@@ -60,6 +69,10 @@ Projectile::Projectile(bool shotbyplayer, int damagein, int radiusin, float spee
   speed = speedin;
   damage = damagein;
   radius = radiusin;
+  if(!texture.loadFromFile(s::projectileTextureFile)){
+	throw std::runtime_error("Could not find projectile texture");
+}
+ 
 }
 
 /*

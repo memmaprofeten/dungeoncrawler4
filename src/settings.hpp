@@ -10,7 +10,8 @@ namespace s {
     extern int characterRotationOffset;
     extern float blockDim;         // The dimension (length=width) of each block (tile)
     extern int viewHeight;
-
+    extern std::string projectileTextureFile;
+    extern float PI; 
 }
 
 #endif

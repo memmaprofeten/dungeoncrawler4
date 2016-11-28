@@ -48,7 +48,6 @@ Function that can be called by player or monster attack that creates the project
   int getdamage();
 
   int getradius();
-
   /**
    * Performs necessary calculations, such as computing its new position, and
    * draws itself.
@@ -66,6 +65,9 @@ private:
   float speed;          // The absolute speed that the projectile has
   int damage; //Damage dealt by projectile.
   int radius; //Radius of projectile for drawing / hit detection.
+  float rotation; //Rotation, connected to the direction
+  sf::Texture texture;
+  sf::Sprite sprite;
 };
 
 //void createprojectile(bool isfiredbyplayer, int xpos, int ypos,  int xspeed, int yspeed, int damage, int radius);
