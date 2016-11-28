@@ -1,22 +1,32 @@
 #include "character.hpp"
+#include "settings.hpp"
 
 Character::Character(const std::string& n, bool t, const std::string& txtrPath, int l) : name(n), type(t), level(l), texturePath(txtrPath) {
-    float blockDim = 10.0f;
     if (!texture.loadFromFile(texturePath)) {
         throw std::runtime_error("Could not load character texture.");
     }
     sprite.setTexture(texture);
-    sprite.setRotation(270);
+    setRotation(s::characterRotationOffset);
     sprite.setOrigin(16, 16);
-    sprite.setScale(sf::Vector2f(blockDim / 32.0f, blockDim / 32.0f));
+    sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
+    pos = sf::Vector2f(0, 0);
 }
 
 std::string Character::getName() const { return name; }
 
-//std::string Character::getTexture() const { return texture; }
+sf::Vector2f Character::getPosition() const { return pos; }
 
 void Character::move(sf::Vector2f dpos) {
+    // TODO: Check collisions
+    pos += dpos;
     sprite.move(dpos.x, dpos.y);
+}
+
+int Character::getRotation() { return rotation; }
+
+void Character::setRotation(int angle) {
+    rotation = s::characterRotationOffset + angle;
+    sprite.setRotation(rotation);
 }
 
 void Character::draw(sf::RenderWindow& window) {

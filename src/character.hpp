@@ -18,23 +18,19 @@ public:
 
 	std::string getName() const;
 
-	//std::string getTexture() const;
-
-	sf::Sprite& getSprite();
-
-	void setSprite(sf::Sprite spr);
+	sf::Vector2f getPosition() const;
 
 	void move(sf::Vector2f dpos);
 
-	void draw(sf::RenderWindow& window);
+	int getRotation();
 
-	// moving function
+	void setRotation(int angle);
+
+	void draw(sf::RenderWindow& window);
 
 	//attacking and getting attacked functions
 
 	//item pickup
-
-	sf::Sprite sprite;
 
 
 private:
@@ -50,9 +46,12 @@ private:
 	int xp; //Player's current experience amount.
 	int xpfornextlevel; //amount required for player to level up.
 
+	sf::Vector2f pos;
+	int rotation;
+
 	std::string texturePath;
 	sf::Texture texture;
-	//sf::Sprite sprite;
+	sf::Sprite sprite;
 };
 
 #endif
