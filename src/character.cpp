@@ -2,7 +2,7 @@
 #include "settings.hpp"
 #include "tile.hpp"
 
-Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, const std::string& txtrPath, int l) : name(n), type(t), level(l), speed(s), pos(p), texturePath(txtrPath) {
+Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, const std::string& txtrPath, const std::string& sdwPath, int l) : name(n), type(t), level(l), speed(s), pos(p), texturePath(txtrPath), shadowPath(sdwPath) {
     if (!texture.loadFromFile(texturePath)) {
         throw std::runtime_error("Could not load character texture.");
     }
@@ -10,9 +10,17 @@ Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, cons
     setRotation(s::characterRotationOffset);
     sprite.setOrigin(16, 16);
     sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
-    //pos = sf::Vector2f(0, 0);
-    room = NULL;
     sprite.setPosition(p);
+
+    if (!shadowTexture.loadFromFile(shadowPath)) {
+        throw std::runtime_error("Could not load character shadow.");
+    }
+    shadowSprite.setTexture(shadowTexture);
+    shadowSprite.setOrigin(16, 8);
+    shadowSprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
+    shadowSprite.setPosition(p);
+
+    room = NULL;
 }
 
 std::string Character::getName() const { return name; }
@@ -31,11 +39,13 @@ void Character::move(sf::Vector2f dir, float elapsed, sf::View& view) {
     if (horTile.isPenetrable()) {
         pos += dposHor;
         sprite.move(dpos.x, 0);
+        shadowSprite.move(dpos.x, 0);
         view.move(dpos.x, 0);
     }
     if (verTile.isPenetrable()) {
         pos += dposVer;
         sprite.move(0, dpos.y);
+        shadowSprite.move(0, dpos.y);
         view.move(0, dpos.y);
     }
 }
@@ -52,7 +62,7 @@ Room* Character::getRoom() { return room; }
 void Character::setRoom(Room* r) { room = r; }
 
 void Character::draw(sf::RenderWindow& window) {
-    // TODO: Check if charecter would go through impenetrable obstacle
+    window.draw(shadowSprite);
     window.draw(sprite);
 }
 

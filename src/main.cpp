@@ -30,7 +30,7 @@ int main()
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
 
-    Character character("Test man", true, 100.0f, sf::Vector2f(30.0f, 30.0f), s::characterTextureFile);
+    Character character("Test man", true, 100.0f, sf::Vector2f(30.0f, 30.0f), s::characterTextureFile, s::characterShadowFile);
     character.setRoom(&testRoom);
     view.move(character.getPosition().x, character.getPosition().y);
 
@@ -118,8 +118,9 @@ int main()
     	for (auto& p : rangedmonsters){
     	  p.monsterai(character,window,elapsed);
     	}
-        
+
         window.setView(view);
+        //window.draw(testShadowSprite);
         character.draw(window);
         window.display();
     }

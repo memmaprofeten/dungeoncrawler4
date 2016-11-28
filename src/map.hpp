@@ -1,9 +1,12 @@
+#ifndef MAP_HH
+#define MAP_HH
+
 #include <vector>
 #include "room.hpp"
 
 class Map {
 public:
-/*Constructor which picks at random from a list of 
+/*Constructor which picks at random from a list of
 pre-created rooms*/
 /*Function to draw current room in the game screen*/
 	Map(int numberOfRooms);
@@ -13,3 +16,5 @@ private:
 	std::vector<Room>& map;
 	int atRoom;
 };
+
+#endif

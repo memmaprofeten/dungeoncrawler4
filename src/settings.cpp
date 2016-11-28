@@ -3,6 +3,7 @@
 namespace s {
 
     std::string characterTextureFile = "../resources/img/character_32.png";
+    std::string characterShadowFile = "../resources/img/shadowtest2.png";
     int characterRotationOffset = 270;
     float blockDim = 10.0f;
     int viewHeight = 150;
