@@ -141,7 +141,7 @@ void RangedMonster::monsterattack(Character player){
   if (getdistancetoplayer(player) < attackrange){
     Projectile monsterprojectile (true, 5, 2, 200.0f);
     monsterprojectile.setPosition(position);
-monsterprojectile.setDirection(cv::normalized(player.getPosition() - position));
+    monsterprojectile.setDirection(cv::normalized(player.getPosition() - position));
     projectiles->push_back(monsterprojectile);
     std::cout<<"boo"<<std::endl;
  }
