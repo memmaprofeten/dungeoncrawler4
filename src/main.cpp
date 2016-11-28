@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <stdexcept>
+#include "settings.hpp"
 #include "room.hpp"
 #include "character.hpp"
 #include "projectile.hpp"
@@ -10,9 +11,7 @@
 
 #define PI 3.14159265358979323846F
 // TODO: Move some of these out to configuration files:
-#define characterTextureFile "../resources/img/character_32.png"
-#define characterRotationOffset 270
-#define blockDim 10.0f
+//#define characterTextureFile "../resources/img/character_32.png"
 
 int main()
 {
@@ -30,9 +29,9 @@ int main()
 
 
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
-    sf::View view(sf::Vector2f(0, 0), sf::Vector2f(200, 150));
+    sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
 
-    Character character("Test man", true, characterTextureFile);
+    Character character("Test man", true, s::characterTextureFile);
 
 	//sf::CircleShape enemy(20.f);
 	//enemy.setFillColor(sf::Color::Green);
@@ -76,7 +75,7 @@ int main()
         }
 
         window.clear();
-        testRoom.draw(window, blockDim);
+        testRoom.draw(window, s::blockDim);
     	//window.draw(enemy);
         for (auto& p : projectiles) {
             p.draw(window, elapsed);
@@ -98,7 +97,7 @@ int main()
     	float dx = shapepos.x - mousepos.x;
     	float dy = shapepos.y - mousepos.y;
     	float rotation = (atan2(dy,dx)) * 180 / PI;
-    	character.sprite.setRotation(rotation+characterRotationOffset);
+    	character.sprite.setRotation(rotation + s::characterRotationOffset);
         character.draw(window);
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {

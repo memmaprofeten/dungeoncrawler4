@@ -18,11 +18,9 @@ public:
 
 	std::string getName() const;
 
+	sf::Vector2f getPosition() const;
+
 	//std::string getTexture() const;
-
-	sf::Sprite& getSprite();
-
-	void setSprite(sf::Sprite spr);
 
 	void move(sf::Vector2f dpos);
 
@@ -49,6 +47,8 @@ private:
 	float movespeed; //Players movement speed.
 	int xp; //Player's current experience amount.
 	int xpfornextlevel; //amount required for player to level up.
+
+	sf::Vector2f pos;
 
 	std::string texturePath;
 	sf::Texture texture;
