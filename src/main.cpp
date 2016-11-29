@@ -17,13 +17,18 @@
 
 int main()
 {
-    // Testing starts here
 
+    /* === FILES === */
     sf::Font standardFont;
     if (!standardFont.loadFromFile("../resources/fonts/Sansation-Regular.ttf")) {
         throw std::runtime_error("Could not load font.");
     }
+    sf::Texture hpContainerTexture;
+    if (!hpContainerTexture.loadFromFile("../resources/img/hp_container1.png")) {
+        throw std::runtime_error("Could not load hp container texture.");
+    }
 
+    // Testing starts here
     Room testRoom("../resources/rooms/room2.txt");
     //testRoom.print();
     /*std::cout << testRoom.getTile(2, 2).toString() << std::endl;
@@ -45,10 +50,18 @@ int main()
     view.move(character.getPosition().x, character.getPosition().y);
 
     /* === GUI === */
+    sf::Vector2f healthBarMargin(15, 15);
+
     sf::RectangleShape healthBar(sf::Vector2f(300, 20));
-    healthBar.setOrigin(healthBar.getSize());
+    healthBar.setOrigin(healthBar.getSize() + sf::Vector2f(25, 4));
     healthBar.setFillColor(sf::Color(100, 20, 20));
-    healthBar.setPosition(sf::Vector2f(window.getSize()) - sf::Vector2f(15, 15));
+    healthBar.setPosition(sf::Vector2f(window.getSize()) - healthBarMargin);
+
+    sf::Sprite hpContainer;
+    hpContainer.setTexture(hpContainerTexture);
+    hpContainer.setOrigin(sf::Vector2f(350, 28));
+    hpContainer.setPosition(sf::Vector2f(window.getSize()) - healthBarMargin);
+
     sf::Text fpsIndicator;
     fpsIndicator.setFont(standardFont);
     fpsIndicator.setCharacterSize(256);
@@ -125,7 +138,8 @@ int main()
                     view.setSize(newViewWidth, view.getSize().y);
                     guiView.setSize(eventSize);
                     guiView.setCenter(eventSize / 2.0f);
-                    healthBar.setPosition(eventSize - sf::Vector2f(15, 15));
+                    healthBar.setPosition(eventSize - healthBarMargin);
+                    hpContainer.setPosition(eventSize - healthBarMargin);
                     break;
                 }
                 default:
@@ -185,6 +199,7 @@ int main()
         /* === GUI === */
         window.setView(guiView);
         window.draw(healthBar);
+        window.draw(hpContainer);
         window.draw(fpsIndicator);
 
         window.display();
