@@ -11,6 +11,7 @@
 #include "projectile.hpp"
 #include "convenience.hpp"
 #include "monster.hpp"
+#include "weapon.hpp"
 
 #define PI 3.14159265358979323846F
 #define FPS_SAMPLE_COUNT 80
@@ -38,7 +39,7 @@ int main()
     }*/
 
     // Testing ends here
-
+    RangedWeapon fireball_weapon("Fireball", 5, 2, "../resources/img/fireball_32.png");
 
    	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
@@ -168,7 +169,7 @@ int main()
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
                 elapsedSinceLastShot = 0.0f;
-                Projectile projectile(true, 5, 2, 250.0f);
+                Projectile projectile = fireball_weapon.createProjectile();
                 projectile.setPosition(shapepos);
                 projectile.setDirection(sf::Vector2f(mousepos) - shapepos);
                 if (cv::norm(projectile.getVelocity()) == 0.0f) {      // If mousepos == shapepos, there is no valid direction. In this case, simply fire the projectile in a default direction (the direction of the x axis).

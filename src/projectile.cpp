@@ -2,6 +2,7 @@
 #include "convenience.hpp"
 #include "tile.hpp"
 #include "settings.hpp"
+#include <cmath>
 // Basic functions to retrieve values from the projectile and the consturctor.
 bool Projectile::isfiredbyplayer(){
   return firedbyplayer;
@@ -65,14 +66,14 @@ void Projectile::draw(sf::RenderWindow& window, float elapsed, Room& currentRoom
 */
 }
 
-Projectile::Projectile(bool shotbyplayer, int damagein, int radiusin, float speedin){
+Projectile::Projectile(bool shotbyplayer, int damagein, int radiusin, float speedin, std::string textureFile){
   firedbyplayer = shotbyplayer;
   pos = sf::Vector2f(0, 0);
   dir = sf::Vector2f(0, 0);
   speed = speedin;
   damage = damagein;
   radius = radiusin;
-  if(!texture.loadFromFile(s::projectileTextureFile)){
+  if(!texture.loadFromFile(textureFile)){
 	throw std::runtime_error("Could not find projectile texture");
 }
  
@@ -95,10 +96,4 @@ Function to create a new projectile (fired by player or enemy)
 Calls constructor, then saves projectile in a list or somesuch.
 That somesuch can be iterated through, calling projectiletick for each projectile for each loop/tick.
 
-*/
-
-/*
-void createprojectile(bool isfiredbyplayer, int xpos, int ypos,  int xspeed, int yspeed, int damage, int radius){
-
-}
 */

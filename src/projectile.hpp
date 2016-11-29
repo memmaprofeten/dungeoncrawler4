@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "room.hpp"
+#include "settings.hpp"
 /*Base class, for projectile attacks fired by player or by enemies.
 */
 
@@ -56,7 +57,7 @@ Function that can be called by player or monster attack that creates the project
    */
   void draw(sf::RenderWindow& window, float elapsed, Room& currentRoom);
 
-  Projectile(bool shotbyplayer, int damagein, int radiusin, float speed);
+  Projectile(bool shotbyplayer, int damagein, int radiusin, float speed, std::string textureFile=s::projectileTextureFile);
 
 private:
   bool firedbyplayer; //Player projectiles damage enemies and vice versa.
@@ -66,10 +67,9 @@ private:
   int damage; //Damage dealt by projectile.
   int radius; //Radius of projectile for drawing / hit detection.
   float rotation; //Rotation, connected to the direction
+  std::string textureFile;
   sf::Texture texture;
   sf::Sprite sprite;
 };
-
-//void createprojectile(bool isfiredbyplayer, int xpos, int ypos,  int xspeed, int yspeed, int damage, int radius);
 
 #endif
