@@ -178,6 +178,8 @@ int main()
             }
         }
 
+        healthBar.setSize(sf::Vector2f(std::max(0.0f, 300.0f * float(character.getHealth()) / float(character.getMaxHealth())), 20));
+
         /* === RENDERING === */
 
         window.clear();

@@ -20,6 +20,7 @@ Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, cons
     shadowSprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
     shadowSprite.setPosition(p);
 
+    health = getMaxHealth();
     room = NULL;
 }
 
@@ -64,6 +65,12 @@ void Character::setRoom(Room* r) { room = r; }
 void Character::draw(sf::RenderWindow& window) {
     window.draw(shadowSprite);
     window.draw(sprite);
+}
+
+int Character::getHealth() const { return health; }
+
+int Character::getMaxHealth() const {
+    return 9 + level;      // NB! This algorithm can be changed for something more complex if there is need for it.
 }
 
 void Character::reducehealth(int damage){

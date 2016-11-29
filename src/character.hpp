@@ -37,7 +37,11 @@ public:
 
 	//item pickup
 
-  void reducehealth(int damage);
+	int getHealth() const;
+
+	int getMaxHealth() const;
+
+  	void reducehealth(int damage);
 
 
 private:
@@ -47,7 +51,6 @@ private:
 	//std::vector<Weapon> weapons; //List of weapons carried by player.
 	std::vector<Item> items; //List of items carried by player.
 	//Weapon equippedweapon; //currently equipped weapon.
-	int maxhealth; //Player's maximum health.
 	int health; //Player's current health.
 	float speed; //Players movement speed.
 	int xp; //Player's current experience amount.
