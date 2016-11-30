@@ -62,6 +62,10 @@ void Monster::changexypos(float xchange, float ychange){
   position.y += ychange;
 }
 
+bool Monster::isactive() const{
+  return active;
+}
+
 /*
 Basically iterates x and y positions based on movespeed in directions given by inputs.Takes in a normalized vector based on player's position relative to monster. 
 Does not handle collision, as I have no idea how.
@@ -71,11 +75,13 @@ void Monster::monstermove(sf::Vector2f direction, float elapsed){
 }
 
 //Reduces health by given amount. Then checks if health is below 0. If it is, it searches the vectors containing the monster for itself, erases itself, and then returns the amount of experience the player gains.
-int MeleeMonster::reducehealth(int reducedby){
+int Monster::reducehealth(int reducedby){
   health -= reducedby;
   if(health <= 0){
-    int temp = xponkill;
+    active = false;
+    return xponkill;
 
+    /*
     for(auto iter=monsters->begin(); iter != monsters->end(); iter++){
       //if (monstername == iter->getname()){
       if (this == &(*iter)){ //Yes, this works.
@@ -83,27 +89,8 @@ int MeleeMonster::reducehealth(int reducedby){
 	monsters->erase(iter);
 	return temp;
       }
-    }  
-  }
-  else{
-    return 0;
-  }
-  return 0;
-}
-
-int RangedMonster::reducehealth(int reducedby){
-  health -= reducedby;
-  if(health <= 0){
-    int temp = xponkill;
-
-    for(auto iter=monsters->begin(); iter != monsters->end(); iter++){
-      //if (monstername == iter->getname()){
-      if (this == &(*iter)){
-	//std::cout << "DING DING DING" << std::endl;
-	monsters->erase(iter);
-	return temp;
-      }
-    }
+      }  */
+    
   }
   else{
     return 0;
@@ -112,7 +99,7 @@ int RangedMonster::reducehealth(int reducedby){
 }
 
 // Constructors for melee and ranged monster classes.
-RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectilesi, float timebetweenattacksi,std::vector<RangedMonster>* rangedmonstersi){
+RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectilesi, float timebetweenattacksi){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
@@ -127,10 +114,10 @@ RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int 
   projectiles = projectilesi;
   timebetweenattacks = timebetweenattacksi;
   attacktimer = 0.0;
-  monsters = rangedmonstersi;
+  active = true;
 }
 
-MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, float timebetweenattacksi, std::vector<MeleeMonster>* meleemonstersi){
+MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, float timebetweenattacksi){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
@@ -143,7 +130,7 @@ MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int at
   aggrostate = false;
   timebetweenattacks = timebetweenattacksi;
   attacktimer = 0.0;
-  monsters = meleemonstersi;
+  active = true;
 }
 
 /*
@@ -258,21 +245,3 @@ void Monster::draw(sf::RenderWindow& window){
   tile.setFillColor(sf::Color::Blue);
   window.draw(tile);
 }
-
-/*
-bool MeleeMonster::operator==(const MeleeMonster inp) const{
-  return bool(&inp==this);
-}
-
-bool RangedMonster::operator==(const RangedMonster inp) const{
-  return bool(&inp==this);
-}
-
-bool MeleeMonster::operator==(const RangedMonster inp) const{
-  return false;
-}
-
-bool RangedMonster::operator==(const MeleeMonster inp) const{
-  return false;
-}
-*/

@@ -1,9 +1,9 @@
-
 #ifndef ITEM_HH
 #define ITEM_HH
 
-#include "character.hpp"
 #include <string>
+
+class Character;
 
 /*examples of item types:
 -gold
@@ -13,11 +13,11 @@
 */
 class Item {
 public:
-  //void draw(sf::RenderWindow& window, Character& player);
-  std::string getname() const { return name; }
-  int gettype() const { return type; }
-  float getvalue() const {return value; }
-  //void dothing(Character& player); //Does a thing.
+  void draw(sf::RenderWindow& window, Character& player);
+  std::string getname() const;
+  int gettype() const;
+  float getvalue() const;
+  void dothing(Character& player); //Does a thing.
 /*
 constructor
 

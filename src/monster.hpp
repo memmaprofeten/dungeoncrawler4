@@ -37,11 +37,12 @@ General "return value" functions.
   sf::Vector2f getPosition();
   void setxypos(int x, int y);
   void changexypos(float xchange, float ychange);
+  bool isactive() const;
 
 /*
 Reduce monster health. To be called by whatever handles the monster getting hit.
 */
-  virtual int reducehealth(int reducedby)=0;
+  int reducehealth(int reducedby);
 
 /*
 Functions to be called by the AI code. In theory, handle movement and attacking.
@@ -68,6 +69,7 @@ protected:
   bool aggrostate; //If the monster is actively chasing/attacking the player.
   float attacktimer; //Amount of time inbetween attacks.
   float timebetweenattacks; //explanatory
+  bool active;
 /*
 type
 health
@@ -83,16 +85,14 @@ public:
   //Virtual functions from Monster.
   void monsterattack(Character& player);
   void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
-  int reducehealth(int reducedby);
   //Constructor
-  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectiles, float timebetweenattacksi, std::vector<RangedMonster>* rangedmonstersi);
+  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectiles, float timebetweenattacksi);
   //bool operator==(const RangedMonster inp) const;
   //bool operator==(const MeleeMonster inp) const;
 private:
   float projectilespeed; //How fast the projectile fired by the enemy moves.
   float attackrange; //At what distance the enemy attacks.
   std::vector<Projectile>* projectiles;//Pointer to projectile vector to make creating new projectiles easier.
-  std::vector<RangedMonster>* monsters;//Pointer to ranged monsters vector so it can erase itself from it.
 };
 
 class MeleeMonster : public Monster{
@@ -100,16 +100,12 @@ public:
   //Virtual functions from Monster.
   void monsterattack(Character& player);
   void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
-  int reducehealth(int reducedby);
   //Constructor
-  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, float timebetweenattacksi, std::vector<MeleeMonster>* meleemonstersi);
+  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, float timebetweenattacksi);
   //bool operator==(const MeleeMonster inp) const;
   //bool operator==(const RangedMonster inp) const;
 private:
   int attackrange; //Radius of the enemy's attack swing
-  std::vector<MeleeMonster>* monsters; //pointer to list containing all melee monsters so it can erase itself when dying.
-
-
 };
 
 #endif

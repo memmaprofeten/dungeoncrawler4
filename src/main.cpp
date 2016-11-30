@@ -88,10 +88,10 @@ int main()
 
     //Monster test code. Comment out later.
     // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
-    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 20.0, 20, 4, 1.0,&meleemonsters));
+    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 20.0, 20, 4, 1.0));
     meleemonsters.begin()->setxypos(50,100);
     //meleemonsters.push_back(MeleeMonster("test3", 1, 1, 1, 20.0, 20, 4, 1.0, &meleemonsters));
-    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 10.0, 50, 100.0, 80.0, &projectiles, 1.0, &rangedmonsters));
+    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 10.0, 50, 100.0, 80.0, &projectiles, 1.0));
     rangedmonsters.begin()->setxypos(50,150);
     //std::cout<< meleemonsters.front().reducehealth(1) << std::endl;
     //std::cout << monsters.begin()->getname() << std::endl;
