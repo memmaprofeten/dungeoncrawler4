@@ -2,6 +2,7 @@
 #define ITEM_HH
 
 #include <string>
+#include <SFML/Graphics.hpp>
 
 class Character;
 

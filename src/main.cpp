@@ -156,7 +156,7 @@ int main()
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) cDir.y += 1;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) cDir.y -= 1;
-        character.move(cv::normalized(cDir), elapsed, view);
+        character.move(cv::normalized(cDir), elapsed);
 
         /* === EVENT HANDLING FOR TURNING === */
     	sf::Vector2f shapepos = character.getPosition();
@@ -198,7 +198,7 @@ int main()
     	  p.monsterai(character,window,elapsed);
     	}
 
-        character.draw(window);
+        character.draw(window, view);
 
         /* === GUI === */
         window.setView(guiView);

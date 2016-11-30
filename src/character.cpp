@@ -28,7 +28,7 @@ std::string Character::getName() const { return name; }
 
 sf::Vector2f Character::getPosition() const { return pos; }
 
-void Character::move(sf::Vector2f dir, float elapsed, sf::View& view) {
+void Character::move(sf::Vector2f dir, float elapsed) {
     sf::Vector2f dpos = elapsed * speed * dir;
     if (room == NULL) {
         throw std::runtime_error("Character has no room assigned!");
@@ -40,14 +40,10 @@ void Character::move(sf::Vector2f dir, float elapsed, sf::View& view) {
     if (horTile.isPenetrable()) {
         pos += dposHor;
         sprite.move(dpos.x, 0);
-        shadowSprite.move(dpos.x, 0);
-        view.move(dpos.x, 0);
     }
     if (verTile.isPenetrable()) {
         pos += dposVer;
         sprite.move(0, dpos.y);
-        shadowSprite.move(0, dpos.y);
-        view.move(0, dpos.y);
     }
 }
 
@@ -62,9 +58,11 @@ Room* Character::getRoom() { return room; }
 
 void Character::setRoom(Room* r) { room = r; }
 
-void Character::draw(sf::RenderWindow& window) {
-    window.draw(shadowSprite);
-    window.draw(sprite);
+void Character::draw(sf::RenderWindow& window, sf::View& view) {
+  shadowSprite.setPosition(pos.x, pos.y);
+  view.setCenter(pos);
+  window.draw(shadowSprite);
+  window.draw(sprite);
 }
 
 int Character::getHealth() const { return health; }
@@ -75,4 +73,26 @@ int Character::getMaxHealth() const {
 
 void Character::reducehealth(int damage){
   health -= damage;
+}
+
+void Character::teleport(sf::Vector2f change){
+  //pos += change;
+  sf::Vector2f dpos = change;
+    if (room == NULL) {
+        throw std::runtime_error("Character has no room assigned!");
+    }
+    sf::Vector2f dposHor = sf::Vector2f(dpos.x, 0);
+    sf::Vector2f dposVer = sf::Vector2f(0, dpos.y);
+    Tile& horTile = room->getTile(pos + dposHor);
+    Tile& verTile = room->getTile(pos + dposVer);
+    if (horTile.isPenetrable()) {
+        pos += dposHor;
+        sprite.move(dpos.x, 0);
+        shadowSprite.move(dpos.x, 0);
+    }
+    if (verTile.isPenetrable()) {
+        pos += dposVer;
+        sprite.move(0, dpos.y);
+        shadowSprite.move(0, dpos.y);
+    }
 }

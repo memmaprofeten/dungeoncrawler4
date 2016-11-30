@@ -21,7 +21,7 @@ public:
 
 	sf::Vector2f getPosition() const;
 
-	void move(sf::Vector2f dir, float elapsed, sf::View& view);
+	void move(sf::Vector2f dir, float elapsed);
 
 	int getRotation();
 
@@ -31,7 +31,7 @@ public:
 
 	void setRoom(Room* r);
 
-	void draw(sf::RenderWindow& window);
+  void draw(sf::RenderWindow& window, sf::View& view);
 
 	//attacking and getting attacked functions
 
@@ -42,6 +42,8 @@ public:
 	int getMaxHealth() const;
 
   	void reducehealth(int damage);
+
+  void teleport (sf::Vector2f change);
 
 
 private:
