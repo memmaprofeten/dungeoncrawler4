@@ -1,6 +1,9 @@
 #ifndef ITEM_HH
 #define ITEM_HH
 
+#include "character.hpp"
+#include <string>
+
 /*examples of item types:
 -gold
 -potions
@@ -9,14 +12,26 @@
 */
 class Item {
 public:
+  void draw(sf::RenderWindow& window);
+  std::string getname() const { return name; }
+  int gettype() const { return type; }
+  float getvalue() const {return value; }
+  //void dothing(Character player);
 /*
 constructor
 
 some kind of draw function*/
 private:
 /*
-type
-value(maybe?)
-*/};
+type, uses switch in order to have to track multiple types of item in play.
+1: Gold, gives player points equal to value variable.
+2: Healing item, gives player value percentage of max health, up to maximum.
+3: Weapon. Calls function to give player random weapon (or weapon based on value) when player walks over.
+*/
+  std::string name;//Name, used for message player gets when picking up item.
+  int type; //Variable used for switch.
+  float value;//Value, used by function called when player walks over item.
+  std::string texturefile; //Filepath for texture to be drawn on ground.
+};
 
 #endif

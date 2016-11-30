@@ -176,7 +176,6 @@ void RangedMonster::monsterattack(Character player){
     monsterprojectile.setPosition(position);
     monsterprojectile.setDirection(cv::normalized(player.getPosition() - position));
     projectiles->push_back(monsterprojectile);
-    //std::cout<<"boo"<<std::endl;
  }
 }
 
@@ -185,7 +184,8 @@ void RangedMonster::monsterattack(Character player){
 void MeleeMonster::monsterattack(Character player){
   if (getdistancetoplayer(player) <= attackrange){
     player.reducehealth(attackdamage);
-    //std::cout << "ding" <<std::endl;
+    std::cout << "Damage dealt: " << attackdamage << std::endl;
+    std::cout << "Playerhealth: " <<  player.getHealth()<<std::endl;
   }
 }
 
