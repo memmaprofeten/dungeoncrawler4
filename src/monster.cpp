@@ -170,7 +170,7 @@ bool Monster::monsteraggrocheck(Character player){
  }
 }
 //Ranged monster attack.
-void RangedMonster::monsterattack(Character player){
+void RangedMonster::monsterattack(Character& player){
   if (getdistancetoplayer(player) < attackrange){
     Projectile monsterprojectile (false, 5, 2, 200.0f);
     monsterprojectile.setPosition(position);
@@ -181,7 +181,7 @@ void RangedMonster::monsterattack(Character player){
 
 //Melee monster attack.
 //If player is within range, deals damage to player equal to attack damgae.
-void MeleeMonster::monsterattack(Character player){
+void MeleeMonster::monsterattack(Character& player){
   if (getdistancetoplayer(player) <= attackrange){
     player.reducehealth(attackdamage);
     std::cout << "Damage dealt: " << attackdamage << std::endl;
@@ -196,7 +196,7 @@ After that, it attacks the player if it is within range.
 */
 
 
-void RangedMonster::monsterai(Character player, sf::RenderWindow& window, float elapsed){
+void RangedMonster::monsterai(Character& player, sf::RenderWindow& window, float elapsed){
   sf::Vector2f direction;
 
   if (monsteraggrocheck(player)){
@@ -224,7 +224,7 @@ void RangedMonster::monsterai(Character player, sf::RenderWindow& window, float 
   draw(window);
 }
 
-void MeleeMonster::monsterai(Character player, sf::RenderWindow& window, float elapsed){
+void MeleeMonster::monsterai(Character& player, sf::RenderWindow& window, float elapsed){
   sf::Vector2f direction;
   
   if (monsteraggrocheck(player)){

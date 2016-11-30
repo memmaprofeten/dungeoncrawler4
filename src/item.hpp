@@ -1,3 +1,4 @@
+
 #ifndef ITEM_HH
 #define ITEM_HH
 
@@ -12,11 +13,11 @@
 */
 class Item {
 public:
-  void draw(sf::RenderWindow& window);
+  //void draw(sf::RenderWindow& window, Character& player);
   std::string getname() const { return name; }
   int gettype() const { return type; }
   float getvalue() const {return value; }
-  //void dothing(Character player);
+  //void dothing(Character& player); //Does a thing.
 /*
 constructor
 

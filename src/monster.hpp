@@ -49,8 +49,8 @@ Monster attack function virtual so ranged and melee monsters attack differently.
 */
   bool monsteraggrocheck(Character player);
   int getdistancetoplayer(Character player);
-  virtual void monsterattack(Character player) =0; //Handles attack by the monster.
-  virtual void monsterai(Character player, sf::RenderWindow& window, float elapsed) =0; //Handles monster AI.
+  virtual void monsterattack(Character& player) =0; //Handles attack by the monster.
+  virtual void monsterai(Character& player, sf::RenderWindow& window, float elapsed) =0; //Handles monster AI.
   void monstermove(sf::Vector2f direction, float elapsed); //Handles movement.
   //bool monsteraggrocheck(Character player);//Checks if player is within range of monster.
 
@@ -81,8 +81,8 @@ isAlive)
 class RangedMonster : public Monster {
 public:
   //Virtual functions from Monster.
-  void monsterattack(Character player);
-  void monsterai(Character player, sf::RenderWindow& window, float elapsed);
+  void monsterattack(Character& player);
+  void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
   int reducehealth(int reducedby);
   //Constructor
   RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectiles, float timebetweenattacksi, std::vector<RangedMonster>* rangedmonstersi);
@@ -98,8 +98,8 @@ private:
 class MeleeMonster : public Monster{
 public:
   //Virtual functions from Monster.
-  void monsterattack(Character player);
-  void monsterai(Character player, sf::RenderWindow& window, float elapsed);
+  void monsterattack(Character& player);
+  void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
   int reducehealth(int reducedby);
   //Constructor
   MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, int aggrorangei, int attackrangei, float timebetweenattacksi, std::vector<MeleeMonster>* meleemonstersi);
