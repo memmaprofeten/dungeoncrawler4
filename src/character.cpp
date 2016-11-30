@@ -21,6 +21,7 @@ Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, cons
     shadowSprite.setPosition(p);
 
     health = getMaxHealth();
+    gold = 0;
     room = NULL;
 }
 
@@ -95,4 +96,16 @@ void Character::teleport(sf::Vector2f change){
         sprite.move(0, dpos.y);
         shadowSprite.move(0, dpos.y);
     }
+}
+
+void Character::givegold(int goldin){
+  gold += goldin;
+}
+
+int Character::getgold() const{
+  return gold;
+}
+
+void Character::sethealth(int newhealth){
+  health = newhealth;
 }

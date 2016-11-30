@@ -19,7 +19,13 @@ public:
   int gettype() const;
   float getvalue() const;
   void dothing(Character& player); //Does a thing.
-/*
+  Item(std::string namei, int typei, float valuei, std::string texturefilei);
+
+  //Functions for the switch cases.
+  void dogoldthingy(Character& player);
+  void dohealythingy(Character& player);
+  void doweaponthingy(Character& player);
+       /*
 constructor
 
 some kind of draw function*/
@@ -35,5 +41,7 @@ type, uses switch in order to have to track multiple types of item in play.
   float value;//Value, used by function called when player walks over item.
   std::string texturefile; //Filepath for texture to be drawn on ground.
 };
+
+//void CreateItem(Room& Roomin); //Funtion to create item. Called when player kills monster.
 
 #endif

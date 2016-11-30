@@ -43,9 +43,15 @@ public:
 
   	void reducehealth(int damage);
 
+  void sethealth(int newhealth);
+  
   void teleport (sf::Vector2f change);
 
+  void givegold(int gold);
 
+  int getgold() const;
+ 
+  
 private:
 	std::string name; //Name of player. User input or based on class?
 	bool type;
@@ -58,6 +64,8 @@ private:
 	int xp; //Player's current experience amount.
 	int xpfornextlevel; //amount required for player to level up.
 
+  int gold;//Amount of gold player has.
+  
 	Room* room;
 	sf::Vector2f pos;
 	int rotation;
