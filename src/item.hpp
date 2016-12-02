@@ -19,7 +19,9 @@ public:
   int gettype() const;
   float getvalue() const;
   void dothing(Character& player); //Does a thing.
-  Item(std::string namei, int typei, float valuei, std::string texturefilei);
+  bool isactive() const;
+  sf::Vector2f getpos() const;
+  Item(std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi);
 
   //Functions for the switch cases.
   void dogoldthingy(Character& player);
@@ -40,6 +42,8 @@ type, uses switch in order to have to track multiple types of item in play.
   int type; //Variable used for switch.
   float value;//Value, used by function called when player walks over item.
   std::string texturefile; //Filepath for texture to be drawn on ground.
+  sf::Vector2f pos; //Item XY Positiony
+  bool active; //To track if the item is active.
 };
 
 //void CreateItem(Room& Roomin); //Funtion to create item. Called when player kills monster.
