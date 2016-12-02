@@ -67,13 +67,13 @@ void Item::draw(sf::RenderWindow& window, Character& player){
       tile.setFillColor(sf::Color::Green);
       break;
     case 3:
-      tile.setFillColor(sf::Color::Gray);
+      tile.setFillColor(sf::Color::White);
       break;
     }
 
     window.draw(tile);
     //Checks if player's xy position is within the item's area. If it is, calls the relevant "do thing" function, and disables the item.
-    if (((pos.x - 1.5f)< player.getPosition().x < (pos.x + 1.5f)) && ((pos.y - 1.5f) < player.getPosition().y < (pos.y + 1.5f))){
+    if (((pos.x - 1.5f)< player.getPosition().x) && (player.getPosition().x < (pos.x + 1.5f)) && ((pos.y - 1.5f) < player.getPosition().y) && (player.getPosition().y < (pos.y + 1.5f))){
 
       switch(type){
       case 1:
