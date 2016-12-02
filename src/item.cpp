@@ -1,7 +1,10 @@
 #include "item.hpp"
 #include "character.hpp"
+#include "convenience.hpp"
 #include <iostream>
 #include <algorithm>
+#include <stdlib.h>
+#include <time.h>
 
 std::string Item::getname() const{
   return name;
@@ -74,7 +77,7 @@ void Item::draw(sf::RenderWindow& window, Character& player){
     window.draw(tile);
     //Checks if player's xy position is within the item's area. If it is, calls the relevant "do thing" function, and disables the item.
     if (((pos.x - 1.5f)< player.getPosition().x) && (player.getPosition().x < (pos.x + 1.5f)) && ((pos.y - 1.5f) < player.getPosition().y) && (player.getPosition().y < (pos.y + 1.5f))){
-
+    //if (cv::distance(pos, player.getPosition()) < 1.5f){
       switch(type){
       case 1:
 	dogoldthingy(player);
@@ -99,8 +102,42 @@ Item::Item (std::string namei, int typei, float valuei, std::string texturefilei
   active = true;
 }
 
-/*
-void CreateItem(std::vector<Item> itemstorage){
+
+void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position){
+  std::string name;
+ int type;
+ float value;
+ std::string texturefile;
+ sf::Vector2f pos;
+
+//Set position to one given in input.
+ pos = position;
+
+//Initialize random number generator.
+ srand(time(NULL));
+
+ type = rand() % 3 + 1;
+
+//1: Gold, 1-100 per drop, 2: Healing, between 20% and 50%, 3: Weapon. 
+ switch(type){
+ case 1:
+   name = "Gold!";
+   value = ceil(rand()%100+1);
+   break;
+ case 2:
+   name = "Potion of Healing!";
+   value = float((ceil(rand()%30+20))/100);
+   break;
+ case 3:
+   name = "Weapon!";
+   value = 0;
+   break;
+ }
+
+
+ Item newitem = Item(name, type, value, "Placeholder for eventual real texture filepath.", pos);
+
+ itemstorage.push_back(newitem);
 
 }
-*/
+

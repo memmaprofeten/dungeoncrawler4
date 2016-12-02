@@ -46,6 +46,6 @@ type, uses switch in order to have to track multiple types of item in play.
   bool active; //To track if the item is active.
 };
 
-//void CreateItem(Room& Roomin); //Funtion to create item. Called when player kills monster.
+void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position); //Funtion to create item. Called when player kills monster.
 
 #endif
