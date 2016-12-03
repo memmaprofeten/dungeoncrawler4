@@ -1,7 +1,5 @@
 #ifndef TILE_HH
 #define TILE_HH
-
-
 #include <SFML/Graphics.hpp>
 #include <string>
 enum TileType{
@@ -17,7 +15,7 @@ a couple tiles per room has some kind of item on them
 
 bool isPenetrable; that returns if characters can walk over this tile*/
 
-	Tile(int type, sf::Vector2f position, sf::Vector2i index);
+	Tile(int type, sf::Vector2f position, sf::Vector2i index, sf::Sprite* freeSprite);
 	bool isPenetrable() const;
 	void draw(sf::RenderWindow& window, float blockDim);
 	std::string toString() const;
@@ -31,7 +29,8 @@ position in room
 	sf::Vector2f tilePosition;
 	sf::Vector2i tileIndex;
 	sf::Texture texture;
-	sf::Sprite sprite;
+	sf::Sprite* sprite; //pointer to sprite
+	int textureIndex;
 };
 
 #endif

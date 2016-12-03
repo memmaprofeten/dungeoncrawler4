@@ -3,9 +3,8 @@
 
 #include <string>
 #include <SFML/Graphics.hpp>
-
+#include "projectile.hpp"
 class Character;
-class Projectile;
 class Item;
 
 class Monster{

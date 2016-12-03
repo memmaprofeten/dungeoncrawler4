@@ -8,7 +8,8 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
-
+#include "monster.hpp"
+class Projectile;
 class Room {
 public:
 
@@ -55,17 +56,25 @@ public:
 	/**
 	 * Draws the room.
 	 */
-	void draw(sf::RenderWindow& window, float blockDim);
+	void draw(sf::RenderWindow& window);
 
 	/**
 	 * Prints the room to std::cout.
 	 */
 	void print();
 
+	//Returns refernce to a sprite that is not in use
+	sf::Sprite* getSprite();
+
+	
 private:
 	int width;
 	int height;
 	std::vector<std::vector<Tile>> room;	// 2D-array of tile-objects mapping the game room.
+	std::vector<sf::Sprite> sprites;//all sprites used in the game
+	std::vector<bool> spritesInUse;	//value telling if sprite is to bedrawn
+	std::vector<Projectile> projectiles; //Projectile objects, 
+	std::vector<Monster> monsters;
 };
 
 #endif

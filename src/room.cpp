@@ -8,23 +8,27 @@
 Room::Room(std::string const file) {
 	int x = 0;
 	int y = 0;
+	sf::Sprite dummy;
+	//sf::Sprite* dymmu = dummy; //TODO: Fix this
 	std::string line;
 	std::ifstream mapFile (file);
 	if (mapFile.is_open()){
 		getline(mapFile, line);
 		std::istringstream iss(line);
 		iss >> width >> height;
-		room = std::vector<std::vector<Tile>>(width, std::vector<Tile>(height, Tile(0,sf::Vector2f(0,0), sf::Vector2i(0,0))));
+		room = std::vector<std::vector<Tile>>(width, std::vector<Tile>(height, Tile(0,sf::Vector2f(0,0), sf::Vector2i(0,0), &dummy)));
 		while(getline(mapFile, line)){
 			x=0;
 			for(unsigned int i = 0; i < line.size(); i++){
-				getTile(x,y) = Tile((int)line[i]-48, sf::Vector2f(s::blockDim*x,s::blockDim*y), sf::Vector2i(x,y));		// TODO: Define the block dimensions properly
+				sf::Sprite* sprite = getSprite();
+				getTile(x,y) = Tile((int)line[i]-48, sf::Vector2f(s::blockDim*x,s::blockDim*y), sf::Vector2i(x,y), sprite);
 				x++;
 			}
 			y++;
 		}
 		mapFile.close();
-	} else {
+	}
+	 else {
 		throw std::runtime_error(std::string("Could not find or open file '") + file + "'.");
 	}
 }
@@ -70,12 +74,16 @@ std::vector<sf::Vector2i> Room::getNeighbours(int x, int y, bool includingSelf, 
     return res;
 }
 
-void Room::draw(sf::RenderWindow& window, float blockDim) {
-	for (int j = 0; j < height; ++j) {
+void Room::draw(sf::RenderWindow& window) {
+/*	for (int j = 0; j < height; ++j) {
         for (int i = 0; i < width; ++i) {
 			getTile(i, j).draw(window, blockDim);
         }
     }
+*/
+	for (auto sprite : sprites){
+		window.draw(sprite);
+	}
 }
 
 void Room::print() {
@@ -85,4 +93,17 @@ void Room::print() {
         }
         std::cout << std::endl;
     }
+}
+
+sf::Sprite* Room::getSprite() {
+	for (unsigned int i; i<sprites.size();i++){
+		if(!spritesInUse[i]) {
+			spritesInUse[i] = true;
+			return &sprites[i];
+		}
+	}
+	sf::Sprite sprite;
+	sprites.push_back(sprite);
+	spritesInUse.push_back(true);
+	return &sprites.back();
 }
