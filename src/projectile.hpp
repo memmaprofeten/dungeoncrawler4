@@ -2,7 +2,7 @@
 #define PROJECTILE_HH
 
 #include <SFML/Graphics.hpp>
-#include "room.hpp"
+//#include "room.hpp" //Removed because of circular dependency
 #include "settings.hpp"
 /*Base class, for projectile attacks fired by player or by enemies.
 */
@@ -55,7 +55,7 @@ Function that can be called by player or monster attack that creates the project
    * The method takes as input a reference to the window to which it needs to
    * draw itself and a float defining the time elapsed since the last frame.
    */
-  void draw(sf::RenderWindow& window, float elapsed, Room& currentRoom);
+  void draw(sf::RenderWindow& window, float elapsed);
 
   Projectile(bool shotbyplayer, int damagein, int radiusin, float speed, std::string textureFile=s::projectileTextureFile);
 

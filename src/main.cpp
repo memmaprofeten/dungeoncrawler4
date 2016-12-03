@@ -29,7 +29,7 @@ int main()
     if (!hpContainerTexture.loadFromFile("../resources/img/hp_container1.png")) {
         throw std::runtime_error("Could not load hp container texture.");
     }
-
+    s::loadTextures();
     // Testing starts here
     Room testRoom("../resources/rooms/room2.txt");
     //testRoom.print();
@@ -42,7 +42,7 @@ int main()
     // Testing ends here
     RangedWeapon fireball_weapon("Fireball", 5, 2, "../resources/img/fireball_32.png");
 
-   	sf::RenderWindow window(sf::VideoMode(800, 600), "The game!");
+   	sf::RenderWindow window(sf::VideoMode(800, 600), "Lost in pohjanmaa!");
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
     sf::View guiView(sf::Vector2f(window.getSize()) / 2.0f, sf::Vector2f(window.getSize()));
 
@@ -186,10 +186,10 @@ int main()
 
         window.clear();
         window.setView(view);
-        testRoom.draw(window, s::blockDim);
+        testRoom.draw(window);
 
         for (auto& p : projectiles) {
-            p.draw(window, elapsed, testRoom);
+            p.draw(window, elapsed);
         }
     	for (auto& p : meleemonsters) {
     	  p.monsterai(character, window, elapsed);

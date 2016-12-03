@@ -14,7 +14,9 @@ namespace s {
     	extern std::string projectileTextureFile;
     	extern std::string characterShadowFile;
 	extern std::string wallTextureFile;
-	extern std::vector<std::string>> texturePaths;
+	extern std::vector<std::string> texturePaths;
+	extern std::vector<sf::Texture> textures;
+	void loadTextures();
     	extern int characterRotationOffset;
     	extern float blockDim;         // The dimension (length=width) of each block (tile)
     	extern int viewHeight;

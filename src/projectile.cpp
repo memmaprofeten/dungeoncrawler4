@@ -37,10 +37,8 @@ int Projectile::getradius(){
   return radius;
 }
 
-void Projectile::draw(sf::RenderWindow& window, float elapsed, Room& currentRoom) {
-    // TODO: Check if projectile has hit a target or a wall
-    // TODO: Check if projectile has reached out of bounds (and destroy, or hide for reuse)
-	    	pos += speed * elapsed * dir;
+void Projectile::draw(sf::RenderWindow& window, float elapsed) {
+/*
 	if(!currentRoom.hasCoordinate((int)pos.x/s::blockDim,(int)pos.y/s::blockDim)){
 		this->setSpeed(0.0f);
 		return;
@@ -50,14 +48,16 @@ void Projectile::draw(sf::RenderWindow& window, float elapsed, Room& currentRoom
 		if(!firedbyplayer){	
 			return;
 		}
-	 }	
+	 }
+*/	
+	    	pos += speed * elapsed * dir;
 		sprite.setTexture(texture);
 		sprite.setPosition(pos.x, pos.y);
 		sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
 		sprite.setOrigin(16.0f,16.0f);
 		sprite.setRotation(rotation+90);
 		window.draw(sprite);
-/*
+/*below not used, ugly shit
 	    	sf::Texture arrow;
 	    	tile.setOrigin(1.0f, 1.0f);
 	    	tile.setPosition(pos.x, pos.y);

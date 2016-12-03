@@ -15,6 +15,14 @@ namespace s {
 						projectileTextureFile,
 						characterShadowFile,
 						wallTextureFile};
+	std::vector<sf::Texture> textures;
+	void loadTextures(){
+		for (auto &i : texturePaths){
+			sf::Texture tex;
+			tex.loadFromFile(i);
+			textures.push_back(tex);
+		}
+	} 	
 	int characterRotationOffset = 270;
 	float blockDim = 10.0f;
 	int viewHeight = 150;
