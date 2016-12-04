@@ -37,9 +37,9 @@ bool Tile::isPenetrable() const {
 		block.setPosition(tileIndex.x * blockDim, tileIndex.y * blockDim);
 		block.setFillColor(tileColor);
 		window.draw(block);
-		
+
 		sprite.setTexture(texture);
-		sprite.setPosition(tileIndex.x * blockDim, tileIndex.y * blockDim); 
+		sprite.setPosition(tileIndex.x * blockDim, tileIndex.y * blockDim);
 		sprite.setScale(sf::Vector2f(blockDim / 32.0f, blockDim / 32.0f));
 		window.draw(sprite);
 }
@@ -51,5 +51,7 @@ std::string Tile::toString() const {
 			return "0";
 		case Wall:
 			return "1";
+		default:
+			return "?";		// Undefined tile type
 	}
 }

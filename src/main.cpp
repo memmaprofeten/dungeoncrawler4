@@ -185,6 +185,7 @@ int main()
         /* === RENDERING === */
 
         window.clear();
+        view.setCenter(character.getPosition());
         window.setView(view);
         testRoom.draw(window);
 
@@ -198,7 +199,7 @@ int main()
     	  p.monsterai(character,window,elapsed);
     	}
 
-        character.draw(window, view);
+        character.draw(window);
 
         /* === GUI === */
         window.setView(guiView);

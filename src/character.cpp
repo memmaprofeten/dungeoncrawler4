@@ -59,11 +59,10 @@ Room* Character::getRoom() { return room; }
 
 void Character::setRoom(Room* r) { room = r; }
 
-void Character::draw(sf::RenderWindow& window, sf::View& view) {
-  shadowSprite.setPosition(pos.x, pos.y);
-  view.setCenter(pos);
-  window.draw(shadowSprite);
-  window.draw(sprite);
+void Character::draw(sf::RenderWindow& window) {
+    shadowSprite.setPosition(pos.x, pos.y);
+    window.draw(shadowSprite);
+    window.draw(sprite);
 }
 
 int Character::getHealth() const { return health; }
