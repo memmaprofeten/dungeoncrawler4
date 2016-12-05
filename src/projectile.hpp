@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "settings.hpp"
 
+class Room;
+
 /**
  * A class representing a projectile fired by player or by an enemy.
  */
@@ -86,16 +88,17 @@ public:
      * NB! To add a projectile to a room, do not call this constructor explicitly!
      * Use the Room class interface instead.
      */
-    Projectile(bool shotbyplayer, int damagein, int radiusin, float speed, int txtrIndex);
+    Projectile(Room* currentRoom, bool shotbyplayer, int damagein, int radiusin, float speed, int txtrIndex);
 
 private:
-    bool firedbyplayer;         // Player projectiles damage enemies and vice versa.
+    Room* room;                 // A pointer to the room that this projectile is currently in
+    bool firedbyplayer;         // Player projectiles damage enemies and vice versa
     bool active;                // Whether or not this projectile is "active" (i.e. exists) and should be drawn. NB! An arrow stuck in a wall is also considered "active".
     sf::Vector2f pos;           // The projectile's position in world space
     sf::Vector2f dir;           // The 2D direction in which the projectile is moving
     float speed;                // The absolute speed that the projectile has
-    int damage;                 // Damage dealt by projectile.
-    int radius;                 // Radius of projectile for drawing / hit detection.
+    int damage;                 // Damage dealt by projectile
+    int radius;                 // Radius of projectile for drawing / hit detection
     float rotation;             // Rotation, connected to the direction
     int textureIndex;
     sf::Texture texture;

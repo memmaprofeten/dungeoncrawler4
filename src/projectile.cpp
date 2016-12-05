@@ -2,6 +2,7 @@
 #include "convenience.hpp"
 #include "tile.hpp"
 #include "settings.hpp"
+#include "room.hpp"
 #include <cmath>
 #include <iostream>
 
@@ -72,16 +73,15 @@ void Projectile::draw(sf::RenderWindow& window, float elapsed) {
         	 }
         */
 
-        if (pos.x < 0.0f || pos.y < 0.0f || pos.x > 800 || pos.y > 600) {
+        if (!room->hasPosition(pos)) {
             active = false;
         } else {
-
-        pos += speed * elapsed * dir;
-    	//sprite.setTexture(texture);        // TODO: Figure this out (why doesn't it work to do this just once?)
-    	sprite.setPosition(pos.x, pos.y);
-    	sprite.setRotation(rotation+90);
-    	window.draw(sprite);
-        // TODO: If the projectile is to be removed (e.g. has hit a soft target), call 'active = false;'.
+            pos += speed * elapsed * dir;
+        	//sprite.setTexture(texture);        // TODO: Figure this out (why doesn't it work to do this just once?)
+        	sprite.setPosition(pos.x, pos.y);
+        	sprite.setRotation(rotation+90);
+        	window.draw(sprite);
+            // TODO: If the projectile is to be removed (e.g. has hit a soft target), call 'active = false;'.
         }
 
         /*below not used, ugly shit
@@ -94,6 +94,6 @@ void Projectile::draw(sf::RenderWindow& window, float elapsed) {
     }
 }
 
-Projectile::Projectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex){
+Projectile::Projectile(Room* currentRoom, bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex) : room(currentRoom) {
     reset(shotbyplayer, damagein, radiusin, speedin, txtrIndex);
 }

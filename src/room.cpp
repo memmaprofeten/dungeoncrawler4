@@ -51,6 +51,13 @@ bool Room::hasCoordinate(int x, int y) {
     return true;
 }
 
+bool Room::hasPosition(sf::Vector2f pos) {
+	if (pos.x < 0.0f || pos.y < 0.0f || pos.x > width * s::blockDim || pos.y > height * s::blockDim) {
+		return false;
+	}
+	return true;
+}
+
 Tile& Room::getTile(int x, int y) {
     if (hasCoordinate(x, y)) {
         return room[x][y];
@@ -139,7 +146,7 @@ Projectile& Room::createProjectile(bool shotbyplayer, int damagein, int radiusin
 		projectiles[i].reset(shotbyplayer, damagein, radiusin, speedin, txtrIndex);
 		return projectiles[i];
 	} else {
-		projectiles.push_back(Projectile(shotbyplayer, damagein, radiusin, speedin, txtrIndex));
+		projectiles.push_back(Projectile(this, shotbyplayer, damagein, radiusin, speedin, txtrIndex));
 		return projectiles.back();
 	}
 }

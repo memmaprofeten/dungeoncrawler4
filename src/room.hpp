@@ -36,6 +36,11 @@ public:
 	bool hasCoordinate(int x, int y);
 
 	/**
+	 * Checks whether the room contains the given position (= not out of bounds).
+	 */
+	 bool hasPosition(sf::Vector2f pos);
+
+	/**
 	 * Returns a reference to the tile at coordinates (x, y).
 	 * If (x, y) are invalid coordinates, an error is thrown.
 	 */
