@@ -30,7 +30,8 @@ int main()
         throw std::runtime_error("Could not load hp container texture.");
     }
     s::loadTextures();
-    // Testing starts here
+
+    /* === TESTING === */
     Room testRoom("../resources/rooms/room2.txt");
     //testRoom.print();
     /*std::cout << testRoom.getTile(2, 2).toString() << std::endl;
@@ -38,10 +39,12 @@ int main()
     for (unsigned i = 0; i < neighbours.size(); ++i) {
         std::cout << "(" << neighbours[i].x << ", " << neighbours[i].y << ")" << std::endl;
     }*/
+    RangedWeapon fireball_weapon("Fireball", 5, 2, 1);
 
-    // Testing ends here
-    RangedWeapon fireball_weapon("Fireball", 5, 2, "../resources/img/fireball_32.png");
 
+
+
+    /* === WINDOW === */
    	sf::RenderWindow window(sf::VideoMode(800, 600), "Lost in pohjanmaa!");
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
     sf::View guiView(sf::Vector2f(window.getSize()) / 2.0f, sf::Vector2f(window.getSize()));
@@ -82,16 +85,15 @@ int main()
     for (auto i=0; i<FPS_SAMPLE_COUNT; ++i) fpsSamples[i] = 0;
 
     /* === CONTAINERS === */        // TODO: Move these out, e.g. into the Room class.
-    std::vector<Projectile> projectiles;
     std::vector<MeleeMonster> meleemonsters;
     std::vector<RangedMonster> rangedmonsters;
 
     //Monster test code. Comment out later.
     // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
-    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 20.0, 20, 4, 1.0));
+    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 20.0, 20, 4, &testRoom, 1.0));
     meleemonsters.begin()->setxypos(50,100);
     //meleemonsters.push_back(MeleeMonster("test3", 1, 1, 1, 20.0, 20, 4, 1.0, &meleemonsters));
-    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 10.0, 50, 100.0, 80.0, &projectiles, 1.0));
+    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 10.0, 50, 100.0, 80.0, &testRoom, 1.0));
     rangedmonsters.begin()->setxypos(50,150);
     //std::cout<< meleemonsters.front().reducehealth(1) << std::endl;
     //std::cout << monsters.begin()->getname() << std::endl;
@@ -170,13 +172,12 @@ int main()
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
                 elapsedSinceLastShot = 0.0f;
-                Projectile projectile = fireball_weapon.createProjectile();
+                Projectile& projectile = fireball_weapon.createProjectile(testRoom);
                 projectile.setPosition(shapepos);
                 projectile.setDirection(sf::Vector2f(mousepos) - shapepos);
                 if (cv::norm(projectile.getVelocity()) == 0.0f) {      // If mousepos == shapepos, there is no valid direction. In this case, simply fire the projectile in a default direction (the direction of the x axis).
                     projectile.setDirection(sf::Vector2f(1, 0));
                 }
-                projectiles.push_back(projectile);
             }
         }
 
@@ -189,9 +190,7 @@ int main()
         window.setView(view);
         testRoom.draw(window);
 
-        for (auto& p : projectiles) {
-            p.draw(window, elapsed);
-        }
+        testRoom.drawProjectiles(window, elapsed);
     	for (auto& p : meleemonsters) {
     	  p.monsterai(character, window, elapsed);
     	}

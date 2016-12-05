@@ -75,9 +75,7 @@ void Character::reducehealth(int damage){
   health -= damage;
 }
 
-void Character::teleport(sf::Vector2f change){
-  //pos += change;
-  sf::Vector2f dpos = change;
+void Character::teleport(sf::Vector2f dpos){
     if (room == NULL) {
         throw std::runtime_error("Character has no room assigned!");
     }

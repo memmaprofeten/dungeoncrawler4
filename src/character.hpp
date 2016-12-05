@@ -46,7 +46,7 @@ public:
 
 	void sethealth(int newhealth);
 
-	void teleport (sf::Vector2f change);
+	void teleport (sf::Vector2f dpos);
 
 	void givegold(int gold);
 

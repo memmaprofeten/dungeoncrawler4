@@ -86,6 +86,17 @@ void Room::draw(sf::RenderWindow& window) {
 	}
 }
 
+void Room::drawProjectiles(sf::RenderWindow& window, float elapsed) {
+	for (int i=0; i<int(projectiles.size()); ++i) {
+		if (projectiles[i].isActive()) {					// Loop only through active projectiles
+			projectiles[i].draw(window, elapsed);			// Call their draw method which updates their position and draws them
+			if (!projectiles[i].isActive()) {
+				freeProjectiles.push_back(i);				// If a projectile becomes inactive, mark it as free for overriding
+			}
+		}
+	}
+}
+
 void Room::print() {
     for (int j = 0; j < height; ++j) {
         for (int i = 0; i < width; ++i) {
@@ -106,4 +117,16 @@ sf::Sprite* Room::getSprite() {
 	sprites.push_back(sprite);
 	spritesInUse.push_back(true);
 	return &sprites.back();
+}
+
+Projectile& Room::createProjectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex) {
+	if (freeProjectiles.size() > 0) {
+		int i = freeProjectiles.back();
+		freeProjectiles.pop_back();
+		projectiles[i].reset(shotbyplayer, damagein, radiusin, speedin, txtrIndex);
+		return projectiles[i];
+	} else {
+		projectiles.push_back(Projectile(shotbyplayer, damagein, radiusin, speedin, txtrIndex));
+		return projectiles.back();
+	}
 }

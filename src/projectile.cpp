@@ -3,9 +3,25 @@
 #include "tile.hpp"
 #include "settings.hpp"
 #include <cmath>
-// Basic functions to retrieve values from the projectile and the consturctor.
-bool Projectile::isfiredbyplayer(){
-  return firedbyplayer;
+#include <iostream>
+
+bool Projectile::isfiredbyplayer() { return firedbyplayer; }
+
+bool Projectile::isActive() { return active; }
+
+void Projectile::reset(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex) {
+    firedbyplayer = shotbyplayer;
+    active = true;
+    pos = sf::Vector2f(0, 0);
+    dir = sf::Vector2f(0, 0);
+    speed = speedin;
+    damage = damagein;
+    radius = radiusin;
+    rotation = 0;
+    textureIndex = txtrIndex;
+    sprite.setTexture(s::textures[textureIndex]);
+    sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
+    sprite.setOrigin(16.0f,16.0f);
 }
 
 sf::Vector2f Projectile::getPosition() {
@@ -38,62 +54,42 @@ int Projectile::getradius(){
 }
 
 void Projectile::draw(sf::RenderWindow& window, float elapsed) {
-/*
-	if(!currentRoom.hasCoordinate((int)pos.x/s::blockDim,(int)pos.y/s::blockDim)){
-		this->setSpeed(0.0f);
-		return;
-	}
-   	else if(!currentRoom.getTile((int)pos.x/s::blockDim,(int)pos.y/s::blockDim).isPenetrable()){
-		this->setSpeed(0.0f);
-		if(!firedbyplayer){	
-			return;
-		}
-	 }
-*/	
-	    	pos += speed * elapsed * dir;
-		sprite.setTexture(texture);
-		sprite.setPosition(pos.x, pos.y);
-		sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
-		sprite.setOrigin(16.0f,16.0f);
-		sprite.setRotation(rotation+90);
-		window.draw(sprite);
-/*below not used, ugly shit
-	    	sf::Texture arrow;
-	    	tile.setOrigin(1.0f, 1.0f);
-	    	tile.setPosition(pos.x, pos.y);
-		tile.setFillColor(sf::Color::Red);
-	    	window.draw(tile);
-*/
+    if (active) {
+        /*
+        	if(!currentRoom.hasCoordinate((int)pos.x/s::blockDim,(int)pos.y/s::blockDim)){
+        		this->setSpeed(0.0f);
+        		return;
+        	}
+           	else if(!currentRoom.getTile((int)pos.x/s::blockDim,(int)pos.y/s::blockDim).isPenetrable()){
+        		this->setSpeed(0.0f);
+        		if(!firedbyplayer){
+        			return;
+        		}
+        	 }
+        */
+
+        if (pos.x < 0.0f || pos.y < 0.0f || pos.x > 800 || pos.y > 600) {
+            active = false;
+        } else {
+
+        pos += speed * elapsed * dir;
+    	//sprite.setTexture(texture);        // TODO: Figure this out (why doesn't it work to do this just once?)
+    	sprite.setPosition(pos.x, pos.y);
+    	sprite.setRotation(rotation+90);
+    	window.draw(sprite);
+        // TODO: If the projectile is to be removed (e.g. has hit a soft target), call 'active = false;'.
+        }
+
+        /*below not used, ugly shit
+        	    	sf::Texture arrow;
+        	    	tile.setOrigin(1.0f, 1.0f);
+        	    	tile.setPosition(pos.x, pos.y);
+        		tile.setFillColor(sf::Color::Red);
+        	    	window.draw(tile);
+        */
+    }
 }
 
-Projectile::Projectile(bool shotbyplayer, int damagein, int radiusin, float speedin, std::string textureFile){
-  firedbyplayer = shotbyplayer;
-  pos = sf::Vector2f(0, 0);
-  dir = sf::Vector2f(0, 0);
-  speed = speedin;
-  damage = damagein;
-  radius = radiusin;
-  if(!texture.loadFromFile(textureFile)){
-	throw std::runtime_error("Could not find projectile texture");
+Projectile::Projectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex){
+    reset(shotbyplayer, damagein, radiusin, speedin, txtrIndex);
 }
- 
-}
-
-/*
-Function that is called to iterate the projectile each tick/loop.
-Changes xy positions based on the appropriate speeds.
-Then checks if a player / enemy / wall is within hit radius.
-If one is, it deals damage (to a player/enemy) and then deletes the projectile.
-In case of colliding with a wall, the projectile is just removed.
- */
-/*
-Projectile::projectiletick(){
-
-}
-*/
-/*
-Function to create a new projectile (fired by player or enemy)
-Calls constructor, then saves projectile in a list or somesuch.
-That somesuch can be iterated through, calling projectiletick for each projectile for each loop/tick.
-
-*/

@@ -59,6 +59,11 @@ public:
 	void draw(sf::RenderWindow& window);
 
 	/**
+	 * Updates the projectiles in the room and draws them.
+	 */
+	void drawProjectiles(sf::RenderWindow& window, float elapsed);
+
+	/**
 	 * Prints the room to std::cout.
 	 */
 	void print();
@@ -66,14 +71,25 @@ public:
 	//Returns refernce to a sprite that is not in use
 	sf::Sprite* getSprite();
 
-	
+	/**
+	 * Adds a projectile with the input parameters as constructor parameters
+	 * to this room and returns the projectile index of this projectile in the
+	 * Room's projectile buffer.
+	 * NB! Always use this method to add a projectile - never use the Projectile
+	 * class' explicit constructor! (This method will try to reactivate a
+	 * deactivated projectile class in its projectile buffer and assign these
+	 * parameters to it.)
+	 */
+	Projectile& createProjectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex);
+
 private:
 	int width;
 	int height;
 	std::vector<std::vector<Tile>> room;	// 2D-array of tile-objects mapping the game room.
 	std::vector<sf::Sprite> sprites;//all sprites used in the game
 	std::vector<bool> spritesInUse;	//value telling if sprite is to bedrawn
-	std::vector<Projectile> projectiles; //Projectile objects, 
+	std::vector<Projectile> projectiles; //Projectile objects
+	std::vector<int> freeProjectiles;		// A vector of projectile indices that are free for replacing
 	std::vector<Monster> monsters;
 };
 

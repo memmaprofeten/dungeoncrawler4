@@ -2,15 +2,17 @@
 #include <math.h>
 #include <string.h>
 #include "convenience.hpp"
+#include "settings.hpp"
 #include <vector>
 #include "character.hpp"
 #include "projectile.hpp"
 #include "item.hpp"
+#include "room.hpp"
 
 /*
 Basic functions. There's probably some brainfarting going on since I have the memory of a goldfish.
 
-Todo: Aggrocheck. General AI including pathfinding. Collision for movement. Attack functions 
+Todo: Aggrocheck. General AI including pathfinding. Collision for movement. Attack functions
 
 Collision requires some way to tie xy position to specific tile on map.
 Pathfinding requires some shenaniganry and/or googling the algorithms.
@@ -70,9 +72,9 @@ bool Monster::isactive() const{
 }
 
 /*
-Basically iterates x and y positions based on movespeed in directions given by inputs.Takes in a normalized vector based on player's position relative to monster. 
+Basically iterates x and y positions based on movespeed in directions given by inputs.Takes in a normalized vector based on player's position relative to monster.
 Does not handle collision, as I have no idea how.
-*/ 
+*/
 void Monster::monstermove(sf::Vector2f direction, float elapsed){
   changexypos(direction.x*movespeed*elapsed, direction.y*movespeed*elapsed);
 }
@@ -93,7 +95,7 @@ int Monster::reducehealth(int reducedby){
 	return temp;
       }
       }  */
-    
+
   }
   else{
     return 0;
@@ -102,7 +104,7 @@ int Monster::reducehealth(int reducedby){
 }
 
 // Constructors for melee and ranged monster classes.
-RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectilesi, float timebetweenattacksi){
+RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, float projectilespeedi, float attackrangei, Room* roomi, /*std::vector<Projectile>* projectilesi*/ float timebetweenattacksi){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
@@ -112,13 +114,14 @@ RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int 
   projectilespeed = projectilespeedi;
   attackrange = attackrangei;
   aggrostate = false;
-  projectiles = projectilesi;
+  room = roomi;
+  //projectiles = projectilesi;
   timebetweenattacks = timebetweenattacksi;
   attacktimer = 0.0;
   active = true;
 }
 
-MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, int attackrangei, float timebetweenattacksi){
+MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, int attackrangei, Room* roomi, float timebetweenattacksi){
   monstername = namei;
   health = healthi;
   xponkill = xponkilli;
@@ -127,13 +130,14 @@ MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int at
   aggrorange = aggrorangei;
   attackrange = attackrangei;
   aggrostate = false;
+  room = roomi;
   timebetweenattacks = timebetweenattacksi;
   attacktimer = 0.0;
   active = true;
 }
 
 /*
-Functions for attacking. Melee monster attacks check if the player is within range of the enemy. If they are, it reduces player damage based on its attackdamage variable. 
+Functions for attacking. Melee monster attacks check if the player is within range of the enemy. If they are, it reduces player damage based on its attackdamage variable.
 
 Ranged enemies will, if the player is within their attack range, fire a projectile at them. Not entirely sure how to handle said projectile.
 
@@ -144,7 +148,7 @@ float Monster::getdistancetoplayer(Character player){
   return sqrt(pow((position.x - player.getPosition().x),2) + pow((position.y- player.getPosition().y),2));
 }
 
-//Returns true if player is within rangedefined by aggrorange variable. 
+//Returns true if player is within rangedefined by aggrorange variable.
 //Will be done once the player character class is more defined.
 
 bool Monster::monsteraggrocheck(Character player){
@@ -158,10 +162,9 @@ bool Monster::monsteraggrocheck(Character player){
 //Ranged monster attack.
 void RangedMonster::monsterattack(Character& player){
   if (getdistancetoplayer(player) < attackrange){
-    Projectile monsterprojectile (false, 5, 2, 200.0f);
-    monsterprojectile.setPosition(position);
-    monsterprojectile.setDirection(cv::normalized(player.getPosition() - position));
-    projectiles->push_back(monsterprojectile);
+    Projectile& projectile = room->createProjectile(false, 5, 2, projectilespeed, 4);
+    projectile.setPosition(position);
+    projectile.setDirection(cv::normalized(player.getPosition() - position));
  }
 }
 
@@ -177,7 +180,7 @@ void MeleeMonster::monsterattack(Character& player){
 }
 
 /*
-Code for the AI of the monsters. Essentially. It first checks if the player is within aggrorange. If it is, it flips the aggrostate to true. 
+Code for the AI of the monsters. Essentially. It first checks if the player is within aggrorange. If it is, it flips the aggrostate to true.
 Then, the monster will move towards the player.
 After that, it attacks the player if it is within range.
 */
@@ -189,7 +192,7 @@ void RangedMonster::monsterai(Character& player, sf::RenderWindow& window, float
   if (monsteraggrocheck(player)){
     aggrostate = true;
   }
-  
+
   if(aggrostate) {
 
 //Determines direction. Will be replaced by pathfinding later.
@@ -213,7 +216,7 @@ void RangedMonster::monsterai(Character& player, sf::RenderWindow& window, float
 
 void MeleeMonster::monsterai(Character& player, sf::RenderWindow& window, float elapsed){
   sf::Vector2f direction;
-  
+
   if (monsteraggrocheck(player)){
     aggrostate = true;
   }
@@ -225,7 +228,7 @@ void MeleeMonster::monsterai(Character& player, sf::RenderWindow& window, float 
     direction = cv::normalized(direction);
 
 //Moves enemy in chosen direction.
-    monstermove(direction, elapsed);    
+    monstermove(direction, elapsed);
 
 //Attacks player if in range.
     attacktimer += elapsed;

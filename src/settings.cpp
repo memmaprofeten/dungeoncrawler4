@@ -7,7 +7,7 @@ namespace s {
 	std::string hpContainerTextureFile = "../resources/img/hp_container1.png";
 	std::string projectileTextureFile = "../resources/img/projectile_32.png";
 	std::string characterShadowFile = "../resources/img/shadowtest2.png";
-	std::string wallTextureFile = "../resources/img/wall_32.png"; 
+	std::string wallTextureFile = "../resources/img/wall_32.png";
 	std::vector<std::string> texturePaths = {characterTextureFile,
 						fireballTextureFile,
 						floor2TextureFile,
@@ -22,7 +22,7 @@ namespace s {
 			tex.loadFromFile(i);
 			textures.push_back(tex);
 		}
-	} 	
+	}
 	int characterRotationOffset = 270;
 	float blockDim = 10.0f;
 	int viewHeight = 150;

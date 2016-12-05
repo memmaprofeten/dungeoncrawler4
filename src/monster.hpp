@@ -4,8 +4,10 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "projectile.hpp"
+
 class Character;
 class Item;
+class Room;
 
 class Monster{
 public:
@@ -63,6 +65,7 @@ protected:
   float movespeed; //Movementspeed of enemy.
   float aggrorange; //AI Parameter. How close the player has to be for the AI to aggro.
   sf::Vector2f position;
+  Room* room;   // Pointer to the room that the monster is currently in
   bool aggrostate; //If the monster is actively chasing/attacking the player.
   float attacktimer; //Amount of time inbetween attacks.
   float timebetweenattacks; //explanatory
@@ -83,13 +86,12 @@ public:
   void monsterattack(Character& player);
   void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
   //Constructor
-  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, float projectilespeedi, float attackrangei, std::vector<Projectile>* projectiles, float timebetweenattacksi);
+  RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, float projectilespeedi, float attackrangei, Room* roomi, /*std::vector<Projectile>* projectiles*/ float timebetweenattacksi);
   //bool operator==(const RangedMonster inp) const;
   //bool operator==(const MeleeMonster inp) const;
 private:
   float projectilespeed; //How fast the projectile fired by the enemy moves.
   float attackrange; //At what distance the enemy attacks.
-  std::vector<Projectile>* projectiles;//Pointer to projectile vector to make creating new projectiles easier.
 };
 
 class MeleeMonster : public Monster{
@@ -98,7 +100,7 @@ public:
   void monsterattack(Character& player);
   void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
   //Constructor
-  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, int attackrangei, float timebetweenattacksi);
+  MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, int attackrangei, Room* roomi, float timebetweenattacksi);
   //bool operator==(const MeleeMonster inp) const;
   //bool operator==(const RangedMonster inp) const;
 private:
