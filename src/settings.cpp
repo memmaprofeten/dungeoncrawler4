@@ -23,6 +23,7 @@ namespace s {
 			textures.push_back(tex);
 		}
 	}
+	float characterSpeed = 80.0f;
 	int characterRotationOffset = 270;
 	float blockDim = 10.0f;
 	int viewHeight = 150;

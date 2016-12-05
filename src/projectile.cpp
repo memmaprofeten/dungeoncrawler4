@@ -42,15 +42,17 @@ void Projectile::setDirection(sf::Vector2f direction) {
     rotation = (atan2(dir.y,dir.x)) * 180 / s::PI;
 }
 
+float Projectile::getSpeed() const { return speed; }
+
 void Projectile::setSpeed(float newSpeed) {
   speed = newSpeed;
 }
 
-int Projectile::getdamage(){
+int Projectile::getdamage() const {
   return damage;
 }
 
-int Projectile::getradius(){
+int Projectile::getradius() const {
   return radius;
 }
 

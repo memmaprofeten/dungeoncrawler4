@@ -58,6 +58,11 @@ public:
     void setDirection(sf::Vector2f direction);
 
     /**
+     * Returns the nominal speed of the projectile.
+     */
+    float getSpeed() const;
+
+    /**
     * Sets the projectile's speed.
     */
     void setSpeed(float newSpeed);
@@ -65,12 +70,12 @@ public:
     /**
      * Returns the damage value of this projectile.
      */
-    int getdamage();
+    int getdamage() const;
 
     /**
      * Returns the nominal attack radius of this projectile.
      */
-    int getradius();
+    int getradius() const;
 
     /* Called to deactivate projectile, eg when it has hit a soft target */
     void deactivate();

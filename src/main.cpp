@@ -37,7 +37,7 @@ int main()
     sf::View guiView(sf::Vector2f(window.getSize()) / 2.0f, sf::Vector2f(window.getSize()));
 
     /* === CHARACTER === */
-    Character character("Test man", true, 80.0f, sf::Vector2f(30.0f, 30.0f), s::characterTextureFile, s::characterShadowFile);
+    Character character("Test man", true, s::characterSpeed, sf::Vector2f(30.0f, 30.0f), s::characterTextureFile, s::characterShadowFile);
     view.move(character.getPosition().x, character.getPosition().y);
 
     /* === TESTING === */
@@ -168,7 +168,9 @@ int main()
                 elapsedSinceLastShot = 0.0f;
                 Projectile& projectile = fireball_weapon.createProjectile(testRoom);
                 projectile.setPosition(shapepos);
-                projectile.setDirection(sf::Vector2f(mousepos) - shapepos);
+                // Calculate the velocity of the projectile based on the location of the aim (mouse click) and the player's momentum:
+                sf::Vector2f vel = cv::normalized(sf::Vector2f(mousepos) - shapepos) * projectile.getSpeed() + cv::normalized(cDir) * s::characterSpeed;
+                projectile.setDirection(cv::normalized(vel));
                 if (cv::norm(projectile.getVelocity()) == 0.0f) {      // If mousepos == shapepos, there is no valid direction. In this case, simply fire the projectile in a default direction (the direction of the x axis).
                     projectile.setDirection(sf::Vector2f(1, 0));
                 }
