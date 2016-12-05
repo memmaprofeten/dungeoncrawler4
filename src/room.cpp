@@ -119,6 +119,10 @@ sf::Sprite* Room::getSprite() {
 	return &sprites.back();
 }
 
+std::vector<Projectile> Room::getProjectiles() {
+	return projectiles;
+}
+
 Projectile& Room::createProjectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex) {
 	if (freeProjectiles.size() > 0) {
 		int i = freeProjectiles.back();

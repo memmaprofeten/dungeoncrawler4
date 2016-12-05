@@ -70,6 +70,9 @@ public:
      */
     int getradius();
 
+    /* Called to deactivate projectile, eg when it has hit a soft target */
+    void deactivate();
+
     /**
     * Performs necessary calculations, such as computing its new position, and
     * draws itself.

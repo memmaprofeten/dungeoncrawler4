@@ -53,6 +53,10 @@ int Projectile::getradius(){
   return radius;
 }
 
+void Projectile::deactivate() {
+  active = false;
+}
+
 void Projectile::draw(sf::RenderWindow& window, float elapsed) {
     if (active) {
         /*

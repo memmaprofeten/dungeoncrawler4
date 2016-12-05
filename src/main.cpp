@@ -180,6 +180,23 @@ int main()
                 }
             }
         }
+        
+        /* === PROJECTILE HIT DETECTION === */
+        std::vector<Projectile> projectiles = testRoom.getProjectiles();
+        for(unsigned int i = 0; i<projectiles.size(); i++) {
+          int projectileRadius = projectiles[i].getradius();
+          
+          if(projectiles[i].isActive()) {
+            //test if projectile is inside radius proximity of character?
+            if(projectiles[i].getPosition().x+projectileRadius >= character.getPosition().x && projectiles[i].getPosition().x-projectileRadius <= character.getPosition().x ) {
+              if(projectiles[i].getPosition().y+projectileRadius >= character.getPosition().y && projectiles[i].getPosition().y-projectileRadius <= character.getPosition().y ) {
+                character.reducehealth(1); // character takes damage
+                projectiles[i].deactivate();
+                
+              }
+            }
+          }
+        }
 
         healthBar.setSize(sf::Vector2f(std::max(0.0f, 300.0f * float(character.getHealth()) / float(character.getMaxHealth())), 20));
 

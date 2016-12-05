@@ -70,6 +70,8 @@ public:
 
 	//Returns refernce to a sprite that is not in use
 	sf::Sprite* getSprite();
+	
+	std::vector<Projectile> getProjectiles();
 
 	/**
 	 * Adds a projectile with the input parameters as constructor parameters
