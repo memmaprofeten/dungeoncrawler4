@@ -41,7 +41,7 @@ int main()
     view.move(character.getPosition().x, character.getPosition().y);
 
     /* === TESTING === */
-    Room testRoom("../resources/rooms/room2.txt", &character);
+    Room testRoom("../resources/rooms/room_large.txt", &character);
     character.setRoom(&testRoom);
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
 
@@ -88,11 +88,8 @@ int main()
     // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
     meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &testRoom, 1.0));
     meleemonsters.begin()->setxypos(50,100);
-    //meleemonsters.push_back(MeleeMonster("test3", 1, 1, 1, 20.0, 20, 4, 1.0, &meleemonsters));
     rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 30.0, 50, 100.0, 80.0, &testRoom, 1.0));
     rangedmonsters.begin()->setxypos(50,150);
-    //std::cout<< meleemonsters.front().reducehealth(1) << std::endl;
-    //std::cout << monsters.begin()->getname() << std::endl;
 
     // Mock parameters start here:
     float projectileCooldown = 0.3f;        // In seconds
