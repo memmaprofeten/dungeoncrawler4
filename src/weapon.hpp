@@ -7,17 +7,18 @@
 
 class Weapon {
 public:
-	Weapon(const std::string n, const bool t, const int d, int r, int txtrIndex) :
-			name(n), type(t), damage(d), range(r), textureIndex(txtrIndex) { }
+	Weapon(const std::string n, const bool t, const int d, float r, int txtrIndex) :
+			name(n), type(t), damage(d), radius(r), textureIndex(txtrIndex) { }
 
 	std::string getName() const { return name; }
 	bool getType() const { return type; }
 	int getDamage() const { return damage; }
-	int getRange() const { return range; }
+	//int getRange() const { return range; }
+	float getRadius() const { return radius; }
 	int getProjectilespeed() const { return projectilespeed; }
 
 	Projectile& createProjectile(Room& room) {
-		return room.createProjectile(true, damage, range, 250.0f, textureIndex);
+		return room.createProjectile(true, damage, radius, 250.0f, textureIndex);
 	}
 
 	virtual void attack() {}
@@ -26,16 +27,16 @@ private:
 	std::string name;
 	bool type; //True = Ranged, False = Melee.
 	int damage;
-	int range;
+	//int range;		// TODO: Readd this again if we think it's necessary
+	float radius;
 	float projectilespeed;
 	int textureIndex;
-	//NB! lifespan?(do people like this kind of feature?)		// Not in my opinion, but I don't know :) - Jon
 };
 
 
 class RangedWeapon : public Weapon {
 public:
-	RangedWeapon(const std::string name, int damage, int range, int txtrIndex) : Weapon(name, true, damage, range, txtrIndex) { }
+	RangedWeapon(const std::string name, int damage, int radius, int txtrIndex) : Weapon(name, true, damage, radius, txtrIndex) { }
 
 	virtual void attack() { }
 };
@@ -43,7 +44,7 @@ public:
 
 class MeleeWeapon : public Weapon {
 public:
-	MeleeWeapon(const std::string name, int damage, int range, int txtrIndex) : Weapon(name, false, damage, range, txtrIndex) { }
+	MeleeWeapon(const std::string name, int damage, int radius, int txtrIndex) : Weapon(name, false, damage, radius, txtrIndex) { }
 
 	virtual void attack() { }
 };

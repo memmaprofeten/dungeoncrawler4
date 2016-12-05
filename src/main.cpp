@@ -31,19 +31,6 @@ int main()
     }
     s::loadTextures();
 
-    /* === TESTING === */
-    Room testRoom("../resources/rooms/room2.txt");
-    //testRoom.print();
-    /*std::cout << testRoom.getTile(2, 2).toString() << std::endl;
-    std::vector<sf::Vector2i> neighbours = testRoom.getNeighbours(0, 0, true, true, true);
-    for (unsigned i = 0; i < neighbours.size(); ++i) {
-        std::cout << "(" << neighbours[i].x << ", " << neighbours[i].y << ")" << std::endl;
-    }*/
-    RangedWeapon fireball_weapon("Fireball", 5, 2, 1);
-
-
-
-
     /* === WINDOW === */
    	sf::RenderWindow window(sf::VideoMode(800, 600), "Lost in pohjanmaa!");
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
@@ -51,8 +38,12 @@ int main()
 
     /* === CHARACTER === */
     Character character("Test man", true, 100.0f, sf::Vector2f(30.0f, 30.0f), s::characterTextureFile, s::characterShadowFile);
-    character.setRoom(&testRoom);
     view.move(character.getPosition().x, character.getPosition().y);
+
+    /* === TESTING === */
+    Room testRoom("../resources/rooms/room2.txt", &character);
+    character.setRoom(&testRoom);
+    RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
 
     /* === GUI === */
     sf::Vector2f healthBarMargin(15, 15);
@@ -179,23 +170,6 @@ int main()
                     projectile.setDirection(sf::Vector2f(1, 0));
                 }
             }
-        }
-        
-        /* === PROJECTILE HIT DETECTION === */
-        std::vector<Projectile> projectiles = testRoom.getProjectiles();
-        for(unsigned int i = 0; i<projectiles.size(); i++) {
-          int projectileRadius = projectiles[i].getradius();
-          
-          if(projectiles[i].isActive()) {
-            //test if projectile is inside radius proximity of character?
-            if(projectiles[i].getPosition().x+projectileRadius >= character.getPosition().x && projectiles[i].getPosition().x-projectileRadius <= character.getPosition().x ) {
-              if(projectiles[i].getPosition().y+projectileRadius >= character.getPosition().y && projectiles[i].getPosition().y-projectileRadius <= character.getPosition().y ) {
-                character.reducehealth(1); // character takes damage
-                projectiles[i].deactivate();
-                
-              }
-            }
-          }
         }
 
         healthBar.setSize(sf::Vector2f(std::max(0.0f, 300.0f * float(character.getHealth()) / float(character.getMaxHealth())), 20));

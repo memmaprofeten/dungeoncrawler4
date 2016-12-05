@@ -5,7 +5,10 @@
 #include <sstream>
 #include <functional>
 #include "settings.hpp"
-Room::Room(std::string const file) {
+#include "convenience.hpp"
+#include "character.hpp"
+
+Room::Room(std::string const file, Character* character) : character(character) {
 	int x = 0;
 	int y = 0;
 	sf::Sprite dummy;
@@ -88,9 +91,15 @@ void Room::draw(sf::RenderWindow& window) {
 
 void Room::drawProjectiles(sf::RenderWindow& window, float elapsed) {
 	for (int i=0; i<int(projectiles.size()); ++i) {
-		if (projectiles[i].isActive()) {					// Loop only through active projectiles
-			projectiles[i].draw(window, elapsed);			// Call their draw method which updates their position and draws them
-			if (!projectiles[i].isActive()) {
+		Projectile& projectile = projectiles[i];
+		if (projectile.isActive()) {					// Loop only through active projectiles
+			projectile.draw(window, elapsed);			// Call their draw method which updates their position and draws them
+			if(!projectile.isfiredbyplayer() && cv::distance(character->getPosition(), projectile.getPosition()) < float(projectile.getradius())) {	// Hit detection
+				character->reducehealth(projectile.getdamage()); // character takes damage
+				projectile.deactivate();
+			}
+			// TODO: Monster hit detection
+			if (!projectile.isActive()) {
 				freeProjectiles.push_back(i);				// If a projectile becomes inactive, mark it as free for overriding
 			}
 		}
@@ -119,9 +128,9 @@ sf::Sprite* Room::getSprite() {
 	return &sprites.back();
 }
 
-std::vector<Projectile> Room::getProjectiles() {
+/*std::vector<Projectile> Room::getProjectiles() {
 	return projectiles;
-}
+}*/
 
 Projectile& Room::createProjectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex) {
 	if (freeProjectiles.size() > 0) {

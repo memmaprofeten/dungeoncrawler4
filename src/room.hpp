@@ -1,7 +1,6 @@
 #ifndef ROOM_HH
 #define ROOM_HH
 
-
 #include "tile.hpp"
 #include <vector>
 #include <SFML/Graphics.hpp>
@@ -9,14 +8,17 @@
 #include <string>
 #include <stdexcept>
 #include "monster.hpp"
+
 class Projectile;
+class Character;
+
 class Room {
 public:
 
 	/**
 	 * Constructor creating the room by loading it from the given file.
 	 */
-	Room(std::string const file);
+	Room(std::string const file, Character* character);
 
 	/**
 	 * Returns the width of the room (in blocks)
@@ -70,8 +72,8 @@ public:
 
 	//Returns refernce to a sprite that is not in use
 	sf::Sprite* getSprite();
-	
-	std::vector<Projectile> getProjectiles();
+
+	//std::vector<Projectile> getProjectiles();
 
 	/**
 	 * Adds a projectile with the input parameters as constructor parameters
@@ -87,6 +89,7 @@ public:
 private:
 	int width;
 	int height;
+	Character* character;
 	std::vector<std::vector<Tile>> room;	// 2D-array of tile-objects mapping the game room.
 	std::vector<sf::Sprite> sprites;//all sprites used in the game
 	std::vector<bool> spritesInUse;	//value telling if sprite is to bedrawn

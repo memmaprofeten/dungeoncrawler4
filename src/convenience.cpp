@@ -14,4 +14,8 @@ namespace cv
         return v / d;
     }
 
+    float distance(sf::Vector2f a, sf::Vector2f b) {
+        return norm(a - b);
+    }
+
 }

@@ -22,6 +22,11 @@ namespace cv
      */
     sf::Vector2f normalized(sf::Vector2f v);
 
+    /**
+     * Returns the distance between two points in the plane.
+     */
+    float distance(sf::Vector2f a, sf::Vector2f b);
+
 }
 
 #endif

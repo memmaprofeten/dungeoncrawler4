@@ -1,9 +1,9 @@
-#include "monster.hpp"
 #include <math.h>
 #include <string.h>
+#include <vector>
+#include "monster.hpp"
 #include "convenience.hpp"
 #include "settings.hpp"
-#include <vector>
 #include "character.hpp"
 #include "projectile.hpp"
 #include "item.hpp"
@@ -162,7 +162,7 @@ bool Monster::monsteraggrocheck(Character player){
 //Ranged monster attack.
 void RangedMonster::monsterattack(Character& player){
   if (getdistancetoplayer(player) < attackrange){
-    Projectile& projectile = room->createProjectile(false, 5, 2, projectilespeed, 4);
+    Projectile& projectile = room->createProjectile(false, 2, 0.8f * s::blockDim, projectilespeed, 4);
     projectile.setPosition(position);
     projectile.setDirection(cv::normalized(player.getPosition() - position));
  }
