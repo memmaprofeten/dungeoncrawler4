@@ -111,7 +111,7 @@ int main()
         if (fpsIndex == 0) fpsIsCounting = true;
         std::stringstream fpsSs;
         if (fpsIsCounting) {
-            fpsSs << int(round(FPS_SAMPLE_COUNT / fpsValue)) << " fps";
+            fpsSs << int(round(float(FPS_SAMPLE_COUNT) / fpsValue)) << " fps";
             fpsIndicator.setString(fpsSs.str());
         } else {
             fpsSs << "Counting...";
