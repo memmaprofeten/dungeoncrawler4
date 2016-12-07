@@ -92,6 +92,7 @@ public:
 	Projectile& createProjectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex);
 
   std::vector<Monster*>& getmonsters();
+  std::vector<Item>& getitems();
   
 private:
 	int width;
@@ -102,7 +103,8 @@ private:
 	std::vector<bool> spritesInUse;	//value telling if sprite is to bedrawn
 	std::vector<Projectile> projectiles; //Projectile objects
 	std::vector<int> freeProjectiles;		// A vector of projectile indices that are free for replacing
-	std::vector<Monster*> monsters;
+  std::vector<Monster*> monsters; //Vector containing pointers to monsters on the level.
+  std::vector<Item> itemstorage; //Vector containing items in level.
 };
 
 #endif

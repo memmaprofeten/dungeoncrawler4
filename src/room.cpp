@@ -154,3 +154,7 @@ Projectile& Room::createProjectile(bool shotbyplayer, int damagein, int radiusin
 std::vector<Monster*>& Room::getmonsters(){
   return monsters;
 }
+
+std::vector<Item>& Room::getitems(){
+  return itemstorage;
+}

@@ -8,6 +8,7 @@
 #include "projectile.hpp"
 #include "item.hpp"
 #include "room.hpp"
+#include "item.hpp"
 #include <stdlib.h>
 #include <time.h>
 
@@ -78,6 +79,7 @@ int Monster::reducehealth(int reducedby){
   health -= reducedby;
   if(health <= 0){
     active = false;
+    CreateItem(room->getitems(), position);
     return xponkill;
 
     /*
