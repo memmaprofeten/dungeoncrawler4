@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <locale>
 #include "settings.hpp"
+#include "map.hpp"
 #include "room.hpp"
 #include "character.hpp"
 #include "projectile.hpp"
@@ -41,7 +42,9 @@ int main()
     view.move(character.getPosition().x, character.getPosition().y);
 
     /* === TESTING === */
-    Room testRoom("../resources/rooms/room_large.txt", &character);
+    Map map(character);
+    //Room testRoom("../resources/rooms/room_large.txt", &character);
+    Room& testRoom = map.getRoom();
     character.setRoom(&testRoom);
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
 
