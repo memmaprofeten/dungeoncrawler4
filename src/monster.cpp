@@ -8,6 +8,9 @@
 #include "projectile.hpp"
 #include "item.hpp"
 #include "room.hpp"
+#include "item.hpp"
+#include <stdlib.h>
+#include <time.h>
 
 /*
 Basic functions. There's probably some brainfarting going on since I have the memory of a goldfish.
@@ -38,15 +41,7 @@ int Monster::getattackdamage(){
 float Monster::getmovespeed(){
   return movespeed;
 }
-/*
-Weapon Monster::getcarriedweapon(){
-  return carriedweapon;
-}
 
-Item Monster::getcarrieditem(){
-  return carrieditem;
-}
-*/
 float Monster::getaggrorange(){
   return aggrorange;
 }
@@ -80,11 +75,15 @@ void Monster::monstermove(sf::Vector2f direction, float elapsed){
 }
 
 //Reduces health by given amount. Then checks if health is below 0. If it is, it searches the vectors containing the monster for itself, erases itself, and then returns the amount of experience the player gains.
-int Monster::reducehealth(int reducedby){
+void Monster::reducehealth(int reducedby){
   health -= reducedby;
   if(health <= 0){
+    //Sets monster as inactive.
     active = false;
-    return xponkill;
+    //Drops item
+    CreateItem(room->getitems(), position);
+    //Awards player XP
+    room->getcharacter()->givexp(xponkill);
 
     /*
     for(auto iter=monsters->begin(); iter != monsters->end(); iter++){
@@ -97,10 +96,6 @@ int Monster::reducehealth(int reducedby){
       }  */
 
   }
-  else{
-    return 0;
-  }
-  return 0;
 }
 
 // Constructors for melee and ranged monster classes.
@@ -247,4 +242,38 @@ void Monster::draw(sf::RenderWindow& window){
   tile.setPosition(position.x, position.y);
   tile.setFillColor(sf::Color::Blue);
   window.draw(tile);
+}
+
+//Creates a random monster at position determined by the position input.
+void CreateMonster(sf::Vector2f positioni, Room* roomi, int leveli){
+  int type;
+  std::string name;
+  
+  srand(time(NULL));
+
+  // Randomly select type. 1: Melee, 2: Ranged
+  type = (rand() % 2) + 1;
+  
+  switch(type){
+  case 1:{
+    name = "ChopChop the Monstorous";
+
+    //Name, health, xp on kill, attack damage, movespeed, aggrorange, attack range, room pointer, time between attacks.
+    MeleeMonster newmonster1 = MeleeMonster(name, (rand() % 4)+leveli, leveli + 2, (rand()%3)+leveli, ((rand()%2)+1)*100.0f, 200.0f, (rand()%5)+10, roomi, 0.8f);
+    
+    newmonster1.setxypos(positioni.x, positioni.y);
+    roomi->getmonsters().push_back(&newmonster1);
+    break;
+  }
+  case 2:{
+    name = "PewPew the Dastardly";
+
+    //Name, health, xp on kill, attack damage, movespeed, aggrorange, projectilespeed, attack range, room pointer, time between attacks.
+    RangedMonster newmonster2 = RangedMonster(name, (rand() % 3) + leveli, leveli + 2, (rand() % 3) + leveli, ((rand() % 2) + 1)*100.0f, 200.0f, ((rand() % 3) + 1)*90.0f,((rand() % 5)+10)*50, roomi, 0.8f);
+
+    newmonster2.setxypos(positioni.x, positioni.y);
+    roomi->getmonsters().push_back(&newmonster2);
+    break;
+  }
+  }
 }

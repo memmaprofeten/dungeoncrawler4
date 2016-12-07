@@ -52,6 +52,7 @@ public:
 
 	int getgold() const;
 
+  void givexp(int amount);
 
 private:
 	std::string name; 				//Name of player. User input or based on class?

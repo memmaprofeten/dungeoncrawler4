@@ -106,3 +106,14 @@ int Character::getgold() const{
 void Character::sethealth(int newhealth){
   health = newhealth;
 }
+
+void Character::givexp(int amount){
+  if (xp + amount >= xpfornextlevel){
+    xp = (xp+amount)-xpfornextlevel;
+    level += 1;
+    health = 9 + level;
+  }
+  else{
+    xp += amount;
+  }
+}
