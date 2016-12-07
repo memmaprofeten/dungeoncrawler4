@@ -87,8 +87,7 @@ public:
   void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
   //Constructor
   RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, float projectilespeedi, float attackrangei, Room* roomi, /*std::vector<Projectile>* projectiles*/ float timebetweenattacksi);
-  //bool operator==(const RangedMonster inp) const;
-  //bool operator==(const MeleeMonster inp) const;
+
 private:
   float projectilespeed; //How fast the projectile fired by the enemy moves.
   float attackrange; //At what distance the enemy attacks.
@@ -101,10 +100,11 @@ public:
   void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
   //Constructor
   MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, int attackrangei, Room* roomi, float timebetweenattacksi);
-  //bool operator==(const MeleeMonster inp) const;
-  //bool operator==(const RangedMonster inp) const;
+  
 private:
   int attackrange; //Radius of the enemy's attack swing
 };
 
 #endif
+
+void CreateMonster(sf::Vector2f positioni, Room* roomi, int leveli);

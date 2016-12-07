@@ -150,3 +150,7 @@ Projectile& Room::createProjectile(bool shotbyplayer, int damagein, int radiusin
 		return projectiles.back();
 	}
 }
+
+std::vector<Monster*>& Room::getmonsters(){
+  return monsters;
+}
