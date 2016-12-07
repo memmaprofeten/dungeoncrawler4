@@ -83,7 +83,7 @@ void Monster::reducehealth(int reducedby){
     //Drops item
     CreateItem(room->getitems(), position);
     //Awards player XP
-    //room->getcharacter()->
+    room->getcharacter()->givexp(xponkill);
 
     /*
     for(auto iter=monsters->begin(); iter != monsters->end(); iter++){
