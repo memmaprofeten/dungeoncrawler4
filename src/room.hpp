@@ -93,7 +93,7 @@ public:
 
   std::vector<Monster*>& getmonsters();
   std::vector<Item>& getitems();
-  
+  Character* getcharacter();
 private:
 	int width;
 	int height;

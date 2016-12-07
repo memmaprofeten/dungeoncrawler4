@@ -75,12 +75,15 @@ void Monster::monstermove(sf::Vector2f direction, float elapsed){
 }
 
 //Reduces health by given amount. Then checks if health is below 0. If it is, it searches the vectors containing the monster for itself, erases itself, and then returns the amount of experience the player gains.
-int Monster::reducehealth(int reducedby){
+void Monster::reducehealth(int reducedby){
   health -= reducedby;
   if(health <= 0){
+    //Sets monster as inactive.
     active = false;
+    //Drops item
     CreateItem(room->getitems(), position);
-    return xponkill;
+    //Awards player XP
+    //room->getcharacter()->
 
     /*
     for(auto iter=monsters->begin(); iter != monsters->end(); iter++){
@@ -93,10 +96,6 @@ int Monster::reducehealth(int reducedby){
       }  */
 
   }
-  else{
-    return 0;
-  }
-  return 0;
 }
 
 // Constructors for melee and ranged monster classes.

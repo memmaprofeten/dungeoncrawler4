@@ -158,3 +158,7 @@ std::vector<Monster*>& Room::getmonsters(){
 std::vector<Item>& Room::getitems(){
   return itemstorage;
 }
+
+Character* Room::getcharacter(){
+  return character;
+}

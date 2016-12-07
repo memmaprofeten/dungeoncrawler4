@@ -41,7 +41,7 @@ General "return value" functions.
 /*
 Reduce monster health. To be called by whatever handles the monster getting hit.
 */
-  int reducehealth(int reducedby);
+  void reducehealth(int reducedby);
 
 /*
 Functions to be called by the AI code. In theory, handle movement and attacking.
