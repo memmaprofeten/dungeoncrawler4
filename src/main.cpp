@@ -102,11 +102,22 @@ int main()
     sf::RectangleShape inventoryBackground;
     inventoryBackground.setFillColor(sf::Color(20, 10, 10, 200));
 
+    sf::RectangleShape tooltipBackground;
+    tooltipBackground.setFillColor(sf::Color(0, 0, 0, 220));
+
+    sf::Text tooltip;
+    tooltip.setPosition(sf::Vector2f(10, 10));
+    tooltip.setFont(standardFont);
+    tooltip.setCharacterSize(256);
+    tooltip.setScale(20.0f / 256.0f * sf::Vector2f(1, 1));
+    tooltip.setColor(sf::Color::Green);
+
     /* === FUNCTIONALITY === */
     bool paused = false;
     bool pauseReleased = true;
     bool pauseReset = true;
     bool inventory = false;
+    bool tooltipShowing = true;
     sf::Clock frameClock;
     float elapsed;
     float elapsedSinceLastShot = 1000.0f;
@@ -281,6 +292,10 @@ int main()
 
         /* === PAUSED LOOP === */
         } else {
+
+            tooltipShowing = false;
+
+            /* === PAUSED EVENT HANDLING === */
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) || sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
                 if (pauseReleased) pauseReset = true;
                 pauseReleased = false;
@@ -302,10 +317,30 @@ int main()
                 character.draw(window);
                 window.setView(guiView);
                 if (inventory) {
-                    window.draw(inventoryBackground);
-                    for (const auto& sprite : testItemSpriteVector) {
-                        window.draw(sprite);
+                    // Track mouse position:
+                    sf::Vector2f mousepos = sf::Vector2f(sf::Mouse::getPosition(window));
+                    sf::Vector2f globalOffset = sf::Vector2f(window.getSize()) * 0.5f * (1.0f - s::relativeInventoryBackgroundWidth);
+                    float rawDim = float(window.getSize().x) * s::relativeInventoryBackgroundWidth / float(s::itemsPerRow);
+                    float xir = (mousepos.x - globalOffset.x) / rawDim;
+                    float yir = (mousepos.y - globalOffset.y) / rawDim;
+                    int xi = int(floor(xir));
+                    int yi = int(floor(yir));
+                    int itemIndex = yi * s::itemsPerRow + xi;
+                    float relativeItemMarginToItem = s::relativeItemMargin * (float)s::itemsPerRow / s::relativeInventoryBackgroundWidth;
+                    if (xi >= 0 && xi < s::itemsPerRow &&
+                        yi >= 0 && itemIndex < (int)character.getInventory().size() &&
+                        xir - (int)xir >= relativeItemMarginToItem && xir - (int)xir <= 1.0f - relativeItemMarginToItem &&
+                        yir - (int)yir >= relativeItemMarginToItem && yir - (int)yir <= 1.0f - relativeItemMarginToItem
+                    ) {
+                        std::stringstream tooltipSs;
+                        tooltipSs << character.getInventory()[itemIndex].getname();
+                        tooltip.setString(tooltipSs.str());
+                        tooltipShowing = true;
                     }
+
+                    window.draw(inventoryBackground);
+                    for (const auto& sprite : testItemSpriteVector) window.draw(sprite);
+                    if (tooltipShowing) window.draw(tooltip);
                 }
                 else window.draw(pausedIndicator);
                 window.display();
