@@ -61,17 +61,14 @@ int main()
     sf::RectangleShape healthBar(sf::Vector2f(300, 20));
     healthBar.setOrigin(healthBar.getSize() + sf::Vector2f(25, 4));
     healthBar.setFillColor(sf::Color(100, 20, 20));
-    healthBar.setPosition(sf::Vector2f(window.getSize()) - healthBarMargin);
 
     sf::RectangleShape healthBarBackground(sf::Vector2f(300, 20));
     healthBarBackground.setOrigin(healthBar.getSize() + sf::Vector2f(25, 4));
     healthBarBackground.setFillColor(sf::Color(0, 0, 0));
-    healthBarBackground.setPosition(sf::Vector2f(window.getSize()) - healthBarMargin);
 
     sf::Sprite hpContainer;
     hpContainer.setTexture(hpContainerTexture);
     hpContainer.setOrigin(sf::Vector2f(350, 28));
-    hpContainer.setPosition(sf::Vector2f(window.getSize()) - healthBarMargin);
 
     sf::Text fpsIndicator;
     fpsIndicator.setFont(standardFont);
@@ -87,12 +84,15 @@ int main()
     pausedIndicator.scale(60.0f / 256.0f * sf::Vector2f(1, 1));
     pausedIndicator.setOrigin(sf::Vector2f(pausedIndicator.getLocalBounds().width / 2.0f, pausedIndicator.getLocalBounds().height / 2.0f));
     pausedIndicator.setColor(sf::Color::Green);
-    pausedIndicator.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
+
+    sf::RectangleShape inventoryBackground;
+    inventoryBackground.setFillColor(sf::Color(20, 10, 10, 200));
 
     /* === FUNCTIONALITY === */
     bool paused = false;
     bool pauseReleased = true;
     bool pauseReset = true;
+    bool inventory = false;
     sf::Clock frameClock;
     float elapsed;
     float elapsedSinceLastShot = 1000.0f;
@@ -141,6 +141,9 @@ int main()
                     healthBarBackground.setPosition(eventSize - healthBarMargin);
                     hpContainer.setPosition(eventSize - healthBarMargin);
                     pausedIndicator.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
+                    inventoryBackground.setSize(0.8f * sf::Vector2f(window.getSize()));
+                    inventoryBackground.setOrigin(sf::Vector2f(inventoryBackground.getLocalBounds().width / 2.0f, inventoryBackground.getLocalBounds().height / 2.0f));
+                    inventoryBackground.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
                     break;
                 }
                 default:
@@ -178,6 +181,12 @@ int main()
                 paused = true;
                 pauseReleased = false;
                 pauseReset = false;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) if (pauseReleased) {
+                paused = true;
+                pauseReleased = false;
+                pauseReset = false;
+                inventory = true;
             }
 
             /* === EVENT HANDLING FOR MOVEMENT === */
@@ -247,26 +256,30 @@ int main()
 
         /* === PAUSED LOOP === */
         } else {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) || sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
                 if (pauseReleased) pauseReset = true;
                 pauseReleased = false;
             } else {
                 pauseReleased = true;
                 if (pauseReset) {           // Continue game:
                     paused = false;
+                    inventory = false;
                     frameClock.restart();   // The time elapsed since the last frame
                 }
             }
 
             /* === PAUSED RENDERING === */
-            window.clear();
-            view.setCenter(character.getPosition());
-            window.setView(view);
-            testRoom.draw(window);
-            character.draw(window);
-            window.setView(guiView);
-            window.draw(pausedIndicator);
-            window.display();
+            if (paused) {               // Check if still paused
+                window.clear();
+                view.setCenter(character.getPosition());
+                window.setView(view);
+                testRoom.draw(window);
+                character.draw(window);
+                window.setView(guiView);
+                if (inventory) window.draw(inventoryBackground);
+                else window.draw(pausedIndicator);
+                window.display();
+            }
         }
     }
 
