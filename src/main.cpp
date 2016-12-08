@@ -29,6 +29,10 @@ int main()
     if (!standardFont.loadFromFile("../resources/fonts/Sansation-Regular.ttf")) {
         throw std::runtime_error("Could not load font.");
     }
+    sf::Font sketchFont;
+    if (!sketchFont.loadFromFile("../resources/fonts/FFF_Tusj.ttf")) {
+        throw std::runtime_error("Could not load font.");
+    }
     sf::Texture hpContainerTexture;
     if (!hpContainerTexture.loadFromFile("../resources/img/hp_container1.png")) {
         throw std::runtime_error("Could not load hp container texture.");
@@ -75,6 +79,15 @@ int main()
     fpsIndicator.scale(20.0f / 256.0f * sf::Vector2f(1, 1));
     fpsIndicator.setColor(sf::Color::Green);
     fpsIndicator.setPosition(sf::Vector2f(10, 10));
+
+    sf::Text pausedIndicator;
+    pausedIndicator.setString("GAME PAUSED");
+    pausedIndicator.setFont(sketchFont);
+    pausedIndicator.setCharacterSize(256);
+    pausedIndicator.scale(60.0f / 256.0f * sf::Vector2f(1, 1));
+    pausedIndicator.setOrigin(sf::Vector2f(pausedIndicator.getLocalBounds().width / 2.0f, pausedIndicator.getLocalBounds().height / 2.0f));
+    pausedIndicator.setColor(sf::Color::Green);
+    pausedIndicator.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
 
     /* === FUNCTIONALITY === */
     bool paused = false;
@@ -127,6 +140,7 @@ int main()
                     healthBar.setPosition(eventSize - healthBarMargin);
                     healthBarBackground.setPosition(eventSize - healthBarMargin);
                     hpContainer.setPosition(eventSize - healthBarMargin);
+                    pausedIndicator.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
                     break;
                 }
                 default:
@@ -244,12 +258,14 @@ int main()
                 }
             }
 
-            /* === PAUSED GUI === */
+            /* === PAUSED RENDERING === */
             window.clear();
             view.setCenter(character.getPosition());
             window.setView(view);
             testRoom.draw(window);
             character.draw(window);
+            window.setView(guiView);
+            window.draw(pausedIndicator);
             window.display();
         }
     }
