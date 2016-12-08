@@ -49,24 +49,25 @@ int main()
 
     /* === TESTING === */
     Map map(character);
-    //Room testRoom("../resources/rooms/room_large.txt", &character);
     Room& testRoom = map.getRoom();
     character.setRoom(&testRoom);
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
     std::vector<Item> testItemVector {
-        Item("Doughnut", 4, 3, "invalid_texture_file", sf::Vector2f(0, 0)),
-        Item("Ice cream", 4, 2, "invalid_texture_file", sf::Vector2f(0, 0)),
-        Item("Cake", 4, 5, "invalid_texture_file", sf::Vector2f(0, 0)),
-        Item("Pizza", 4, 6, "invalid_texture_file", sf::Vector2f(0, 0)),
-        Item("Trophy", 3, 0, "invalid_texture_file", sf::Vector2f(0, 0)),
-        Item("Potion of wisdom", 4, 8, "invalid_texture_file", sf::Vector2f(0, 0)),
-        Item("Potion of strength", 4, 6, "invalid_texture_file", sf::Vector2f(0, 0)),
-        Item("Potion of being badass", 4, 12, "invalid_texture_file", sf::Vector2f(0, 0))
+        Item("Doughnut", 4, 3, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
+        Item("Ice cream", 4, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
+        Item("Cake", 4, 5, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
+        Item("Pizza", 4, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
+        Item("Trophy", 3, 0, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
+        Item("Potion of wisdom", 4, 8, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
+        Item("Potion of strength", 4, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
+        Item("Potion of being badass", 4, 12, "../resources/img/sword1_32.png", sf::Vector2f(0, 0))
     };
-    std::vector<sf::RectangleShape> testItemSpriteVector;
+    std::vector<sf::Texture> testItemTextureVector;
+    std::vector<sf::Sprite> testItemSpriteVector;
     for (unsigned i=0; i<testItemVector.size(); ++i) {
-        sf::RectangleShape sprite;
-        sprite.setFillColor(sf::Color(200, 100, 100));
+        testItemTextureVector.push_back(testItemVector[i].getTexture());
+        sf::Sprite sprite;
+        sprite.setTexture(testItemTextureVector[i]);
         testItemSpriteVector.push_back(sprite);
     }
 
@@ -88,7 +89,7 @@ int main()
     sf::Text fpsIndicator;
     fpsIndicator.setFont(standardFont);
     fpsIndicator.setCharacterSize(256);
-    fpsIndicator.scale(20.0f / 256.0f * sf::Vector2f(1, 1));
+    fpsIndicator.setScale(20.0f / 256.0f * sf::Vector2f(1, 1));
     fpsIndicator.setColor(sf::Color::Green);
     fpsIndicator.setPosition(sf::Vector2f(10, 10));
 
@@ -96,7 +97,7 @@ int main()
     pausedIndicator.setString("GAME PAUSED");
     pausedIndicator.setFont(sketchFont);
     pausedIndicator.setCharacterSize(256);
-    pausedIndicator.scale(60.0f / 256.0f * sf::Vector2f(1, 1));
+    pausedIndicator.setScale(60.0f / 256.0f * sf::Vector2f(1, 1));
     pausedIndicator.setOrigin(sf::Vector2f(pausedIndicator.getLocalBounds().width / 2.0f, pausedIndicator.getLocalBounds().height / 2.0f));
     pausedIndicator.setColor(sf::Color::Green);
 
@@ -165,8 +166,9 @@ int main()
                     float invMargin = invDim.x * s::relativeItemMargin;
                     float itemDim = (invDim.x - float(s::itemsPerRow) * 2.0f * invMargin) / float(s::itemsPerRow);
                     for (int i=0; i<(int)testItemSpriteVector.size(); ++i) {
-                        sf::RectangleShape& sprite = testItemSpriteVector[i];
-                        sprite.setSize(sf::Vector2f(itemDim, itemDim));
+                        sf::Sprite& sprite = testItemSpriteVector[i];
+                        sprite.setTexture(testItemTextureVector[i]);
+                        sprite.setScale(sf::Vector2f(itemDim / 32.0f, itemDim / 32.0f));
                         sprite.setPosition(0.5f * (1.0f - s::relativeInventoryBackgroundWidth) * sf::Vector2f(window.getSize()) + sf::Vector2f((i % s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin, (i / s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin));
                     }
                     break;

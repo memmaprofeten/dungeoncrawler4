@@ -93,13 +93,18 @@ void Item::draw(sf::RenderWindow& window, Character& player){
     }
 }
 
+sf::Texture Item::getTexture() const { return texture; }
+
 Item::Item (std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi){
   name = namei;
   type = typei;
   value = valuei;
-  texturefile = texturefilei;
+  textureFile = texturefilei;
   pos = posi;
   active = true;
+  if (!texture.loadFromFile(textureFile)) {
+      throw std::runtime_error(std::string("Could not load Item texture") + textureFile + ".");
+  }
 }
 
 
@@ -118,7 +123,7 @@ void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position){
 
  type = rand() % 3 + 1;
 
-//1: Gold, 1-100 per drop, 2: Healing, between 20% and 50%, 3: Weapon. 
+//1: Gold, 1-100 per drop, 2: Healing, between 20% and 50%, 3: Weapon.
  switch(type){
  case 1:
    name = "Gold!";
@@ -140,4 +145,3 @@ void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position){
  itemstorage.push_back(newitem);
 
 }
-
