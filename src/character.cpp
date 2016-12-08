@@ -74,6 +74,12 @@ void Character::draw(sf::RenderWindow& window) {
     window.draw(sprite);
 }
 
+std::vector<Item>& Character::getInventory() { return inventory; }
+
+void Character::addItem(Item item) {
+    inventory.push_back(item);
+}
+
 int Character::getHealth() const { return health; }
 
 int Character::getMaxHealth() const {

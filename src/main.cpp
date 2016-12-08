@@ -52,20 +52,18 @@ int main()
     Room& testRoom = map.getRoom();
     character.setRoom(&testRoom);
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
-    std::vector<Item> testItemVector {
-        Item("Doughnut", 4, 3, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
-        Item("Ice cream", 4, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
-        Item("Cake", 4, 5, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
-        Item("Pizza", 4, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
-        Item("Trophy", 3, 0, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
-        Item("Potion of wisdom", 4, 8, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
-        Item("Potion of strength", 4, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)),
-        Item("Potion of being badass", 4, 12, "../resources/img/sword1_32.png", sf::Vector2f(0, 0))
-    };
-    std::vector<sf::Texture> testItemTextureVector;
-    std::vector<sf::Sprite> testItemSpriteVector;
-    for (unsigned i=0; i<testItemVector.size(); ++i) {
-        testItemTextureVector.push_back(testItemVector[i].getTexture());
+    character.addItem(Item("Doughnut", 4, 3, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
+    character.addItem(Item("Ice cream", 4, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
+    character.addItem(Item("Cake", 4, 5, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
+    character.addItem(Item("Pizza", 4, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
+    character.addItem(Item("Trophy", 3, 0, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
+    character.addItem(Item("Potion of wisdom", 4, 8, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
+    character.addItem(Item("Potion of strength", 4, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
+    character.addItem(Item("Potion of being badass", 4, 12, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
+    std::vector<sf::Texture> testItemTextureVector;         // TODO: Move out to global texture vector?
+    std::vector<sf::Sprite> testItemSpriteVector;           // TODO: Move out to global sprite vector?
+    for (unsigned i=0; i<character.getInventory().size(); ++i) {
+        testItemTextureVector.push_back(character.getInventory()[i].getTexture());
         sf::Sprite sprite;
         sprite.setTexture(testItemTextureVector[i]);
         testItemSpriteVector.push_back(sprite);
