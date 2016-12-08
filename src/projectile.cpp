@@ -39,7 +39,7 @@ sf::Vector2f Projectile::getVelocity() {
 
 void Projectile::setDirection(sf::Vector2f direction) {
     dir = cv::normalized(direction);
-    rotation = (atan2(dir.y,dir.x)) * 180 / s::PI;
+    rotation = (atan2(dir.y,dir.x)) * 180 / cv::PI;
 }
 
 float Projectile::getSpeed() const { return speed; }

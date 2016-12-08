@@ -30,5 +30,7 @@ namespace s {
 	int characterRotationOffset = 270;
 	float blockDim = 10.0f;
 	int viewHeight = 150;
-	float PI = 3.14159265358979323846F;
+	float relativeInventoryBackgroundWidth = 0.8f;
+	int itemsPerRow = 8;
+	float relativeItemMargin = 0.01f;
 }

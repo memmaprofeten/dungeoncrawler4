@@ -19,13 +19,15 @@ namespace s {
 	void loadTextures();
 
 	extern std::string mapPath;
-	
+
 	extern float characterSpeed;
     extern std::string defaultProjectileTextureFile;
 	extern int characterRotationOffset;
 	extern float blockDim;         // The dimension (length=width) of each block (tile)
 	extern int viewHeight;
-	extern float PI;
+	extern float relativeInventoryBackgroundWidth;
+	extern int itemsPerRow;
+	extern float relativeItemMargin;
 }
 
 #endif

@@ -1,8 +1,12 @@
 #include "convenience.hpp"
 #include <cmath>
 
+#define PI_DEF 3.14159265358979323846F
+
 namespace cv
 {
+
+    float PI = PI_DEF;
 
     float norm(sf::Vector2f v) {
         return sqrt(v.x * v.x + v.y * v.y);

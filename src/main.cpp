@@ -15,7 +15,6 @@
 #include "weapon.hpp"
 #include "item.hpp"
 
-#define PI 3.14159265358979323846F
 #define FPS_SAMPLE_COUNT 80
 #define FLOAT_CORRECTION 0.001F     // The Epsilon value to be used to avoid floating point errors
 
@@ -54,6 +53,22 @@ int main()
     Room& testRoom = map.getRoom();
     character.setRoom(&testRoom);
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
+    std::vector<Item> testItemVector {
+        Item("Doughnut", 4, 3, "invalid_texture_file", sf::Vector2f(0, 0)),
+        Item("Ice cream", 4, 2, "invalid_texture_file", sf::Vector2f(0, 0)),
+        Item("Cake", 4, 5, "invalid_texture_file", sf::Vector2f(0, 0)),
+        Item("Pizza", 4, 6, "invalid_texture_file", sf::Vector2f(0, 0)),
+        Item("Trophy", 3, 0, "invalid_texture_file", sf::Vector2f(0, 0)),
+        Item("Potion of wisdom", 4, 8, "invalid_texture_file", sf::Vector2f(0, 0)),
+        Item("Potion of strength", 4, 6, "invalid_texture_file", sf::Vector2f(0, 0)),
+        Item("Potion of being badass", 4, 12, "invalid_texture_file", sf::Vector2f(0, 0))
+    };
+    std::vector<sf::RectangleShape> testItemSpriteVector;
+    for (unsigned i=0; i<testItemVector.size(); ++i) {
+        sf::RectangleShape sprite;
+        sprite.setFillColor(sf::Color(200, 100, 100));
+        testItemSpriteVector.push_back(sprite);
+    }
 
     /* === GUI === */
     sf::Vector2f healthBarMargin(15, 15);
@@ -135,15 +150,25 @@ int main()
                     sf::Vector2f eventSize(event.size.width, event.size.height);
                     float newViewWidth = eventSize.x / eventSize.y * view.getSize().y;
                     view.setSize(newViewWidth, view.getSize().y);
+                    // GUI:
                     guiView.setSize(eventSize);
                     guiView.setCenter(eventSize / 2.0f);
                     healthBar.setPosition(eventSize - healthBarMargin);
                     healthBarBackground.setPosition(eventSize - healthBarMargin);
                     hpContainer.setPosition(eventSize - healthBarMargin);
                     pausedIndicator.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
-                    inventoryBackground.setSize(0.8f * sf::Vector2f(window.getSize()));
+                    // Inventory:
+                    inventoryBackground.setSize(s::relativeInventoryBackgroundWidth * sf::Vector2f(window.getSize()));
                     inventoryBackground.setOrigin(sf::Vector2f(inventoryBackground.getLocalBounds().width / 2.0f, inventoryBackground.getLocalBounds().height / 2.0f));
                     inventoryBackground.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
+                    sf::Vector2f invDim = inventoryBackground.getSize();
+                    float invMargin = invDim.x * s::relativeItemMargin;
+                    float itemDim = (invDim.x - float(s::itemsPerRow) * 2.0f * invMargin) / float(s::itemsPerRow);
+                    for (int i=0; i<(int)testItemSpriteVector.size(); ++i) {
+                        sf::RectangleShape& sprite = testItemSpriteVector[i];
+                        sprite.setSize(sf::Vector2f(itemDim, itemDim));
+                        sprite.setPosition(0.5f * (1.0f - s::relativeInventoryBackgroundWidth) * sf::Vector2f(window.getSize()) + sf::Vector2f((i % s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin, (i / s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin));
+                    }
                     break;
                 }
                 default:
@@ -208,7 +233,7 @@ int main()
         	sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         	float dx = shapepos.x - mousepos.x;
         	float dy = shapepos.y - mousepos.y;
-        	float rotation = (atan2(dy,dx)) * 180 / PI;
+        	float rotation = (atan2(dy,dx)) * 180 / cv::PI;
         	character.setRotation(rotation);
 
             /* === EVENT HANDLING FOR SHOOTING === */
@@ -276,7 +301,12 @@ int main()
                 testRoom.draw(window);
                 character.draw(window);
                 window.setView(guiView);
-                if (inventory) window.draw(inventoryBackground);
+                if (inventory) {
+                    window.draw(inventoryBackground);
+                    for (const auto& sprite : testItemSpriteVector) {
+                        window.draw(sprite);
+                    }
+                }
                 else window.draw(pausedIndicator);
                 window.display();
             }

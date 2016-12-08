@@ -11,6 +11,8 @@
 namespace cv
 {
 
+    extern float PI;
+
     /**
      * Calculates the norm, or length, of a vector.
      */
