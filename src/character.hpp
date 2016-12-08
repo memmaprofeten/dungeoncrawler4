@@ -49,6 +49,8 @@ public:
 
 	void addItem(Item item);
 
+	bool consumeItem(int i);
+
 	int getHealth() const;
 
 	int getMaxHealth() const;

@@ -80,6 +80,14 @@ void Character::addItem(Item item) {
     inventory.push_back(item);
 }
 
+bool Character::consumeItem(int i) {
+    if (i < 0 || i >= (int)inventory.size()) return false;
+    // TODO: Check if item can be consumed
+    // TODO: If it can, get the perks and remove it from the inventory. If not, return false.
+    inventory.erase(inventory.begin() + i);
+    return true;
+}
+
 int Character::getHealth() const { return health; }
 
 int Character::getMaxHealth() const {

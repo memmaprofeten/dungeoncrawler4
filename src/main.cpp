@@ -18,6 +18,7 @@
 #define FPS_SAMPLE_COUNT 80
 #define FLOAT_CORRECTION 0.001F     // The Epsilon value to be used to avoid floating point errors
 
+void drawInventory(const sf::Window& window, const sf::RectangleShape& inventoryBackground, const std::vector<sf::Texture>& itemTextureVector, std::vector<sf::Sprite>& itemSpriteVector);
 void switchRoom(int neighbour, Map& map, Character& character);
 
 int main()
@@ -113,6 +114,7 @@ int main()
     tooltip.setColor(sf::Color::Green);
 
     /* === FUNCTIONALITY === */
+    bool mouseReleased = true;
     bool paused = false;
     bool pauseReleased = true;
     bool pauseReset = true;
@@ -171,15 +173,7 @@ int main()
                     inventoryBackground.setSize(s::relativeInventoryBackgroundWidth * sf::Vector2f(window.getSize()));
                     inventoryBackground.setOrigin(sf::Vector2f(inventoryBackground.getLocalBounds().width / 2.0f, inventoryBackground.getLocalBounds().height / 2.0f));
                     inventoryBackground.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
-                    sf::Vector2f invDim = inventoryBackground.getSize();
-                    float invMargin = invDim.x * s::relativeItemMargin;
-                    float itemDim = (invDim.x - float(s::itemsPerRow) * 2.0f * invMargin) / float(s::itemsPerRow);
-                    for (int i=0; i<(int)testItemSpriteVector.size(); ++i) {
-                        sf::Sprite& sprite = testItemSpriteVector[i];
-                        sprite.setTexture(testItemTextureVector[i]);
-                        sprite.setScale(sf::Vector2f(itemDim / 32.0f, itemDim / 32.0f));
-                        sprite.setPosition(0.5f * (1.0f - s::relativeInventoryBackgroundWidth) * sf::Vector2f(window.getSize()) + sf::Vector2f((i % s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin, (i / s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin));
-                    }
+                    drawInventory(window, inventoryBackground, testItemTextureVector, testItemSpriteVector);
                     break;
                 }
                 default:
@@ -338,6 +332,20 @@ int main()
                         tooltip.setString(tooltipSs.str());
                         tooltipShowing = true;
                     }
+                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                        if (tooltipShowing && mouseReleased) {
+                            std::cout << "Using " + character.getInventory()[itemIndex].getname() << "." << std::endl;
+                            bool couldConsume = character.consumeItem(itemIndex);
+                            if (couldConsume) {
+                                testItemTextureVector.erase(testItemTextureVector.begin() + itemIndex);
+                                testItemSpriteVector.erase(testItemSpriteVector.begin() + itemIndex);
+                                drawInventory(window, inventoryBackground, testItemTextureVector, testItemSpriteVector);
+                            }
+                        }
+                        mouseReleased = false;
+                    } else {
+                        mouseReleased = true;
+                    }
 
                     window.draw(inventoryBackground);
                     for (const auto& sprite : testItemSpriteVector) window.draw(sprite);
@@ -350,6 +358,18 @@ int main()
     }
 
     return 0;
+}
+
+void drawInventory(const sf::Window& window, const sf::RectangleShape& inventoryBackground, const std::vector<sf::Texture>& itemTextureVector, std::vector<sf::Sprite>& itemSpriteVector) {
+    sf::Vector2f invDim = inventoryBackground.getSize();
+    float invMargin = invDim.x * s::relativeItemMargin;
+    float itemDim = (invDim.x - float(s::itemsPerRow) * 2.0f * invMargin) / float(s::itemsPerRow);
+    for (int i=0; i<(int)itemSpriteVector.size(); ++i) {
+        sf::Sprite& sprite = itemSpriteVector[i];
+        sprite.setTexture(itemTextureVector[i]);
+        sprite.setScale(sf::Vector2f(itemDim / 32.0f, itemDim / 32.0f));
+        sprite.setPosition(0.5f * (1.0f - s::relativeInventoryBackgroundWidth) * sf::Vector2f(window.getSize()) + sf::Vector2f((i % s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin, (i / s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin));
+    }
 }
 
 /* Switches to the room that is the ith neighbour of the current room, where
