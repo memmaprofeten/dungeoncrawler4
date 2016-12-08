@@ -320,18 +320,19 @@ int main()
                     // Track mouse position:
                     sf::Vector2f mousepos = sf::Vector2f(sf::Mouse::getPosition(window));
                     sf::Vector2f globalOffset = sf::Vector2f(window.getSize()) * 0.5f * (1.0f - s::relativeInventoryBackgroundWidth);
-                    float rawDim = float(window.getSize().x) * s::relativeInventoryBackgroundWidth / float(s::itemsPerRow);
+                    float rawDim = float(window.getSize().x) * s::relativeInventoryBackgroundWidth / float(s::itemsPerRow); // The dimension of an item slot including its margins
                     float xir = (mousepos.x - globalOffset.x) / rawDim;
                     float yir = (mousepos.y - globalOffset.y) / rawDim;
-                    int xi = int(floor(xir));
-                    int yi = int(floor(yir));
-                    int itemIndex = yi * s::itemsPerRow + xi;
+                    int xi = int(floor(xir));       // The horizontal index of the current item in the inventory grid
+                    int yi = int(floor(yir));       // The vertical index of the current item in the inventory grid
+                    int itemIndex = yi * s::itemsPerRow + xi;       // The actual index in the character's inventory of the item being hovered over
                     float relativeItemMarginToItem = s::relativeItemMargin * (float)s::itemsPerRow / s::relativeInventoryBackgroundWidth;
                     if (xi >= 0 && xi < s::itemsPerRow &&
                         yi >= 0 && itemIndex < (int)character.getInventory().size() &&
-                        xir - (int)xir >= relativeItemMarginToItem && xir - (int)xir <= 1.0f - relativeItemMarginToItem &&
-                        yir - (int)yir >= relativeItemMarginToItem && yir - (int)yir <= 1.0f - relativeItemMarginToItem
+                        xir - (int)xir >= relativeItemMarginToItem && xir - (int)xir <= 1.0f - relativeItemMarginToItem &&  // Check if the cursor is on top of a horizontal margin
+                        yir - (int)yir >= relativeItemMarginToItem && yir - (int)yir <= 1.0f - relativeItemMarginToItem     // Check if the cursor is on top of a vertical margin
                     ) {
+                        // Show tooltip:
                         std::stringstream tooltipSs;
                         tooltipSs << character.getInventory()[itemIndex].getname();
                         tooltip.setString(tooltipSs.str());
