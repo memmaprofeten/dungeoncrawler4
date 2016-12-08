@@ -27,10 +27,10 @@ struct roomContainer {
 	RoomType type;					// The type of the room
 	bool active;					// Whether or not the room represented by this struct instance is currently in use (initialized)
 	std::string roomPath;			// A path to the room file describing this room
-	int neighbourNorth;				// The index of the northern neighbour (negative if no such neighbour exists)
 	int neighbourEast;				// The index of the eastern neighbour (negative if no such neighbour exists)
 	int neighbourSouth;				// The index of the southern neighbour (negative if no such neighbour exists)
 	int neighbourWest;				// The index of the western neighbour (negative if no such neighbour exists)
+	int neighbourNorth;				// The index of the northern neighbour (negative if no such neighbour exists)
 };
 
 class Map {
@@ -48,6 +48,11 @@ public:
 	 * i is defined by the 'neighbour' parameter. If the neighbour index is
 	 * invalid for the current room, it selects a default room instead. The
 	 * method then returns a reference to the new room.
+	 * The neighbour indices are defined in the following way:
+	 * 		- 0: east
+	 * 		- 1: south
+	 * 		- 2: west
+	 * 		- 3: north
 	 */
 	Room& switchRoom(int neighbour);
 

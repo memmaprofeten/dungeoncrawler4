@@ -23,6 +23,9 @@ namespace s {
 			textures.push_back(tex);
 		}
 	}
+
+	std::string mapPath = "../resources/rooms/";
+
 	float characterSpeed = 80.0f;
 	int characterRotationOffset = 270;
 	float blockDim = 10.0f;

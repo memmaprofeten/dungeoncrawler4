@@ -40,6 +40,13 @@ public:
 	 */
 	 bool hasPosition(sf::Vector2f pos);
 
+	 /**
+	  * Returns a 2D vector describing in which direction(s) the given position
+	  * is out of bounds. If the given position is still within bounds, the
+	  * returned vector is the zero vector.
+	  */
+	 sf::Vector2i getOffsetDirection(sf::Vector2f pos);
+
 	/**
 	 * Returns a reference to the tile at coordinates (x, y).
 	 * If (x, y) are invalid coordinates, an error is thrown.
@@ -91,9 +98,9 @@ public:
 	 */
 	Projectile& createProjectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex);
 
-  std::vector<Monster*>& getmonsters();
-  std::vector<Item>& getitems();
-  Character* getcharacter();
+	std::vector<Monster*>& getmonsters();
+	std::vector<Item>& getitems();
+	Character* getcharacter();
 private:
 	int width;
 	int height;
@@ -103,8 +110,8 @@ private:
 	std::vector<bool> spritesInUse;	//value telling if sprite is to bedrawn
 	std::vector<Projectile> projectiles; //Projectile objects
 	std::vector<int> freeProjectiles;		// A vector of projectile indices that are free for replacing
-  std::vector<Monster*> monsters; //Vector containing pointers to monsters on the level.
-  std::vector<Item> itemstorage; //Vector containing items in level.
+	std::vector<Monster*> monsters; //Vector containing pointers to monsters on the level.
+	std::vector<Item> itemstorage; //Vector containing items in level.
 };
 
 #endif

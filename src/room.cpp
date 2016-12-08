@@ -14,7 +14,7 @@ Room::Room(std::string const file, Character* character) : character(character) 
 	sf::Sprite dummy;
 	//sf::Sprite* dymmu = dummy; //TODO: Fix this
 	std::string line;
-	std::ifstream mapFile (file);
+	std::ifstream mapFile (s::mapPath + file);
 	if (mapFile.is_open()){
 		getline(mapFile, line);
 		std::istringstream iss(line);
@@ -56,6 +56,15 @@ bool Room::hasPosition(sf::Vector2f pos) {
 		return false;
 	}
 	return true;
+}
+
+sf::Vector2i Room::getOffsetDirection(sf::Vector2f pos) {
+	sf::Vector2i res(0, 0);
+	if (pos.x < 0.0f)						res = sf::Vector2i(res.x - 1, res.y);
+	else if (pos.x > width * s::blockDim)	res = sf::Vector2i(res.x + 1, res.y);
+	if (pos.y < 0.0f)						res = sf::Vector2i(res.x, res.y - 1);
+	else if (pos.y > height * s::blockDim)	res = sf::Vector2i(res.x, res.y + 1);
+	return res;
 }
 
 Tile& Room::getTile(int x, int y) {

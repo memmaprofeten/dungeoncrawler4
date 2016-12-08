@@ -29,6 +29,10 @@ std::string Character::getName() const { return name; }
 
 sf::Vector2f Character::getPosition() const { return pos; }
 
+void Character::setPosition(sf::Vector2f newPosition) {
+    pos = newPosition;
+}
+
 void Character::move(sf::Vector2f dir, float elapsed) {
     sf::Vector2f dpos = elapsed * speed * dir;
     if (room == NULL) {
@@ -40,12 +44,16 @@ void Character::move(sf::Vector2f dir, float elapsed) {
     Tile& verTile = room->getTile(pos + dposVer);
     if (horTile.isPenetrable()) {
         pos += dposHor;
-        sprite.move(dpos.x, 0);
+        //sprite.move(dpos.x, 0);
     }
     if (verTile.isPenetrable()) {
         pos += dposVer;
-        sprite.move(0, dpos.y);
+        //sprite.move(0, dpos.y);
     }
+}
+
+sf::Vector2f Character::getHypotheticalPosition(sf::Vector2f dir, float elapsed) const {
+    return getPosition() + elapsed * speed * dir;
 }
 
 int Character::getRotation() { return rotation; }
@@ -61,6 +69,7 @@ void Character::setRoom(Room* r) { room = r; }
 
 void Character::draw(sf::RenderWindow& window) {
     shadowSprite.setPosition(pos.x, pos.y);
+    sprite.setPosition(pos.x, pos.y);
     window.draw(shadowSprite);
     window.draw(sprite);
 }

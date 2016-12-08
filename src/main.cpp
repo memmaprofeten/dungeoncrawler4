@@ -17,6 +17,9 @@
 
 #define PI 3.14159265358979323846F
 #define FPS_SAMPLE_COUNT 80
+#define FLOAT_CORRECTION 0.001F     // The Epsilon value to be used to avoid floating point errors
+
+void switchRoom(int neighbour, Map& map, Character& character);
 
 int main()
 {
@@ -155,7 +158,13 @@ int main()
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) cDir.y += 1;
     	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) cDir.y -= 1;
-        character.move(cv::normalized(cDir), elapsed);
+        sf::Vector2f cdPos = cv::normalized(cDir);
+        sf::Vector2i offset = testRoom.getOffsetDirection(character.getHypotheticalPosition(cdPos, elapsed));   // Check if the player has left the room
+        if (offset.x > 0)       switchRoom(0, map, character);
+        else if (offset.y > 0)  switchRoom(1, map, character);
+        else if (offset.x < 0)  switchRoom(2, map, character);
+        else if (offset.y < 0)  switchRoom(3, map, character);
+        character.move(cdPos, elapsed);
 
         /* === EVENT HANDLING FOR TURNING === */
     	sf::Vector2f shapepos = character.getPosition();
@@ -210,4 +219,37 @@ int main()
     }
 
     return 0;
+}
+
+/* Switches to the room that is the ith neighbour of the current room, where
+ * i is defined by the 'neighbour' parameter.
+ * The neighbour indices are defined in the following way:
+ * 		- 0: east
+ * 		- 1: south
+ * 		- 2: west
+ * 		- 3: north
+ */
+void switchRoom(int neighbour, Map& map, Character& character) {
+    Room& newRoom = map.switchRoom(neighbour);
+    character.setRoom(&newRoom);
+    sf::Vector2f pos = character.getPosition();
+    switch (neighbour) {
+        case 0:
+            pos.x = 0 + FLOAT_CORRECTION;
+            break;
+        case 1:
+            pos.y = 0 + FLOAT_CORRECTION;
+            break;
+        case 2:
+            pos.x = newRoom.getWidth() * s::blockDim - FLOAT_CORRECTION;
+            break;
+        case 3:
+            pos.y = newRoom.getHeight() * s::blockDim - FLOAT_CORRECTION;
+            break;
+        default:
+            pos.x = newRoom.getWidth() * s::blockDim / 2.0f;
+            pos.y = newRoom.getHeight() * s::blockDim / 2.0f;
+            break;
+    }
+    character.setPosition(pos);
 }

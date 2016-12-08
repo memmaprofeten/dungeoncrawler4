@@ -22,7 +22,14 @@ public:
 
 	sf::Vector2f getPosition() const;
 
+	/* Forces the character's position to the given position, without taking
+	 * any constraints into account.
+	 */
+	void setPosition(sf::Vector2f newPosition);
+
 	void move(sf::Vector2f dir, float elapsed);
+
+	sf::Vector2f getHypotheticalPosition(sf::Vector2f dir, float elapsed) const;
 
 	int getRotation();
 
@@ -52,7 +59,7 @@ public:
 
 	int getgold() const;
 
-  void givexp(int amount);
+	void givexp(int amount);
 
 private:
 	std::string name; 				//Name of player. User input or based on class?
