@@ -77,6 +77,9 @@ int main()
     fpsIndicator.setPosition(sf::Vector2f(10, 10));
 
     /* === FUNCTIONALITY === */
+    bool paused = false;
+    bool pauseReleased = true;
+    bool pauseReset = true;
     sf::Clock frameClock;
     float elapsed;
     float elapsedSinceLastShot = 1000.0f;
@@ -105,26 +108,6 @@ int main()
     /* === THE MAIN GAME LOOP === */
 	while (window.isOpen())
 	{
-        elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame
-        elapsedSinceLastShot += elapsed;                // The time elapsed since player's last shot
-        //sf::sleep(sf::seconds(0.05f));                // Uncomment this to simulate worse fps
-
-        /* === FPS COUNTER === */
-        fpsValue -= fpsSamples[fpsIndex];
-        fpsValue += elapsed;
-        fpsSamples[fpsIndex] = elapsed;
-        fpsIndex = (fpsIndex + 1) % FPS_SAMPLE_COUNT;
-        if (fpsIndex == 0) fpsIsCounting = true;
-        std::stringstream fpsSs;
-        if (fpsIsCounting) {
-            fpsSs << int(round(float(FPS_SAMPLE_COUNT) / fpsValue)) << " fps";
-            fpsIndicator.setString(fpsSs.str());
-        } else {
-            fpsSs << "Counting...";
-            fpsIndicator.setString(fpsSs.str());
-        }
-
-        window.setView(view);
 
         /* === GENERAL EVENT HANDLING === */
         sf::Event event;
@@ -149,73 +132,126 @@ int main()
                 default:
                     break;
             }
-
         }
 
-        /* === EVENT HANDLING FOR MOVEMENT === */
-        sf::Vector2f cDir(0, 0);
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) cDir.x += 1;
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) cDir.y += 1;
-    	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) cDir.y -= 1;
-        sf::Vector2f cdPos = cv::normalized(cDir);
-        sf::Vector2i offset = testRoom.getOffsetDirection(character.getHypotheticalPosition(cdPos, elapsed));   // Check if the player has left the room
-        if (offset.x > 0)       switchRoom(0, map, character);
-        else if (offset.y > 0)  switchRoom(1, map, character);
-        else if (offset.x < 0)  switchRoom(2, map, character);
-        else if (offset.y < 0)  switchRoom(3, map, character);
-        character.move(cdPos, elapsed);
+        /* === GAMEPLAY LOOP === */
+        if (!paused) {
+            elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame
+            elapsedSinceLastShot += elapsed;                // The time elapsed since player's last shot
+            //sf::sleep(sf::seconds(0.05f));                // Uncomment this to simulate worse fps
 
-        /* === EVENT HANDLING FOR TURNING === */
-    	sf::Vector2f shapepos = character.getPosition();
-    	sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-    	float dx = shapepos.x - mousepos.x;
-    	float dy = shapepos.y - mousepos.y;
-    	float rotation = (atan2(dy,dx)) * 180 / PI;
-    	character.setRotation(rotation);
+            /* === FPS COUNTER === */
+            fpsValue -= fpsSamples[fpsIndex];
+            fpsValue += elapsed;
+            fpsSamples[fpsIndex] = elapsed;
+            fpsIndex = (fpsIndex + 1) % FPS_SAMPLE_COUNT;
+            if (fpsIndex == 0) fpsIsCounting = true;
+            std::stringstream fpsSs;
+            if (fpsIsCounting) {
+                fpsSs << int(round(float(FPS_SAMPLE_COUNT) / fpsValue)) << " fps";
+                fpsIndicator.setString(fpsSs.str());
+            } else {
+                fpsSs << "Counting...";
+                fpsIndicator.setString(fpsSs.str());
+            }
 
-        /* === EVENT HANDLING FOR SHOOTING === */
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
-                elapsedSinceLastShot = 0.0f;
-                Projectile& projectile = fireball_weapon.createProjectile(testRoom);
-                projectile.setPosition(shapepos);
-                // Calculate the velocity of the projectile based on the location of the aim (mouse click) and the player's momentum:
-                sf::Vector2f vel = cv::normalized(sf::Vector2f(mousepos) - shapepos) * projectile.getSpeed() + cv::normalized(cDir) * s::characterSpeed;
-                projectile.setDirection(cv::normalized(vel));
-                if (cv::norm(projectile.getVelocity()) == 0.0f) {      // If mousepos == shapepos, there is no valid direction. In this case, simply fire the projectile in a default direction (the direction of the x axis).
-                    projectile.setDirection(sf::Vector2f(1, 0));
+            window.setView(view);
+
+
+
+            /* === GENERAL EVENT HANDLING === */
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) if (pauseReleased) {
+                paused = true;
+                pauseReleased = false;
+                pauseReset = false;
+            }
+
+            /* === EVENT HANDLING FOR MOVEMENT === */
+            sf::Vector2f cDir(0, 0);
+        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) cDir.x += 1;
+        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
+        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) cDir.y += 1;
+        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) cDir.y -= 1;
+            sf::Vector2f cdPos = cv::normalized(cDir);
+            sf::Vector2i offset = testRoom.getOffsetDirection(character.getHypotheticalPosition(cdPos, elapsed));   // Check if the player has left the room
+            if (offset.x > 0)       switchRoom(0, map, character);
+            else if (offset.y > 0)  switchRoom(1, map, character);
+            else if (offset.x < 0)  switchRoom(2, map, character);
+            else if (offset.y < 0)  switchRoom(3, map, character);
+            character.move(cdPos, elapsed);
+
+            /* === EVENT HANDLING FOR TURNING === */
+        	sf::Vector2f shapepos = character.getPosition();
+        	sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+        	float dx = shapepos.x - mousepos.x;
+        	float dy = shapepos.y - mousepos.y;
+        	float rotation = (atan2(dy,dx)) * 180 / PI;
+        	character.setRotation(rotation);
+
+            /* === EVENT HANDLING FOR SHOOTING === */
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
+                    elapsedSinceLastShot = 0.0f;
+                    Projectile& projectile = fireball_weapon.createProjectile(testRoom);
+                    projectile.setPosition(shapepos);
+                    // Calculate the velocity of the projectile based on the location of the aim (mouse click) and the player's momentum:
+                    sf::Vector2f vel = cv::normalized(sf::Vector2f(mousepos) - shapepos) * projectile.getSpeed() + cv::normalized(cDir) * s::characterSpeed;
+                    projectile.setDirection(cv::normalized(vel));
+                    if (cv::norm(projectile.getVelocity()) == 0.0f) {      // If mousepos == shapepos, there is no valid direction. In this case, simply fire the projectile in a default direction (the direction of the x axis).
+                        projectile.setDirection(sf::Vector2f(1, 0));
+                    }
                 }
             }
+
+            healthBar.setSize(sf::Vector2f(std::max(0.0f, 300.0f * float(character.getHealth()) / float(character.getMaxHealth())), 20));
+
+            /* === RENDERING === */
+
+            window.clear();
+            view.setCenter(character.getPosition());
+            window.setView(view);
+            testRoom.draw(window);
+
+            testRoom.drawProjectiles(window, elapsed);
+        	for (auto& p : meleemonsters) {
+        	  p.monsterai(character, window, elapsed);
+        	}
+        	for (auto& p : rangedmonsters) {
+        	  p.monsterai(character,window,elapsed);
+        	}
+
+            character.draw(window);
+
+            /* === GUI === */
+            window.setView(guiView);
+            window.draw(healthBarBackground);
+            window.draw(healthBar);
+            window.draw(hpContainer);
+            window.draw(fpsIndicator);
+
+            window.display();
+
+        /* === PAUSED LOOP === */
+        } else {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+                if (pauseReleased) pauseReset = true;
+                pauseReleased = false;
+            } else {
+                pauseReleased = true;
+                if (pauseReset) {           // Continue game:
+                    paused = false;
+                    frameClock.restart();   // The time elapsed since the last frame
+                }
+            }
+
+            /* === PAUSED GUI === */
+            window.clear();
+            view.setCenter(character.getPosition());
+            window.setView(view);
+            testRoom.draw(window);
+            character.draw(window);
+            window.display();
         }
-
-        healthBar.setSize(sf::Vector2f(std::max(0.0f, 300.0f * float(character.getHealth()) / float(character.getMaxHealth())), 20));
-
-        /* === RENDERING === */
-
-        window.clear();
-        view.setCenter(character.getPosition());
-        window.setView(view);
-        testRoom.draw(window);
-
-        testRoom.drawProjectiles(window, elapsed);
-    	for (auto& p : meleemonsters) {
-    	  p.monsterai(character, window, elapsed);
-    	}
-    	for (auto& p : rangedmonsters) {
-    	  p.monsterai(character,window,elapsed);
-    	}
-
-        character.draw(window);
-
-        /* === GUI === */
-        window.setView(guiView);
-        window.draw(healthBarBackground);
-        window.draw(healthBar);
-        window.draw(hpContainer);
-        window.draw(fpsIndicator);
-
-        window.display();
     }
 
     return 0;
