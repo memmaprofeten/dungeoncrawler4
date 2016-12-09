@@ -14,6 +14,7 @@
 #include "monster.hpp"
 #include "weapon.hpp"
 #include "item.hpp"
+#include "npc.hpp"
 
 #define FPS_SAMPLE_COUNT 80
 #define FLOAT_CORRECTION 0.001F     // The Epsilon value to be used to avoid floating point errors

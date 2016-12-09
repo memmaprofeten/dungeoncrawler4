@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <time.h>
+#include <cmath>
 
 std::string Item::getname() const{
   return name;
