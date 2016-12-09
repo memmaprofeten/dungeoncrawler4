@@ -2,6 +2,7 @@
 #include "settings.hpp"
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 #include <sstream>
 #include <cmath>
 #include <algorithm>

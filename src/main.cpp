@@ -58,14 +58,14 @@ int main()
 
     Shopkeeper shopkeeper("../resources/img/character_32.png");
     shopkeeper.setPosition(sf::Vector2f(40,40));
-    character.addItem(Item("Doughnut", 4, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Ice cream", 4, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Cake", 4, 5, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Pizza", 4, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Trophy", 3, 0, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Potion of wisdom", 4, 8, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Potion of strength", 4, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Potion of being badass", 4, 12, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
+    character.addItem(Item("Doughnut", 2, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0),1));
+    character.addItem(Item("Ice cream", 2, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
+    character.addItem(Item("Cake", 2, 5, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
+    character.addItem(Item("Pizza", 2, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
+    character.addItem(Item("Trophy", 4, 0, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
+    character.addItem(Item("Potion of wisdom", 2, 8, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
+    character.addItem(Item("Potion of strength", 2, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
+    character.addItem(Item("Potion of being badass", 2, 12, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
 
     std::vector<sf::Texture> testItemTextureVector;         // TODO: Move out to global texture vector?
     std::vector<sf::Sprite> testItemSpriteVector;           // TODO: Move out to global sprite vector?
@@ -140,9 +140,9 @@ int main()
     // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
     //CreateMonster(sf::Vector2f(75,75), &testRoom, 1);
     //CreateMonster(sf::Vector2f(50,50), &testRoom, 1);
-MeleeMonster tempmon = MeleeMonster(sf::Vector2f(200,200), &(map.getRoom()), 1);	
+MeleeMonster tempmon = MeleeMonster(sf::Vector2f(200,200), &(map.getRoom()), 1);
 map.getRoom().addmonster(&tempmon);
-	
+
 
 /*    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &testRoom, 1.0));
     meleemonsters.begin()->setxypos(50,100);

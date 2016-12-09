@@ -87,8 +87,9 @@ bool Character::consumeItem(int i) {
     inventory[i].dothing(*this);
     if (inventory[i].gettype() == 2){
       inventory.erase(inventory.begin() + i);
+      return true;
     }
-    return true;
+    return false;
 }
 
 int Character::getHealth() const { return health; }
