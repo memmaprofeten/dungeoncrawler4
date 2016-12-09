@@ -116,6 +116,8 @@ RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int 
   active = true;
 }
 
+RangedMonster::~RangedMonster() {}
+
 MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, int attackrangei, Room* roomi, float timebetweenattacksi){
   monstername = namei;
   health = healthi;
@@ -130,6 +132,8 @@ MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int at
   attacktimer = 0.0;
   active = true;
 }
+
+MeleeMonster::~MeleeMonster() {}
 
 /*
 Functions for attacking. Melee monster attacks check if the player is within range of the enemy. If they are, it reduces player damage based on its attackdamage variable.
@@ -248,19 +252,19 @@ void Monster::draw(sf::RenderWindow& window){
 void CreateMonster(sf::Vector2f positioni, Room* roomi, int leveli){
   int type;
   std::string name;
-  
+
   srand(time(NULL));
 
   // Randomly select type. 1: Melee, 2: Ranged
   type = (rand() % 2) + 1;
-  
+
   switch(type){
   case 1:{
     name = "ChopChop the Monstorous";
 
     //Name, health, xp on kill, attack damage, movespeed, aggrorange, attack range, room pointer, time between attacks.
     MeleeMonster newmonster1 = MeleeMonster(name, (rand() % 4)+leveli, leveli + 2, (rand()%3)+leveli, ((rand()%2)+1)*100.0f, 200.0f, (rand()%5)+10, roomi, 0.8f);
-    
+
     newmonster1.setxypos(positioni.x, positioni.y);
     roomi->getmonsters().push_back(&newmonster1);
     break;

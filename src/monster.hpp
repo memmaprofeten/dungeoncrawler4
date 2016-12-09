@@ -12,7 +12,7 @@ class Room;
 class Monster{
 public:
   Monster(){};
-  ~Monster(){};
+  virtual ~Monster(){};
 /*Constructor similar to the character
 each monster assigned random item at creation
 
@@ -87,6 +87,7 @@ public:
   void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
   //Constructor
   RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, float projectilespeedi, float attackrangei, Room* roomi, /*std::vector<Projectile>* projectiles*/ float timebetweenattacksi);
+  ~RangedMonster();
 
 private:
   float projectilespeed; //How fast the projectile fired by the enemy moves.
@@ -100,7 +101,8 @@ public:
   void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
   //Constructor
   MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, int attackrangei, Room* roomi, float timebetweenattacksi);
-  
+  ~MeleeMonster();
+
 private:
   int attackrange; //Radius of the enemy's attack swing
 };

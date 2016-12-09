@@ -21,6 +21,11 @@ public:
 	Room(std::string const file, Character* character);
 
 	/**
+	 * The Room destructor
+	 */
+	~Room();
+
+	/**
 	 * Returns the width of the room (in blocks)
 	 */
 	int getWidth() const;

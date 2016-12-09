@@ -36,6 +36,13 @@ Room::Room(std::string const file, Character* character) : character(character) 
 	}
 }
 
+Room::~Room() {
+	for (unsigned i=0; i<monsters.size(); ++i) {
+		delete monsters[i];
+		monsters.clear();
+	}
+}
+
 int Room::getWidth() const {
 	return width;
 }
