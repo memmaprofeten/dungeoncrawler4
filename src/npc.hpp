@@ -8,15 +8,23 @@ class Item;
 
 class Npc{
 public:
-  Npc();
+  Npc(std::string s);
+  
+  void setPosition(sf::Vector2f);
+  
+  void draw(sf::RenderWindow&);
+  
+  void setRotation(int);
 
 private:
-  
+  sf::Texture texture;
+  sf::Sprite sprite;
+  sf::Vector2f pos;
 };
 
 class Shopkeeper : public Npc {
 public:
-  Shopkeeper();
+  Shopkeeper(std::string s);
 private:
   std::vector<Item> inventory;
 };

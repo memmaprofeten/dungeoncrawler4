@@ -54,6 +54,8 @@ int main()
     Room& testRoom = map.getRoom();
     character.setRoom(&testRoom);
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
+    Shopkeeper shopkeeper("../resources/img/character_32.png");
+    shopkeeper.setPosition(sf::Vector2f(40,40));
     character.addItem(Item("Doughnut", 4, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0)));
     character.addItem(Item("Ice cream", 4, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
     character.addItem(Item("Cake", 4, 5, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
@@ -275,6 +277,7 @@ int main()
         	}
 
             character.draw(window);
+            shopkeeper.draw(window);
 
             /* === GUI === */
             window.setView(guiView);
