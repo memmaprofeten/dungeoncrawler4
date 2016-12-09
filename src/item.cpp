@@ -50,8 +50,8 @@ void Item::dogoldthingy(Character& player){
 
 void Item::dohealythingy(Character& player){
   //Set player health to either their max health, or their health + a percentage of max hp.
-  std::cout<< "Player has picked up a healing item, healing for " << value << " of their max health." << std::endl;
-  player.sethealth(int(std::min(float(player.getMaxHealth()),player.getHealth()+(player.getMaxHealth()*value))));
+  std::cout<< "Player has picked up a healing item, healing for " << value << "  health." << std::endl;
+  player.sethealth(int(std::min(float(player.getMaxHealth()),player.getHealth()+value)));
 }
 
 void Item::doweaponthingy(Character& player){
@@ -84,10 +84,11 @@ void Item::draw(sf::RenderWindow& window, Character& player){
 	dogoldthingy(player);
 	break;
       case 2:
-	dohealythingy(player);
+	player.addItem(*this);
 	break;
       case 3:
-	doweaponthingy(player);
+	player.addItem(*this);
+	break;
       }
 
       active = false;
@@ -96,24 +97,26 @@ void Item::draw(sf::RenderWindow& window, Character& player){
 
 sf::Texture Item::getTexture() const { return texture; }
 
-Item::Item (std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi){
+Item::Item (std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi, int leveli){
   name = namei;
   type = typei;
   value = valuei;
   textureFile = texturefilei;
   pos = posi;
   active = true;
+  level = leveli;
   if (!texture.loadFromFile(textureFile)) {
       throw std::runtime_error(std::string("Could not load Item texture") + textureFile + ".");
   }
 }
 
 
-void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position){
+void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position, int leveli){
   std::string name;
  int type;
  float value;
  std::string texturefile;
+ std::string texturepath;
  sf::Vector2f pos;
 
 //Set position to one given in input.
@@ -129,19 +132,22 @@ void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position){
  case 1:
    name = "Gold!";
    value = ceil(rand()%100+1);
+   texturepath = "../resources/img/dougnut_32.png";
    break;
  case 2:
    name = "Potion of Healing!";
-   value = float((ceil(rand()%30+20))/100);
+   value = float(rand() % (leveli*5) + 1);
+   texturepath = "../resources/img/doughnut_32.png";
    break;
  case 3:
    name = "Weapon!";
+   texturepath = "../resources/img/sword1_32.png";
    value = 0;
    break;
  }
 
 
- Item newitem = Item(name, type, value, "Placeholder for eventual real texture filepath.", pos);
+ Item newitem = Item(name, type, value, texturepath, pos, leveli);
 
  itemstorage.push_back(newitem);
 

@@ -82,6 +82,10 @@ public:
 	 */
 	void drawProjectiles(sf::RenderWindow& window, float elapsed);
 
+  // Runs the monster AI and draws them.
+  void drawmonsters(sf::RenderWindow& window, float elapsed);
+  
+  
 	/**
 	 * Prints the room to std::cout.
 	 */
@@ -102,7 +106,7 @@ public:
 	 * parameters to it.)
 	 */
 	Projectile& createProjectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex);
-
+  
 	std::vector<Monster*>& getmonsters();
 	std::vector<Item>& getitems();
 	Character* getcharacter();

@@ -22,9 +22,8 @@ public:
   bool isactive() const;
   sf::Vector2f getpos() const;
   sf::Texture getTexture() const;
-  Item(std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi);
+  Item(std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi, int leveli);
 
-  //Functions for the switch cases.
   void dogoldthingy(Character& player);
   void dohealythingy(Character& player);
   void doweaponthingy(Character& player);
@@ -40,14 +39,15 @@ type, uses switch in order to have to track multiple types of item in play.
 3: Weapon. Calls function to give player random weapon (or weapon based on value) when player walks over.
 */
   std::string name;//Name, used for message player gets when picking up item.
-  int type; //Variable used for switch.
-  float value;//Value, used by function called when player walks over item.
   std::string textureFile; //Filepath for texture to be drawn on ground.
   sf::Texture texture;
   sf::Vector2f pos; //Item XY Positiony
   bool active; //To track if the item is active.
+  int type;
+  float value;
+  int level;
 };
 
-void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position); //Funtion to create item. Called when player kills monster.
+void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position, int leveli); //Funtion to create item. Called when player kills monster.
 
 #endif
