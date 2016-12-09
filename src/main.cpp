@@ -14,6 +14,7 @@
 #include "monster.hpp"
 #include "weapon.hpp"
 #include "item.hpp"
+#include "npc.hpp"
 
 #define FPS_SAMPLE_COUNT 80
 #define FLOAT_CORRECTION 0.001F     // The Epsilon value to be used to avoid floating point errors
@@ -54,6 +55,8 @@ int main()
     Room& testRoom = map.getRoom();
     character.setRoom(&testRoom);
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
+    Shopkeeper shopkeeper("../resources/img/character_32.png");
+    shopkeeper.setPosition(sf::Vector2f(40,40));
     character.addItem(Item("Doughnut", 4, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0)));
     character.addItem(Item("Ice cream", 4, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
     character.addItem(Item("Cake", 4, 5, "../resources/img/sword1_32.png", sf::Vector2f(0, 0)));
@@ -136,11 +139,17 @@ int main()
 
     //Monster test code. Comment out later.
     // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
-    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &testRoom, 1.0));
+/*    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &testRoom, 1.0));
     meleemonsters.begin()->setxypos(50,100);
     rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 30.0, 50, 100.0, 80.0, &testRoom, 1.0));
     rangedmonsters.begin()->setxypos(50,150);
-
+*/  	MeleeMonster monster1("test", 1, 1, 1, 40.0, 20, 4, &testRoom, 1.0);
+	RangedMonster monster2("test2", 1, 1, 1, 30.0, 50, 100.0, 80.0, &testRoom, 1.0);
+	testRoom.getmonsters().push_back(&monster1);
+    	testRoom.getmonsters().push_back(&monster2);
+	for (auto monster : testRoom.getmonsters()){
+		monster->setxypos(50,100);
+	}
     // Mock parameters start here:
     float projectileCooldown = 0.3f;        // In seconds
     // Mock parameters end here
@@ -267,14 +276,19 @@ int main()
             testRoom.draw(window);
 
             testRoom.drawProjectiles(window, elapsed);
+/*
         	for (auto& p : meleemonsters) {
         	  p.monsterai(character, window, elapsed);
         	}
         	for (auto& p : rangedmonsters) {
         	  p.monsterai(character,window,elapsed);
         	}
-
+*/		
+		for (auto p : testRoom.getmonsters()){
+			p->monsterai(character,window,elapsed);
+		}
             character.draw(window);
+            shopkeeper.draw(window);
 
             /* === GUI === */
             window.setView(guiView);

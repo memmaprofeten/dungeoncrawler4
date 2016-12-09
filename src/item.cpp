@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <time.h>
+#include <cmath>
 
 std::string Item::getname() const{
   return name;
@@ -140,7 +141,7 @@ void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position){
  }
 
 
- Item newitem = Item(name, type, value, "Placeholder for eventual real texture filepath.", pos);
+ Item newitem = Item(name, type, value, "../resources/img/doughnut_32.png", pos);
 
  itemstorage.push_back(newitem);
 

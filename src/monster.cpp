@@ -71,7 +71,23 @@ Basically iterates x and y positions based on movespeed in directions given by i
 Does not handle collision, as I have no idea how.
 */
 void Monster::monstermove(sf::Vector2f direction, float elapsed){
-  changexypos(direction.x*movespeed*elapsed, direction.y*movespeed*elapsed);
+  	sf::Vector2f dpos = elapsed * movespeed * direction;
+    if (room == NULL) {
+        throw std::runtime_error("Monster has no room assigned!");
+    }
+    sf::Vector2f dposHor = sf::Vector2f(dpos.x, 0);
+    sf::Vector2f dposVer = sf::Vector2f(0, dpos.y);
+    Tile& horTile = room->getTile(position + dposHor);
+    Tile& verTile = room->getTile(position + dposVer);
+    if (horTile.isPenetrable()) {
+        position += dposHor;
+        //sprite.move(dpos.x, 0);
+    }
+    if (verTile.isPenetrable()) {
+        position += dposVer;
+        //sprite.move(0, dpos.y);
+    }
+
 }
 
 //Reduces health by given amount. Then checks if health is below 0. If it is, it searches the vectors containing the monster for itself, erases itself, and then returns the amount of experience the player gains.
@@ -187,6 +203,9 @@ After that, it attacks the player if it is within range.
 
 void RangedMonster::monsterai(Character& player, sf::RenderWindow& window, float elapsed){
   sf::Vector2f direction;
+  if (!active) {
+	return;
+  }
 
   if (monsteraggrocheck(player)){
     aggrostate = true;
@@ -209,13 +228,14 @@ void RangedMonster::monsterai(Character& player, sf::RenderWindow& window, float
       monsterattack(player);
     }
   }
-
   draw(window);
 }
 
 void MeleeMonster::monsterai(Character& player, sf::RenderWindow& window, float elapsed){
   sf::Vector2f direction;
-
+  if(!active){
+	return;
+  }
   if (monsteraggrocheck(player)){
     aggrostate = true;
   }
