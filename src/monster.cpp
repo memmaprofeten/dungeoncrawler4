@@ -187,6 +187,9 @@ After that, it attacks the player if it is within range.
 
 void RangedMonster::monsterai(Character& player, sf::RenderWindow& window, float elapsed){
   sf::Vector2f direction;
+  if (!active) {
+	return;
+  }
 
   if (monsteraggrocheck(player)){
     aggrostate = true;
@@ -209,13 +212,14 @@ void RangedMonster::monsterai(Character& player, sf::RenderWindow& window, float
       monsterattack(player);
     }
   }
-
   draw(window);
 }
 
 void MeleeMonster::monsterai(Character& player, sf::RenderWindow& window, float elapsed){
   sf::Vector2f direction;
-
+  if(!active){
+	return;
+  }
   if (monsteraggrocheck(player)){
     aggrostate = true;
   }
