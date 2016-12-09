@@ -75,24 +75,25 @@ void Item::draw(sf::RenderWindow& window, Character& player){
       break;
     }
 
-    window.draw(tile);
     //Checks if player's xy position is within the item's area. If it is, calls the relevant "do thing" function, and disables the item.
-    if (((pos.x - 1.5f)< player.getPosition().x) && (player.getPosition().x < (pos.x + 1.5f)) && ((pos.y - 1.5f) < player.getPosition().y) && (player.getPosition().y < (pos.y + 1.5f))){
+    if (((pos.x - 3.0f)< player.getPosition().x) && (player.getPosition().x < (pos.x + 3.0f)) && ((pos.y - 3.0f) < player.getPosition().y) && (player.getPosition().y < (pos.y + 3.0f))){
     //if (cv::distance(pos, player.getPosition()) < 1.5f){
       switch(type){
       case 1:
 	dogoldthingy(player);
+	active = false;
 	break;
       case 2:
 	player.addItem(*this);
+	active = false;
 	break;
       case 3:
 	player.addItem(*this);
+	active = false;
 	break;
       }
-
-      active = false;
     }
+	window.draw(tile);
 }
 
 sf::Texture Item::getTexture() const { return texture; }
@@ -111,16 +112,7 @@ Item::Item (std::string namei, int typei, float valuei, std::string texturefilei
 }
 
 
-void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position, int leveli){
-  std::string name;
- int type;
- float value;
- std::string texturefile;
- std::string texturepath;
- sf::Vector2f pos;
-
-//Set position to one given in input.
- pos = position;
+Item::Item(sf::Vector2f position, int leveli){
 
 //Initialize random number generator.
  srand(time(NULL));
@@ -132,22 +124,21 @@ void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position, int level
  case 1:
    name = "Gold!";
    value = ceil(rand()%100+1);
-   texturepath = "../resources/img/dougnut_32.png";
+   textureFile = "../resources/img/doughnut_32.png";
    break;
  case 2:
    name = "Potion of Healing!";
    value = float(rand() % (leveli*5) + 1);
-   texturepath = "../resources/img/doughnut_32.png";
+   textureFile = "../resources/img/doughnut_32.png";
    break;
  case 3:
    name = "Weapon!";
-   texturepath = "../resources/img/sword1_32.png";
+   textureFile = "../resources/img/sword1_32.png";
    value = 0;
    break;
  }
 
- Item newitem = Item(name, type, value, texturepath, pos, leveli);
-
- itemstorage.push_back(newitem);
-
+ pos = position;
+level = leveli;
+active = true;
 }

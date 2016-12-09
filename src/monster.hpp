@@ -87,6 +87,7 @@ public:
   void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
   //Constructor
   RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, float projectilespeedi, float attackrangei, Room* roomi, /*std::vector<Projectile>* projectiles*/ float timebetweenattacksi);
+  RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli);
   ~RangedMonster();
 
 private:
@@ -101,6 +102,7 @@ public:
   void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
   //Constructor
   MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, int attackrangei, Room* roomi, float timebetweenattacksi);
+  MeleeMonster(sf::Vector2f positioni, Room* roomi, int leveli);
   ~MeleeMonster();
 
 private:
@@ -108,5 +110,3 @@ private:
 };
 
 #endif
-
-void CreateMonster(sf::Vector2f positioni, Room* roomi, int leveli);

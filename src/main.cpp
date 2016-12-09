@@ -140,6 +140,9 @@ int main()
     // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
     //CreateMonster(sf::Vector2f(75,75), &testRoom, 1);
     //CreateMonster(sf::Vector2f(50,50), &testRoom, 1);
+MeleeMonster tempmon = MeleeMonster(sf::Vector2f(200,200), &(map.getRoom()), 1);	
+map.getRoom().addmonster(&tempmon);
+	
 
 /*    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &testRoom, 1.0));
     meleemonsters.begin()->setxypos(50,100);
@@ -285,7 +288,8 @@ int main()
             character.draw(window);
             shopkeeper.draw(window);
 
-	    testRoom.drawmonsters(window, elapsed);
+	    map.getRoom().drawmonsters(window, elapsed);
+		map.getRoom().drawitems(window);
             /* === GUI === */
             window.setView(guiView);
             window.draw(healthBarBackground);

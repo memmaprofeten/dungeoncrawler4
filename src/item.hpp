@@ -23,7 +23,8 @@ public:
   sf::Vector2f getpos() const;
   sf::Texture getTexture() const;
   Item(std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi, int leveli);
-
+  Item(sf::Vector2f positioni, int leveli);
+  
   void dogoldthingy(Character& player);
   void dohealythingy(Character& player);
   void doweaponthingy(Character& player);

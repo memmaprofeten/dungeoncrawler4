@@ -39,7 +39,6 @@ Room::Room(std::string const file, Character* character) : character(character) 
 }
 
 Room::Room(int width, int height, float p, int randomGenIterations, std::vector<bool> entrances) : width(width), height(height) {
-	srand(time(NULL));
 	sf::Sprite dummy;
 	std::vector<std::vector<int>> rawMap(width, std::vector<int>(height, 0));
 	std::vector<std::vector<int>> filteredMap(width, std::vector<int>(height, 0));
@@ -183,6 +182,18 @@ void Room::drawmonsters(sf::RenderWindow& window, float elapsed){
   }
 }
 
+void Room::drawitems(sf::RenderWindow& window){
+	for (auto it = itemstorage.begin(); it != itemstorage.end(); it++){
+		if (it->isactive()){
+			it->draw(window, *character);
+		}
+	}
+}
+
+void Room::additem(Item& newitem){
+	itemstorage.push_back(newitem);
+}
+
 void Room::print() {
     for (int j = 0; j < height; ++j) {
         for (int i = 0; i < width; ++i) {
@@ -231,4 +242,8 @@ std::vector<Item>& Room::getitems(){
 
 Character* Room::getcharacter(){
   return character;
+}
+
+void Room::addmonster(Monster* monsteri){
+	monsters.push_back(monsteri);
 }

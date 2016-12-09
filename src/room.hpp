@@ -116,6 +116,9 @@ public:
 	std::vector<Monster*>& getmonsters();
 	std::vector<Item>& getitems();
 	Character* getcharacter();
+	void addmonster(Monster* monsteri);
+	void additem(Item& newitem);
+	void drawitems(sf::RenderWindow& window);
 private:
 	int width;
 	int height;
