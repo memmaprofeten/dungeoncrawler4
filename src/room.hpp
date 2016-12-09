@@ -21,6 +21,12 @@ public:
 	Room(std::string const file, Character* character);
 
 	/**
+	 * Constructor creating a random generated room based on the given
+	 * parameters.
+	 */
+	Room(int width, int height, float p, int randomGenIterations);
+
+	/**
 	 * The Room destructor
 	 */
 	~Room();

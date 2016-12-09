@@ -146,7 +146,6 @@ void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position, int level
    break;
  }
 
-
  Item newitem = Item(name, type, value, texturepath, pos, leveli);
 
  itemstorage.push_back(newitem);

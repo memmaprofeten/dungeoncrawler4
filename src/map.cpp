@@ -6,7 +6,8 @@ Map::Map(Character& c) : room("start.txt", &c) {
     atRoom = 0;
     character = &c;
     roomMap.push_back(roomContainer { open,     true, "start.txt",                  1, -1, -1, -1 });   // 0
-    roomMap.push_back(roomContainer { open,     false, "tutorial_dungeon.txt",      -1, -1, 0, -1 });   // 1
+    //roomMap.push_back(roomContainer { open,     false, "tutorial_dungeon.txt",      -1, -1, 0, -1 });   // 1
+    roomMap.push_back(roomContainer { dungeon,  true, "",                           -1, -1, 0, -1});
 }
 
 Room& Map::getRoom() {
@@ -38,7 +39,11 @@ Room& Map::switchRoom(int neighbour) {
     atRoom = newRoomIndex;
     roomMap[atRoom].active = true;
     // TODO: Clean old room? Copy constructor?
-    room = Room(roomMap[atRoom].roomPath, character);
+    if (roomMap[atRoom].type == open) {
+        room = Room(roomMap[atRoom].roomPath, character);
+    } else {
+        room = Room(40, 40, 0.3f, 3);
+    }
     return room;
 }
 
