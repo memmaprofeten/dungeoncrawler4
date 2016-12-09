@@ -116,12 +116,20 @@ void Room::drawProjectiles(sf::RenderWindow& window, float elapsed) {
 	for (int i=0; i<int(projectiles.size()); ++i) {
 		Projectile& projectile = projectiles[i];
 		if (projectile.isActive()) {					// Loop only through active projectiles
-			projectile.draw(window, elapsed);			// Call their draw method which updates their position and draws them
+			projectile.draw(window, elapsed, this);			// Call their draw method which updates their position and draws them
 			if(!projectile.isfiredbyplayer() && cv::distance(character->getPosition(), projectile.getPosition()) < float(projectile.getradius())) {	// Hit detection
 				character->reducehealth(projectile.getdamage()); // character takes damage
 				projectile.deactivate();
 			}
 			// TODO: Monster hit detection
+			for (auto monster : monsters){
+				if(monster->isactive()){
+					if(projectile.isfiredbyplayer() && cv::distance(monster->getPosition(), projectile.getPosition()) < float(projectile.getradius())) {
+						monster->reducehealth(projectile.getdamage());
+						projectile.deactivate();
+					}
+				}
+			}
 			if (!projectile.isActive()) {
 				freeProjectiles.push_back(i);				// If a projectile becomes inactive, mark it as free for overriding
 			}

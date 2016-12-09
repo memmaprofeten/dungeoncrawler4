@@ -69,7 +69,7 @@ void Projectile::draw(sf::RenderWindow& window, float elapsed,Room* currentRoom)
         	}
            	else if(!currentRoom->getTile((int)pos.x/s::blockDim,(int)pos.y/s::blockDim).isPenetrable()){
         		this->setSpeed(0.0f);
-        		if(!firedbyplayer){
+        		if(firedbyplayer){
         			return;
         		}
         	 }
