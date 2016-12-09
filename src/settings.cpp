@@ -33,7 +33,7 @@ namespace s {
 	float relativeInventoryBackgroundWidth = 0.8f;
 	int itemsPerRow = 8;
 	float relativeItemMargin = 0.01f;
-	int standardEntrancePosX = 18;
-	int standardEntrancePosY = 18;
+	int standardEntrancePosX = 17;
+	int standardEntrancePosY = 17;
 	int standardEntranceWidth = 3;
 }

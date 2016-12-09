@@ -1,13 +1,14 @@
 #include "map.hpp"
 #include "room.hpp"
 #include "character.hpp"
+#include <time.h>
 
 Map::Map(Character& c) : room("start.txt", &c) {
     atRoom = 0;
     character = &c;
     roomMap.push_back(roomContainer { open,     true, "start.txt",                  1, -1, -1, -1 });   // 0
-    //roomMap.push_back(roomContainer { open,     false, "tutorial_dungeon.txt",      -1, -1, 0, -1 });   // 1
-    roomMap.push_back(roomContainer { dungeon,  true, "",                           -1, -1, 0, -1});
+    roomMap.push_back(roomContainer { dungeon,  true, "",                           2, -1, 0, -1});    // 1
+    roomMap.push_back(roomContainer { open,     false, "tutorial_dungeon.txt",      -1, -1, 1, -1 });   // 2
 }
 
 Room& Map::getRoom() {

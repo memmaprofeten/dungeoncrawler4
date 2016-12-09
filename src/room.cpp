@@ -39,6 +39,7 @@ Room::Room(std::string const file, Character* character) : character(character) 
 }
 
 Room::Room(int width, int height, float p, int randomGenIterations, std::vector<bool> entrances) : width(width), height(height) {
+	srand(time(NULL));
 	sf::Sprite dummy;
 	std::vector<std::vector<int>> rawMap(width, std::vector<int>(height, 0));
 	std::vector<std::vector<int>> filteredMap(width, std::vector<int>(height, 0));
