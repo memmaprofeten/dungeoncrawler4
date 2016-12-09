@@ -67,12 +67,12 @@ public:
 
 	void givexp(int amount);
 
+  int getlevel();
 private:
 	std::string name; 				//Name of player. User input or based on class?
 	bool type;						// TODO: Is this supposed to define anything?
 	int level;						//Character level of player. Starts at 1
 	//std::vector<Weapon> weapons;	//List of weapons carried by player.
-	//std::vector<Item> items;		//List of items carried by player.
 	std::vector<Item> inventory;	//List of items carried by the player
 	//Weapon equippedweapon; 		//currently equipped weapon.
 	int health;						//Player's current health.

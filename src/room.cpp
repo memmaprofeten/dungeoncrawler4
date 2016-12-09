@@ -174,6 +174,14 @@ void Room::drawProjectiles(sf::RenderWindow& window, float elapsed) {
 	}
 }
 
+void Room::drawmonsters(sf::RenderWindow& window, float elapsed){
+  for (auto it = monsters.begin(); it != monsters.end(); it++){
+    if ((*it)->isactive()){
+      (*it)->monsterai(*character, window, elapsed);
+    }
+  }
+}
+
 void Room::print() {
     for (int j = 0; j < height; ++j) {
         for (int i = 0; i < width; ++i) {
