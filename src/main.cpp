@@ -55,7 +55,7 @@ int main()
     Room& testRoom = map.getRoom();
     character.setRoom(&testRoom);
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
-    
+
     Shopkeeper shopkeeper("../resources/img/character_32.png");
     shopkeeper.setPosition(sf::Vector2f(40,40));
     character.addItem(Item("Doughnut", 4, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0),1));
@@ -138,15 +138,15 @@ int main()
     /* === CONTAINERS === */        // TODO: Move these out, e.g. into the Room class.
     //Monster test code. Comment out later.
     // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
-    CreateMonster(sf::Vector2f(75,75), &testRoom, 1);
-    CreateMonster(sf::Vector2f(50,50), &testRoom, 1);
+    //CreateMonster(sf::Vector2f(75,75), &testRoom, 1);
+    //CreateMonster(sf::Vector2f(50,50), &testRoom, 1);
 
 /*    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &testRoom, 1.0));
     meleemonsters.begin()->setxypos(50,100);
     rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 30.0, 50, 100.0, 80.0, &testRoom, 1.0));
     rangedmonsters.begin()->setxypos(50,150);
 */
-    
+
     // Mock parameters start here:
     float projectileCooldown = 0.3f;        // In seconds
     // Mock parameters end here
@@ -280,7 +280,7 @@ int main()
         	for (auto& p : rangedmonsters) {
         	  p.monsterai(character,window,elapsed);
         	}
-*/		
+*/
 
             character.draw(window);
             shopkeeper.draw(window);
