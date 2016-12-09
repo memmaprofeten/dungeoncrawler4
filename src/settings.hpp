@@ -28,6 +28,9 @@ namespace s {
 	extern float relativeInventoryBackgroundWidth;
 	extern int itemsPerRow;
 	extern float relativeItemMargin;
+	extern int standardEntrancePosX;		// The standard X coordinate of a horizontal room entrance
+	extern int standardEntrancePosY;		// The standard Y coordinate of a vertical room entrance
+	extern int standardEntranceWidth;		// The standard width of a room entrance (in blocks)
 }
 
 #endif

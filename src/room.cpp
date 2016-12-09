@@ -38,7 +38,7 @@ Room::Room(std::string const file, Character* character) : character(character) 
 	}
 }
 
-Room::Room(int width, int height, float p, int randomGenIterations) : width(width), height(height) {
+Room::Room(int width, int height, float p, int randomGenIterations, std::vector<bool> entrances) : width(width), height(height) {
 	sf::Sprite dummy;
 	std::vector<std::vector<int>> rawMap(width, std::vector<int>(height, 0));
 	std::vector<std::vector<int>> filteredMap(width, std::vector<int>(height, 0));
@@ -61,10 +61,15 @@ Room::Room(int width, int height, float p, int randomGenIterations) : width(widt
 	}
 	for (int i=0; i<width; ++i) { filteredMap[i][0] = 1; filteredMap[i][height - 1] = 1; }		// Set walls around the room
 	for (int j=0; j<width; ++j) { filteredMap[0][j] = 1; filteredMap[width - 1][j] = 1; }		// Set walls around the room
-	filteredMap[0][18] = 0; filteredMap[0][19] = 0; filteredMap[0][20] = 0; filteredMap[1][18] = 0; filteredMap[1][19] = 0; filteredMap[1][20] = 0; 
+	for (int i=0; i<s::standardEntranceWidth; ++i) {											// Ensure clearings around all entrances
+		if (entrances[0]) { filteredMap[width - 2][s::standardEntrancePosX + i] = 0; filteredMap[width - 1][s::standardEntrancePosX + i] = 0; }
+		if (entrances[1]) { filteredMap[s::standardEntrancePosY + i][height - 2] = 0; filteredMap[s::standardEntrancePosY + i][height - 1] = 0; }
+		if (entrances[2]) { filteredMap[0][s::standardEntrancePosX + i] = 0; filteredMap[1][s::standardEntrancePosX + i] = 0; }
+		if (entrances[3]) { filteredMap[s::standardEntrancePosY + i][0] = 0; filteredMap[s::standardEntrancePosY + i][1] = 0; }
+	}
 	for (int i=0; i<width; ++i) for (int j=0; j<height; ++j) {
 		sf::Sprite* sprite = getSprite();
-		getTile(i, j) = Tile(filteredMap[i][j], sf::Vector2f(s::blockDim*i,s::blockDim*j), sf::Vector2i(i,j), sprite);
+		getTile(i, j) = Tile(filteredMap[i][j], sf::Vector2f(s::blockDim*i, s::blockDim*j), sf::Vector2i(i, j), sprite);
 	}
 }
 

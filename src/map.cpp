@@ -42,7 +42,7 @@ Room& Map::switchRoom(int neighbour) {
     if (roomMap[atRoom].type == open) {
         room = Room(roomMap[atRoom].roomPath, character);
     } else {
-        room = Room(40, 40, 0.3f, 3);
+        room = Room(40, 40, 0.3f, 3, std::vector<bool>{true, true, true, true});
     }
     return room;
 }

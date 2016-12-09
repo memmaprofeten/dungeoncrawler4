@@ -24,7 +24,7 @@ public:
 	 * Constructor creating a random generated room based on the given
 	 * parameters.
 	 */
-	Room(int width, int height, float p, int randomGenIterations);
+	Room(int width, int height, float p, int randomGenIterations, std::vector<bool> entrances);
 
 	/**
 	 * The Room destructor
