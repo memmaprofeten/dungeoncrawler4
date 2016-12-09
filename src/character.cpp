@@ -84,7 +84,10 @@ bool Character::consumeItem(int i) {
     if (i < 0 || i >= (int)inventory.size()) return false;
     // TODO: Check if item can be consumed
     // TODO: If it can, get the perks and remove it from the inventory. If not, return false.
-    inventory.erase(inventory.begin() + i);
+    inventory[i].dothing(*this);
+    if (inventory[i].gettype() == 2){
+      inventory.erase(inventory.begin() + i);
+    }
     return true;
 }
 
@@ -139,4 +142,8 @@ void Character::givexp(int amount){
   else{
     xp += amount;
   }
+}
+
+int Character::getlevel(){
+  return level;
 }
