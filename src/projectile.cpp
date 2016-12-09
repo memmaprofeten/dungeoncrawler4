@@ -60,20 +60,20 @@ void Projectile::deactivate() {
   active = false;
 }
 
-void Projectile::draw(sf::RenderWindow& window, float elapsed) {
+void Projectile::draw(sf::RenderWindow& window, float elapsed,Room* currentRoom) {
     if (active) {
-        /*
-        	if(!currentRoom.hasCoordinate((int)pos.x/s::blockDim,(int)pos.y/s::blockDim)){
+    
+        	if(!currentRoom->hasCoordinate((int)pos.x/s::blockDim,(int)pos.y/s::blockDim)){
         		this->setSpeed(0.0f);
         		return;
         	}
-           	else if(!currentRoom.getTile((int)pos.x/s::blockDim,(int)pos.y/s::blockDim).isPenetrable()){
+           	else if(!currentRoom->getTile((int)pos.x/s::blockDim,(int)pos.y/s::blockDim).isPenetrable()){
         		this->setSpeed(0.0f);
         		if(!firedbyplayer){
         			return;
         		}
         	 }
-        */
+        
 
         if (!room->hasPosition(pos)) {
             active = false;
