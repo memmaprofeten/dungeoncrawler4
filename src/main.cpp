@@ -49,6 +49,7 @@ int main()
     view.move(character.getPosition().x, character.getPosition().y);
 
     /* === TESTING === */
+    //Room testRoom2 = Room(40, 40, 0.3);
     Map map(character);
     Room& testRoom = map.getRoom();
     character.setRoom(&testRoom);

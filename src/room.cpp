@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <cmath>
+#include <algorithm>
 #include <functional>
 #include "settings.hpp"
 #include "convenience.hpp"
@@ -33,6 +35,36 @@ Room::Room(std::string const file, Character* character) : character(character) 
 	}
 	 else {
 		throw std::runtime_error(std::string("Could not find or open file '") + file + "'.");
+	}
+}
+
+Room::Room(int width, int height, float p, int randomGenIterations) : width(width), height(height) {
+	sf::Sprite dummy;
+	std::vector<std::vector<int>> rawMap(width, std::vector<int>(height, 0));
+	std::vector<std::vector<int>> filteredMap(width, std::vector<int>(height, 0));
+	room = std::vector<std::vector<Tile>>(width, std::vector<Tile>(height, Tile(0,sf::Vector2f(0,0), sf::Vector2i(0,0), &dummy)));
+	for (int i=0; i<width; ++i) for (int j=0; j<height; ++j) {
+		rawMap[i][j] = int(round(std::max(0.0f, float(rand() % 100) * 0.01f - p)));
+	}
+	for (int iter=0; iter<randomGenIterations; ++iter) {				// Apply filters
+		for (int i=0; i<width; ++i) for (int j=0; j<height; ++j) {
+			int neighbourWalls = 0;
+			for (int ii=-1; ii<2; ++ii) for (int jj=-1; jj<2; ++jj) {
+				int x = i + ii;
+				int y = j + jj;
+				if (x >= 0 && y >= 0 && x < width && y < width && rawMap[x][y] == 1) neighbourWalls++;
+				if (neighbourWalls > 2) filteredMap[i][j] = 1;
+				else filteredMap[i][j] = 0;
+			}
+		}
+		rawMap = filteredMap;
+	}
+	for (int i=0; i<width; ++i) { filteredMap[i][0] = 1; filteredMap[i][height - 1] = 1; }		// Set walls around the room
+	for (int j=0; j<width; ++j) { filteredMap[0][j] = 1; filteredMap[width - 1][j] = 1; }		// Set walls around the room
+	filteredMap[0][18] = 0; filteredMap[0][19] = 0; filteredMap[0][20] = 0; filteredMap[1][18] = 0; filteredMap[1][19] = 0; filteredMap[1][20] = 0; 
+	for (int i=0; i<width; ++i) for (int j=0; j<height; ++j) {
+		sf::Sprite* sprite = getSprite();
+		getTile(i, j) = Tile(filteredMap[i][j], sf::Vector2f(s::blockDim*i,s::blockDim*j), sf::Vector2i(i,j), sprite);
 	}
 }
 
