@@ -2,12 +2,14 @@
 #include "room.hpp"
 #include "character.hpp"
 #include <time.h>
+#include <cmath>
+#include <time.h>
 
 Map::Map(Character& c) : room("start.txt", &c) {
     atRoom = 0;
     character = &c;
     roomMap.push_back(roomContainer { open,     true, "start.txt",                  1, -1, -1, -1 });   // 0
-    roomMap.push_back(roomContainer { dungeon,  true, "",                           2, -1, 0, -1});    // 1
+    roomMap.push_back(roomContainer { dungeon,  true, "",                           2, -1, 0, -1});     // 1
     roomMap.push_back(roomContainer { open,     false, "tutorial_dungeon.txt",      -1, -1, 1, -1 });   // 2
 }
 
@@ -43,7 +45,10 @@ Room& Map::switchRoom(int neighbour) {
     if (roomMap[atRoom].type == open) {
         room = Room(roomMap[atRoom].roomPath, character);
     } else {
-        room = Room(40, 40, 0.3f, 3, std::vector<bool>{true, true, true, true});
+        srand(time(NULL));
+        float p = (float)(rand() % 1000) / 999.0f * 0.13f + 0.6f;
+        std::cout << "Generating dungeon with p = " << p << "." << std::endl;
+        room = Room(60, 60, p, 3, std::vector<bool>{true, true, true, true});
     }
     return room;
 }

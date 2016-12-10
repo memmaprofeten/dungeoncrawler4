@@ -90,11 +90,17 @@ public:
   // Runs the monster AI and draws them.
   void drawmonsters(sf::RenderWindow& window, float elapsed);
 
-
 	/**
 	 * Prints the room to std::cout.
 	 */
 	void print();
+
+	/**
+	 * Returns a 2D vector of booleans representing the room, where a 'true'
+	 * value represents a non-penetrable cell and a 'false' value represents
+	 * a penetrable cell.
+	 */
+	std::vector<std::vector<bool>> getPenetrabilityMap();
 
 	//Returns refernce to a sprite that is not in use
 	sf::Sprite* getSprite();
@@ -118,6 +124,7 @@ public:
 	void addmonster(Monster* monsteri);
 	void additem(Item& newitem);
 	void drawitems(sf::RenderWindow& window);
+
 private:
 	int width;
 	int height;

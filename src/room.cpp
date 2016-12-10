@@ -7,6 +7,7 @@
 #include <cmath>
 #include <algorithm>
 #include <functional>
+#include <time.h>
 #include "settings.hpp"
 #include "convenience.hpp"
 #include "character.hpp"
@@ -40,37 +41,63 @@ Room::Room(std::string const file, Character* character) : character(character) 
 }
 
 Room::Room(int width, int height, float p, int randomGenIterations, std::vector<bool> entrances) : width(width), height(height) {
+	srand(time(NULL));
 	sf::Sprite dummy;
-	std::vector<std::vector<int>> rawMap(width, std::vector<int>(height, 0));
-	std::vector<std::vector<int>> filteredMap(width, std::vector<int>(height, 0));
 	room = std::vector<std::vector<Tile>>(width, std::vector<Tile>(height, Tile(0,sf::Vector2f(0,0), sf::Vector2i(0,0), &dummy)));
-	for (int i=0; i<width; ++i) for (int j=0; j<height; ++j) {
-		rawMap[i][j] = int(round(std::max(0.0f, float(rand() % 100) * 0.01f - p)));
-	}
-	for (int iter=0; iter<randomGenIterations; ++iter) {				// Apply filters
+	bool valid = false;
+	int attempts = 0;
+	while (!valid) {		// Try new generations until a valid one is found
+		attempts++;
+		std::vector<std::vector<int>> rawMap(width, std::vector<int>(height, 0));
+		std::vector<std::vector<int>> filteredMap(width, std::vector<int>(height, 0));
 		for (int i=0; i<width; ++i) for (int j=0; j<height; ++j) {
-			int neighbourWalls = 0;
-			for (int ii=-1; ii<2; ++ii) for (int jj=-1; jj<2; ++jj) {
-				int x = i + ii;
-				int y = j + jj;
-				if (x >= 0 && y >= 0 && x < width && y < width && rawMap[x][y] == 1) neighbourWalls++;
-				if (neighbourWalls > 2) filteredMap[i][j] = 1;
-				else filteredMap[i][j] = 0;
+			rawMap[i][j] = int(round(std::max(0.0f, float(rand() % 100) * 0.01f - (1.0f - p))));
+		}
+		for (int iter=0; iter<randomGenIterations; ++iter) {				// Apply filters
+			for (int i=0; i<width; ++i) for (int j=0; j<height; ++j) {
+				int neighbourWalls = 0;
+				for (int ii=-1; ii<2; ++ii) for (int jj=-1; jj<2; ++jj) {
+					int x = i + ii;
+					int y = j + jj;
+					if (x >= 0 && y >= 0 && x < width && y < width && rawMap[x][y] == 1) neighbourWalls++;
+					if (neighbourWalls > 2) filteredMap[i][j] = 1;
+					else filteredMap[i][j] = 0;
+				}
+			}
+			rawMap = filteredMap;
+		}
+		for (int i=0; i<width; ++i) { filteredMap[i][0] = 1; filteredMap[i][height - 1] = 1; }		// Set walls around the room
+		for (int j=0; j<width; ++j) { filteredMap[0][j] = 1; filteredMap[width - 1][j] = 1; }		// Set walls around the room
+		for (int i=0; i<s::standardEntranceWidth; ++i) {											// Ensure clearings around all entrances
+			if (entrances[0]) { filteredMap[width - 2][s::standardEntrancePosX + i] = 0; filteredMap[width - 1][s::standardEntrancePosX + i] = 0; }
+			if (entrances[1]) { filteredMap[s::standardEntrancePosY + i][height - 2] = 0; filteredMap[s::standardEntrancePosY + i][height - 1] = 0; }
+			if (entrances[2]) { filteredMap[0][s::standardEntrancePosX + i] = 0; filteredMap[1][s::standardEntrancePosX + i] = 0; }
+			if (entrances[3]) { filteredMap[s::standardEntrancePosY + i][0] = 0; filteredMap[s::standardEntrancePosY + i][1] = 0; }
+		}
+		std::vector<std::vector<bool>> penetrabilityMap(width, std::vector<bool>(height, false));
+		for (int i=0; i<width; ++i) for (int j=0; j<height; ++j) {			// NB! Makes assumption about penetrability. Update accordingly.
+			if (filteredMap[i][j] == 1) penetrabilityMap[i][j] = true;
+		}
+		std::vector<bool> reachesEntrances = cv::pathExists(penetrabilityMap, sf::Vector2i(0, s::standardEntrancePosY + s::standardEntranceWidth / 2), std::vector<sf::Vector2i>{
+			sf::Vector2i(width - 1, s::standardEntrancePosY + s::standardEntranceWidth / 2),		// East
+			sf::Vector2i(s::standardEntrancePosX + s::standardEntranceWidth / 2, height - 1),		// South
+			sf::Vector2i(0, s::standardEntrancePosY + s::standardEntranceWidth / 2),				// West
+			sf::Vector2i(s::standardEntrancePosX + s::standardEntranceWidth / 2, 0)					// North
+		});
+
+		//std::cout << reachesEntrances[0] << "," << reachesEntrances[1] << "," << reachesEntrances[2] << "," << reachesEntrances[3] << std::endl;
+		if ((!entrances[0] || reachesEntrances[0]) &&
+			(!entrances[1] || reachesEntrances[1]) &&
+			(!entrances[2] || reachesEntrances[2]) &&
+			(!entrances[3] || reachesEntrances[3])
+		) {
+			valid = true;
+			std::cout << "Successfully generated dungeon after " << attempts << " attempts." << std::endl;
+			for (int i=0; i<width; ++i) for (int j=0; j<height; ++j) {
+				sf::Sprite* sprite = getSprite();
+				getTile(i, j) = Tile(filteredMap[i][j], sf::Vector2f(s::blockDim*i, s::blockDim*j), sf::Vector2i(i, j), sprite);
 			}
 		}
-		rawMap = filteredMap;
-	}
-	for (int i=0; i<width; ++i) { filteredMap[i][0] = 1; filteredMap[i][height - 1] = 1; }		// Set walls around the room
-	for (int j=0; j<width; ++j) { filteredMap[0][j] = 1; filteredMap[width - 1][j] = 1; }		// Set walls around the room
-	for (int i=0; i<s::standardEntranceWidth; ++i) {											// Ensure clearings around all entrances
-		if (entrances[0]) { filteredMap[width - 2][s::standardEntrancePosX + i] = 0; filteredMap[width - 1][s::standardEntrancePosX + i] = 0; }
-		if (entrances[1]) { filteredMap[s::standardEntrancePosY + i][height - 2] = 0; filteredMap[s::standardEntrancePosY + i][height - 1] = 0; }
-		if (entrances[2]) { filteredMap[0][s::standardEntrancePosX + i] = 0; filteredMap[1][s::standardEntrancePosX + i] = 0; }
-		if (entrances[3]) { filteredMap[s::standardEntrancePosY + i][0] = 0; filteredMap[s::standardEntrancePosY + i][1] = 0; }
-	}
-	for (int i=0; i<width; ++i) for (int j=0; j<height; ++j) {
-		sf::Sprite* sprite = getSprite();
-		getTile(i, j) = Tile(filteredMap[i][j], sf::Vector2f(s::blockDim*i, s::blockDim*j), sf::Vector2i(i, j), sprite);
 	}
 }
 
@@ -202,6 +229,14 @@ void Room::print() {
         }
         std::cout << std::endl;
     }
+}
+
+std::vector<std::vector<bool>> Room::getPenetrabilityMap() {
+	std::vector<std::vector<bool>> res(width, std::vector<bool>(height, false));
+	for (int i=0; i<width; ++i) for (int j=0; j<height; ++j) {
+		if (!room[i][j].isPenetrable()) res[i][j] = true;
+	}
+	return res;
 }
 
 sf::Sprite* Room::getSprite() {

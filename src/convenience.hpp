@@ -29,6 +29,15 @@ namespace cv
      */
     float distance(sf::Vector2f a, sf::Vector2f b);
 
+    /**
+     * Takes as input a grid of penetrable/non-penetrable booleans, start
+     * coordinates and a vector of target coordinates, and returns a vector of
+     * booleans where each boolean tells whether or not there exists a path
+     * between the starting point and the target point at the corresponding
+     * index.
+     */
+    std::vector<bool> pathExists(const std::vector<std::vector<bool>>& grid, sf::Vector2i start, std::vector<sf::Vector2i> targets);
+
 }
 
 #endif
