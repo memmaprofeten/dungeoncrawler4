@@ -2,26 +2,24 @@
 #define WEAPON_HH
 #include <string>
 #include <vector>
-#include <iostream>
-#include "projectile.hpp"
+
+class Room;
+class Projectile;
 
 class Weapon {
 public:
-	Weapon(const std::string n, const bool t, const int d, float r, int txtrIndex) :
-			name(n), type(t), damage(d), radius(r), textureIndex(txtrIndex) { }
+	Weapon(std::string n, bool t, int d, float r, int txtrIndex);
 
-	std::string getName() const { return name; }
-	bool getType() const { return type; }
-	int getDamage() const { return damage; }
-	//int getRange() const { return range; }
-	float getRadius() const { return radius; }
-	int getProjectilespeed() const { return projectilespeed; }
+	std::string getName() const;
+	bool getType() const;
+	int getDamage() const;
+	//int getRange() const;
+	float getRadius() const;
+	int getProjectilespeed() const;
 
-	Projectile& createProjectile(Room& room) {
-		return room.createProjectile(true, damage, radius, 250.0f, textureIndex);
-	}
+	Projectile& createProjectile(Room& room);
 
-	virtual void attack() {}
+	virtual void attack();
 
 private:
 	std::string name;
@@ -36,17 +34,17 @@ private:
 
 class RangedWeapon : public Weapon {
 public:
-	RangedWeapon(const std::string name, int damage, int radius, int txtrIndex) : Weapon(name, true, damage, radius, txtrIndex) { }
+	RangedWeapon(std::string name, int damage, int radius, int txtrIndex);
 
-	virtual void attack() { }
+	virtual void attack();
 };
 
 
 class MeleeWeapon : public Weapon {
 public:
-	MeleeWeapon(const std::string name, int damage, int radius, int txtrIndex) : Weapon(name, false, damage, radius, txtrIndex) { }
+	MeleeWeapon(std::string name, int damage, int radius, int txtrIndex);
 
-	virtual void attack() { }
+	virtual void attack();
 };
 
 #endif
