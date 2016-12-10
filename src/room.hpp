@@ -10,6 +10,7 @@
 
 class Projectile;
 class Character;
+class Weapon;
 
 class Room {
 public:
@@ -76,6 +77,8 @@ public:
 	 * If 'includingOutsiders' is true, such neighbours that are out of bounds are included.
 	 */
 	std::vector<sf::Vector2i> getNeighbours(int x, int y, bool includingSelf, bool includingDiagonals, bool includingOutsiders);
+
+	void performAttack(bool friendly, sf::Vector2f source, sf::Vector2f direction, const Weapon& weapon);
 
 	/**
 	 * Draws the room.

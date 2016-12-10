@@ -1,5 +1,8 @@
 #include "room.hpp"
 #include "settings.hpp"
+#include "convenience.hpp"
+#include "character.hpp"
+#include "weapon.hpp"
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
@@ -8,9 +11,7 @@
 #include <algorithm>
 #include <functional>
 #include <time.h>
-#include "settings.hpp"
-#include "convenience.hpp"
-#include "character.hpp"
+
 
 Room::Room(std::string const file, Character* character) : character(character) {
 	int x = 0;
@@ -163,6 +164,24 @@ std::vector<sf::Vector2i> Room::getNeighbours(int x, int y, bool includingSelf, 
         }
     }
     return res;
+}
+
+void Room::performAttack(bool byPlayer, sf::Vector2f source, sf::Vector2f direction, const Weapon& weapon) {
+	std::cout << "performAttack called" << std::endl;
+	// TODO: Get weapon's min/max radius and angle.
+	float minRadius = 0.0f;
+	float maxRadius = 5.0f;
+	float angle = 30.0f;
+	if (byPlayer) {		// Target all monsters within range
+		// TODO: Implement
+	} else {			// Target the player
+		sf::Vector2f cVec = character->getPosition() - source;
+		float d = cv::norm(cVec);
+		if (d <= maxRadius && d >= minRadius) {
+			// TODO: Check direction
+			character->reducehealth(weapon.getDamage());
+		}
+	}
 }
 
 void Room::draw(sf::RenderWindow& window) {
