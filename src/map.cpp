@@ -5,12 +5,18 @@
 #include <cmath>
 #include <time.h>
 
-Map::Map(Character& c) : room("start.txt", &c) {
-    atRoom = 0;
+Map::Map(Character& c) : room("welcome_room.txt", &c) {        // TODO: Replace with "welcome_room.txt"
+    atRoom = s::startingRoomIndex;
     character = &c;
-    roomMap.push_back(roomContainer { open,     true, "start.txt",                  1, -1, -1, -1 });   // 0
-    roomMap.push_back(roomContainer { dungeon,  true, "",                           2, -1, 0, -1});     // 1
-    roomMap.push_back(roomContainer { open,     false, "tutorial_dungeon.txt",      -1, -1, 1, -1 });   // 2
+    roomMap.push_back(roomContainer { open,     true, "main_cave1.txt",             1, 2, 4, 5 });      // 0    (default room)
+    roomMap.push_back(roomContainer { open,     true, "main_cave2.txt",             -1, 3, 0, -1 });    // 1
+    roomMap.push_back(roomContainer { open,     true, "main_cave3.txt",             3, -1, -1, 0 });    // 2
+    roomMap.push_back(roomContainer { open,     true, "main_cave4.txt",             -1, -1, 2, 1 });    // 3
+
+    roomMap.push_back(roomContainer { open,     true, "welcome_room.txt",           0, -1, -1, -1 });   // 4
+
+    roomMap.push_back(roomContainer { dungeon,  true, "",                           5, 0, 5, 5 });      // 5
+
 }
 
 Room& Map::getRoom() {

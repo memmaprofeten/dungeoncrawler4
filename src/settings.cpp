@@ -36,4 +36,5 @@ namespace s {
 	int standardEntrancePosX = 17;
 	int standardEntrancePosY = 17;
 	int standardEntranceWidth = 3;
+	int startingRoomIndex = 4;
 }
