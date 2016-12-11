@@ -4,6 +4,10 @@
 #include <string>
 #include <iostream>
 
+Weapon::~Weapon(){}
+RangedWeapon::~RangedWeapon(){}
+MeleeWeapon::~MeleeWeapon(){}
+
 Weapon::Weapon(std::string n, bool t, int d, float r, int txtrIndex) :
         name(n), type(t), damage(d), radius(r), textureIndex(txtrIndex) { }
 

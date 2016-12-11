@@ -17,7 +17,7 @@ public:
   int getProjectilespeed() const;
   Projectile& createProjectile(Room& room);
   virtual void attack();
-  //~Weapon(){} // LIKELY TO CAUSE NEW AND EXCITING ISSUES. DANGERZONE.
+  virtual ~Weapon(); // LIKELY TO CAUSE NEW AND EXCITING ISSUES. DANGERZONE.
 protected:
   Weapon(int level, float seed);
   std::string name;
@@ -38,6 +38,8 @@ public:
   RangedWeapon(std::string name, int damage, int radius, int txtrIndex);//Specific constructor.
   RangedWeapon(int level, float seed);//Random weapon constructor.
   virtual void attack();
+
+  ~RangedWeapon();
 };
 
 
@@ -46,6 +48,8 @@ public:
   MeleeWeapon(std::string name, int damage, int radius, int txtrIndex); //Specific weapon constructor.
   MeleeWeapon(int level, float seed); // Random weapon constructor.
 	virtual void attack();
+
+  ~MeleeWeapon();
 private:
   float minradius;
   float maxradius;

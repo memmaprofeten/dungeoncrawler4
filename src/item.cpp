@@ -11,7 +11,7 @@
 
 Item::~Item(){
   if (type == 3){
-    //delete(representedweapon); LIKELY TO CAUSE NEW AND FUN ISSUES.
+    delete(representedweapon); //LIKELY TO CAUSE NEW AND FUN ISSUES.
   }
 }
 
