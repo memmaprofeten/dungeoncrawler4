@@ -83,7 +83,7 @@ public:
 	 * the given weapon. If friendly, the attack targets only monsters. If not,
 	 * it targets only monsters.
 	 */
-	void performAttack(bool friendly, sf::Vector2f source, float direction, const Weapon& weapon);
+	void performAttack(bool friendly, sf::Vector2f source, sf::Vector2f direction, const Weapon& weapon);
 
 	/**
 	 * Draws the room.

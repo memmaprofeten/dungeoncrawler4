@@ -24,6 +24,10 @@ namespace cv
         return norm(a - b);
     }
 
+    float dotP(sf::Vector2f a, sf::Vector2f b) {
+        return a.x * b.x + a.y * b.y;
+    }
+
     std::vector<bool> pathExists(const std::vector<std::vector<bool>>& grid, sf::Vector2i start, std::vector<sf::Vector2i> targets) {
         int width = grid.size();
         int height = grid[0].size();

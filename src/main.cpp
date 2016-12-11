@@ -245,10 +245,10 @@ int main()
             character.move(cdPos, elapsed);
 
             /* === EVENT HANDLING FOR TURNING === */
-        	sf::Vector2f shapepos = character.getPosition();
+        	sf::Vector2f charpos = character.getPosition();
         	sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-        	float dx = shapepos.x - mousepos.x;
-        	float dy = shapepos.y - mousepos.y;
+        	float dx = charpos.x - mousepos.x;
+        	float dy = charpos.y - mousepos.y;
         	float rotation = (atan2(dy,dx)) * 180 / cv::PI;
         	character.setRotation(rotation);
 
@@ -256,18 +256,18 @@ int main()
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {      // Melee attack
                 if (elapsedSinceLastAttack < 0.0f || elapsedSinceLastAttack > meleeCooldown) {
                     elapsedSinceLastAttack = 0.0f;
-                    room.performAttack(true, character.getPosition(), (float)rotation, MeleeWeapon("test", 3, 0, 0));  // TODO. Replace with player's real weapon
+                    room.performAttack(true, character.getPosition(), cv::normalized(mousepos - charpos), MeleeWeapon("test", 3, 0, 0));  // TODO. Replace with player's real weapon
                 }
             }
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {     // Missile attack
                 if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
                     elapsedSinceLastShot = 0.0f;
                     Projectile& projectile = fireball_weapon.createProjectile(room);
-                    projectile.setPosition(shapepos);
+                    projectile.setPosition(charpos);
                     // Calculate the velocity of the projectile based on the location of the aim (mouse click) and the player's momentum:
-                    sf::Vector2f vel = cv::normalized(sf::Vector2f(mousepos) - shapepos) * projectile.getSpeed() + cv::normalized(cDir) * s::characterSpeed;
+                    sf::Vector2f vel = cv::normalized(mousepos - charpos) * projectile.getSpeed() + cv::normalized(cDir) * s::characterSpeed;
                     projectile.setDirection(cv::normalized(vel));
-                    if (cv::norm(projectile.getVelocity()) == 0.0f) {      // If mousepos == shapepos, there is no valid direction. In this case, simply fire the projectile in a default direction (the direction of the x axis).
+                    if (cv::norm(projectile.getVelocity()) == 0.0f) {      // If mousepos == charpos, there is no valid direction. In this case, simply fire the projectile in a default direction (the direction of the x axis).
                         projectile.setDirection(sf::Vector2f(1, 0));
                     }
                 }

@@ -167,26 +167,27 @@ std::vector<sf::Vector2i> Room::getNeighbours(int x, int y, bool includingSelf, 
     return res;
 }
 
-void Room::performAttack(bool byPlayer, sf::Vector2f source, float direction, const Weapon& weapon) {
+void Room::performAttack(bool byPlayer, sf::Vector2f source, sf::Vector2f direction, const Weapon& weapon) {
 	std::cout << "performAttack called" << std::endl;
 	// TODO: Get weapon's min/max radius and angle.
 	float minRadius = 0.0f;
-	float maxRadius = 5.0f;
+	float maxRadius = 12.5f;
 	float angle = 30.0f;
 	if (byPlayer) {		// Target all monsters within range
-		// TODO: Implement
 		for (unsigned i=0; i<monsters.size(); ++i) {
 			if (monsters[i]->isactive()) {
-				// TODO: Check distance
-				// TODO: Check direction
-				monsters[i]->reducehealth(weapon.getDamage());
+				sf::Vector2f cVec = monsters[i]->getPosition() - source;
+				float d = cv::norm(cVec);
+				if (d <= maxRadius && d >= minRadius && acos(cv::dotP(direction, cv::normalized(cVec))) * 180.0f / cv::PI <= angle) {
+					monsters[i]->reducehealth(weapon.getDamage());
+				}
 			}
 		}
 	} else {			// Target the player
 		sf::Vector2f cVec = character->getPosition() - source;
 		float d = cv::norm(cVec);
 		if (d <= maxRadius && d >= minRadius) {
-			// TODO: Check direction
+			// TODO: Check direction?
 			character->reducehealth(weapon.getDamage());
 		}
 	}
