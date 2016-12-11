@@ -112,7 +112,12 @@ RangedWeapon::RangedWeapon(int level, float seed) : Weapon (level, seed){
 void RangedWeapon::attack() { }
 
 
-MeleeWeapon::MeleeWeapon(const std::string name, int damage, int radius, int txtrIndex) : Weapon(name, false, damage, radius, txtrIndex) { cooldown = 0.8f; }
+MeleeWeapon::MeleeWeapon(const std::string name, int damage, int radius, int txtrIndex) : Weapon(name, false, damage, radius, txtrIndex) {
+  cooldown = 0.8f;
+  minradius = 0;
+  maxradius = 20.0f;
+  angle = 120.0f;
+}
 
 MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
   srand(int(seed));

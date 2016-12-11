@@ -55,8 +55,8 @@ int main()
     /* === TESTING === */
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
     Shopkeeper shopkeeper("../resources/img/character_32.png");
-    /*
     shopkeeper.setPosition(sf::Vector2f(40,40));
+    /*
     character.addItem(Item("Doughnut", 2, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0),1));
     character.addItem(Item("Ice cream", 2, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
     character.addItem(Item("Cake", 2, 5, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
@@ -75,6 +75,16 @@ int main()
         testItemSpriteVector.push_back(sprite);
     }
 
+    /* ADD STARTING WEAPONS FOR PLAYER */
+    RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 0.8f * s::blockDim, 4);
+    MeleeWeapon* startingmeleeweapon = new MeleeWeapon("Novice's Sword", 3, 0.8f*s::blockDim, 1);
+    Item* startingrangedweaponitem = new Item("Novice's Bow", startingrangedweapon, 1, "../resources/img/sword1_32.png",sf::Vector2f(0,0));
+    Item* startingmeleeweaponitem = new Item("Novice's Sword", startingmeleeweapon, 1, "../resources/img/sword1_32.png",sf::Vector2f(0,0));
+    character.addItem(startingrangedweaponitem);
+    character.addItem(startingmeleeweaponitem);
+    startingrangedweaponitem->dothing(character);
+    startingmeleeweaponitem->dothing(character);
+    
     /* === GUI === */
     sf::Vector2f healthBarMargin(15, 15);
 
