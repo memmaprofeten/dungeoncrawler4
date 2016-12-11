@@ -55,7 +55,7 @@ int main()
     /* === TESTING === */
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
     Shopkeeper shopkeeper("../resources/img/character_32.png");
-
+    /*
     shopkeeper.setPosition(sf::Vector2f(40,40));
     character.addItem(Item("Doughnut", 2, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0),1));
     character.addItem(Item("Ice cream", 2, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
@@ -65,11 +65,11 @@ int main()
     character.addItem(Item("Potion of wisdom", 2, 8, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
     character.addItem(Item("Potion of strength", 2, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
     character.addItem(Item("Potion of being badass", 2, 12, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-
+    */
     std::vector<sf::Texture> testItemTextureVector;         // TODO: Move out to global texture vector?
     std::vector<sf::Sprite> testItemSpriteVector;           // TODO: Move out to global sprite vector?
     for (unsigned i=0; i<character.getInventory().size(); ++i) {
-        testItemTextureVector.push_back(character.getInventory()[i].getTexture());
+        testItemTextureVector.push_back(character.getInventory()[i]->getTexture());
         sf::Sprite sprite;
         sprite.setTexture(testItemTextureVector[i]);
         testItemSpriteVector.push_back(sprite);
@@ -359,13 +359,13 @@ int main()
                     ) {
                         // Show tooltip:
                         std::stringstream tooltipSs;
-                        tooltipSs << character.getInventory()[itemIndex].getname();
+                        tooltipSs << character.getInventory()[itemIndex]->getname();
                         tooltip.setString(tooltipSs.str());
                         tooltipShowing = true;
                     }
                     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                         if (tooltipShowing && mouseReleased) {
-                            std::cout << "Using " + character.getInventory()[itemIndex].getname() << "." << std::endl;
+                            std::cout << "Using " + character.getInventory()[itemIndex]->getname() << "." << std::endl;
                             bool couldConsume = character.consumeItem(itemIndex);
                             if (couldConsume) {
                                 testItemTextureVector.erase(testItemTextureVector.begin() + itemIndex);

@@ -58,7 +58,7 @@ void Item::dogoldthingy(Character& player){
 
 void Item::dohealythingy(Character& player){
   //Set player health to either their max health, or their health + a percentage of max hp.
-  std::cout<< "Player has picked up a healing item, healing for " << value << "  health." << std::endl;
+  std::cout<< "Player has used a healing item, healing for " << value << "  health." << std::endl;
   player.sethealth(int(std::min(float(player.getMaxHealth()),player.getHealth()+value)));
 }
 
@@ -93,11 +93,11 @@ void Item::draw(sf::RenderWindow& window, Character& player){
 	active = false;
 	break;
       case 2:
-	player.addItem(*this);
+	player.addItem(this);
 	active = false;
 	break;
       case 3:
-	player.addItem(*this);
+	player.addItem(this);
 	active = false;
 	break;
       }

@@ -46,9 +46,9 @@ public:
 
 	//item pickup
 
-	std::vector<Item>& getInventory();
+	std::vector<Item*>& getInventory();
 
-	void addItem(Item item);
+	void addItem(Item* item);
 
 	bool consumeItem(int i);
 
@@ -76,7 +76,7 @@ private:
 	bool type;						// TODO: Is this supposed to define anything?
 	int level;						//Character level of player. Starts at 1
 	//std::vector<Weapon> weapons;	//List of weapons carried by player.
-	std::vector<Item> inventory;	//List of items carried by the player
+	std::vector<Item*> inventory;	//List of items carried by the player
 	Weapon* equippedrangedweapon; 		//currently equipped weapon.
   Weapon* equippedmeleeweapon;
   int health;						//Player's current health.

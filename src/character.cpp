@@ -77,9 +77,9 @@ void Character::draw(sf::RenderWindow& window) {
     window.draw(sprite);
 }
 
-std::vector<Item>& Character::getInventory() { return inventory; }
+std::vector<Item*>& Character::getInventory() { return inventory; }
 
-void Character::addItem(Item item) {
+void Character::addItem(Item* item) {
     inventory.push_back(item);
 }
 
@@ -87,11 +87,12 @@ bool Character::consumeItem(int i) {
     if (i < 0 || i >= (int)inventory.size()) return false;
     // TODO: Check if item can be consumed
     // TODO: If it can, get the perks and remove it from the inventory. If not, return false.
-    inventory[i].dothing(*this);
-    if (inventory[i].gettype() == 2){
+    inventory[i]->dothing(*this);
+    /*if (inventory[i]->gettype() == 2){
+      delete inventory[i];
       inventory.erase(inventory.begin() + i);
       return true;
-    }
+    }*/
     return false;
 }
 
