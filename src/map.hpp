@@ -7,6 +7,8 @@
 
 //class Room;
 class Character;
+class Item;
+class Weapon;
 
 enum RoomType {
 	open,			// 'open' represents static, 'open world'-like rooms that the player might often return to. These rooms are typically less hostile and contain friendly NPCs, shops, quest givers or similar.

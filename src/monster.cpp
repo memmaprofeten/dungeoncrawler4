@@ -276,7 +276,7 @@ RangedMonster::RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli){
 	health = (rand() % 3) + leveli;
 	xponkill = leveli + 3;	
 	attackdamage =  (rand() % 4) + leveli;	
-	movespeed = ((rand()%3))*50.0f;
+	movespeed = (((rand()%10)+1))*15.0f;
 	aggrorange = 200.0f;	
 	projectilespeed = ((rand() % 3) + 1)*90.0f;	
 	attackrange = ((rand() % 5)+10)*50;	

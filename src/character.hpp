@@ -4,9 +4,10 @@
 #include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "room.hpp"
 //#include "weapon.hpp"
-#include "item.hpp"
+class Room;
+class Weapon;
+class Item;
 
 /*Can it be made so that only one instance of character can
 be created?*/
@@ -68,14 +69,17 @@ public:
 	void givexp(int amount);
 
   int getlevel();
+
+  void equipweapon(Weapon* newweapon);
 private:
 	std::string name; 				//Name of player. User input or based on class?
 	bool type;						// TODO: Is this supposed to define anything?
 	int level;						//Character level of player. Starts at 1
 	//std::vector<Weapon> weapons;	//List of weapons carried by player.
 	std::vector<Item> inventory;	//List of items carried by the player
-	//Weapon equippedweapon; 		//currently equipped weapon.
-	int health;						//Player's current health.
+	Weapon* equippedrangedweapon; 		//currently equipped weapon.
+  Weapon* equippedmeleeweapon;
+  int health;						//Player's current health.
 	float speed;					//Players movement speed.
 	int xp;							//Player's current experience amount.
 	int xpfornextlevel;				//amount required for player to level up.

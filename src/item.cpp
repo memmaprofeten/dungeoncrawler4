@@ -1,4 +1,6 @@
 #include "item.hpp"
+#include "room.hpp"
+#include "weapon.hpp"
 #include "character.hpp"
 #include "convenience.hpp"
 #include <iostream>
@@ -55,7 +57,8 @@ void Item::dohealythingy(Character& player){
 }
 
 void Item::doweaponthingy(Character& player){
-  std::cout << "Weapon Pickup has been called. Player HP to make compiler happy: " << player.getHealth() << std::endl;
+  std::cout << "Player has equipped weapon " << representedweapon->getName() << "." << std::endl;
+  player.equipweapon(representedweapon);
 }
 
 void Item::draw(sf::RenderWindow& window, Character& player){
@@ -106,9 +109,12 @@ Item::Item (std::string namei, int typei, float valuei, std::string texturefilei
   pos = posi;
   active = true;
   level = leveli;
+  representedweapon = NULL;
   if (!texture.loadFromFile(textureFile)) {
       throw std::runtime_error(std::string("Could not load Item texture") + textureFile + ".");
   }
+  sellable = true;
+  baseprice = 100;
 }
 
 
@@ -125,20 +131,54 @@ Item::Item(sf::Vector2f position, int leveli){
    name = "Gold!";
    value = ceil(rand()%100+1);
    textureFile = "../resources/img/doughnut_32.png";
+   representedweapon = NULL;
    break;
  case 2:
    name = "Potion of Healing!";
    value = float(rand() % (leveli*5) + 1);
    textureFile = "../resources/img/doughnut_32.png";
+   representedweapon = NULL;
    break;
  case 3:
    name = "Weapon!";
    textureFile = "../resources/img/sword1_32.png";
-   value = 0;
+   value = ((rand() % 255) + 1);
+
+   int weapontype = (rand()%2)+1;
+   switch(weapontype){
+   case 1:{
+     RangedWeapon tempweapon = RangedWeapon(leveli, value);
+     representedweapon = &tempweapon;
+     break;
+   }
+   case 2:{
+     MeleeWeapon tempweapon = MeleeWeapon(leveli, value);
+     representedweapon = &tempweapon;
+     break;
+   }
+   }
    break;
  }
 
  pos = position;
-level = leveli;
-active = true;
+ level = leveli;
+ active = true;
+ sellable = true;
+ baseprice = rand()%400+1;
 }
+
+Item::Item(std::string namei, Weapon* weaponi, int leveli, std::string texturefilei, sf::Vector2f posi){
+  name = namei;
+  representedweapon = weaponi;
+  level = leveli;
+  textureFile = texturefilei;
+  pos = posi;
+  level = leveli;
+  active = true;
+  type = 3;
+  value = 0;
+  sellable = true;
+  baseprice = 100;
+}
+
+

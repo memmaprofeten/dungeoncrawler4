@@ -1,6 +1,9 @@
 #include "character.hpp"
 #include "settings.hpp"
 #include "tile.hpp"
+#include "item.hpp"
+#include "room.hpp"
+#include "weapon.hpp"
 
 Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, const std::string& txtrPath, const std::string& sdwPath, int l) : name(n), type(t), level(l), speed(s), pos(p), texturePath(txtrPath), shadowPath(sdwPath) {
     if (!texture.loadFromFile(texturePath)) {
@@ -147,4 +150,16 @@ void Character::givexp(int amount){
 
 int Character::getlevel(){
   return level;
+}
+
+void Character::equipweapon(Weapon* newweapon){
+  int weapontype = newweapon->getType();
+  switch(weapontype){
+  case 1:
+    equippedmeleeweapon = newweapon;
+    break;
+  case 2:
+    equippedrangedweapon = newweapon;
+    break;
+  }
 }

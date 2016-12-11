@@ -4,6 +4,8 @@
 #include <time.h>
 #include <cmath>
 #include <time.h>
+#include "item.hpp"
+#include "weapon.hpp"
 
 Map::Map(Character& c) : room("welcome_room.txt", &c) {        // TODO: Replace with "welcome_room.txt"
     atRoom = s::startingRoomIndex;
