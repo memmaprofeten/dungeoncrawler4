@@ -78,7 +78,7 @@ public:
 	 */
 	std::vector<sf::Vector2i> getNeighbours(int x, int y, bool includingSelf, bool includingDiagonals, bool includingOutsiders);
 
-	void performAttack(bool friendly, sf::Vector2f source, sf::Vector2f direction, const Weapon& weapon);
+	void performAttack(bool friendly, sf::Vector2f source, float direction, const Weapon& weapon);
 
 	/**
 	 * Draws the room.

@@ -45,18 +45,17 @@ int main()
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
     sf::View guiView(sf::Vector2f(window.getSize()) / 2.0f, sf::Vector2f(window.getSize()));
 
-    /* === CHARACTER === */
+    /* === GAME VARIABLES === */
     Character character("Test man", true, s::characterSpeed, sf::Vector2f(30.0f, 30.0f), s::characterTextureFile, s::characterShadowFile);
     view.move(character.getPosition().x, character.getPosition().y);
+    Map map(character);
+    Room& room = map.getRoom();
+    character.setRoom(&room);
 
     /* === TESTING === */
-    //Room testRoom2 = Room(40, 40, 0.3);
-    Map map(character);
-    Room& testRoom = map.getRoom();
-    character.setRoom(&testRoom);
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
-
     Shopkeeper shopkeeper("../resources/img/character_32.png");
+
     shopkeeper.setPosition(sf::Vector2f(40,40));
     character.addItem(Item("Doughnut", 2, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0),1));
     character.addItem(Item("Ice cream", 2, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
@@ -128,6 +127,7 @@ int main()
     bool tooltipShowing = true;
     sf::Clock frameClock;
     float elapsed;
+    float elapsedSinceLastAttack = 1000.0f;
     float elapsedSinceLastShot = 1000.0f;
     float fpsSamples[FPS_SAMPLE_COUNT];
     float fpsValue = 0;
@@ -138,20 +138,21 @@ int main()
     /* === CONTAINERS === */        // TODO: Move these out, e.g. into the Room class.
     //Monster test code. Comment out later.
     // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
-    //CreateMonster(sf::Vector2f(75,75), &testRoom, 1);
-    //CreateMonster(sf::Vector2f(50,50), &testRoom, 1);
-    MeleeMonster tempmon = MeleeMonster(sf::Vector2f(200,200), &(map.getRoom()), 1);
+    //CreateMonster(sf::Vector2f(75,75), &room, 1);
+    //CreateMonster(sf::Vector2f(50,50), &room, 1);
+    MeleeMonster tempmon = MeleeMonster(sf::Vector2f(20,20), &(map.getRoom()), 1);
     map.getRoom().addmonster(&tempmon);
 
 
-/*    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &testRoom, 1.0));
+/*    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &room, 1.0));
     meleemonsters.begin()->setxypos(50,100);
-    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 30.0, 50, 100.0, 80.0, &testRoom, 1.0));
+    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 30.0, 50, 100.0, 80.0, &room, 1.0));
     rangedmonsters.begin()->setxypos(50,150);
 */
 
     // Mock parameters start here:
-    float projectileCooldown = 0.3f;        // In seconds
+    float meleeCooldown = 0.2f;             // In seconds
+    float projectileCooldown = 0.6f;        // In seconds
     // Mock parameters end here
 
     window.setView(view);
@@ -194,6 +195,7 @@ int main()
         /* === GAMEPLAY LOOP === */
         if (!paused) {
             elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame
+            elapsedSinceLastAttack += elapsed;
             elapsedSinceLastShot += elapsed;                // The time elapsed since player's last shot
             //sf::sleep(sf::seconds(0.05f));                // Uncomment this to simulate worse fps
 
@@ -236,7 +238,7 @@ int main()
         	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) cDir.y += 1;
         	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) cDir.y -= 1;
             sf::Vector2f cdPos = cv::normalized(cDir);
-            sf::Vector2i offset = testRoom.getOffsetDirection(character.getHypotheticalPosition(cdPos, elapsed));   // Check if the player has left the room
+            sf::Vector2i offset = room.getOffsetDirection(character.getHypotheticalPosition(cdPos, elapsed));   // Check if the player has left the room
             if (offset.x > 0)       switchRoom(0, map, character);
             else if (offset.y > 0)  switchRoom(1, map, character);
             else if (offset.x < 0)  switchRoom(2, map, character);
@@ -251,11 +253,17 @@ int main()
         	float rotation = (atan2(dy,dx)) * 180 / cv::PI;
         	character.setRotation(rotation);
 
-            /* === EVENT HANDLING FOR SHOOTING === */
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            /* === EVENT HANDLING FOR ATTACKING === */
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {      // Melee attack
+                if (elapsedSinceLastAttack < 0.0f || elapsedSinceLastAttack > meleeCooldown) {
+                    elapsedSinceLastAttack = 0.0f;
+                    room.performAttack(true, character.getPosition(), (float)rotation, MeleeWeapon("test", 3, 0, 0));  // TODO. Replace with player's real weapon
+                }
+            }
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {     // Missile attack
                 if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
                     elapsedSinceLastShot = 0.0f;
-                    Projectile& projectile = fireball_weapon.createProjectile(testRoom);
+                    Projectile& projectile = fireball_weapon.createProjectile(room);
                     projectile.setPosition(shapepos);
                     // Calculate the velocity of the projectile based on the location of the aim (mouse click) and the player's momentum:
                     sf::Vector2f vel = cv::normalized(sf::Vector2f(mousepos) - shapepos) * projectile.getSpeed() + cv::normalized(cDir) * s::characterSpeed;
@@ -273,9 +281,7 @@ int main()
             window.clear();
             view.setCenter(character.getPosition());
             window.setView(view);
-            testRoom.draw(window);
-
-            testRoom.drawProjectiles(window, elapsed);
+            room.draw(window);
 /*
         	for (auto& p : meleemonsters) {
         	  p.monsterai(character, window, elapsed);
@@ -284,12 +290,14 @@ int main()
         	  p.monsterai(character,window,elapsed);
         	}
 */
+            map.getRoom().drawmonsters(window, elapsed);
+            map.getRoom().drawitems(window);
 
             character.draw(window);
             shopkeeper.draw(window);
 
-	    map.getRoom().drawmonsters(window, elapsed);
-		map.getRoom().drawitems(window);
+            room.drawProjectiles(window, elapsed);
+
             /* === GUI === */
             window.setView(guiView);
             window.draw(healthBarBackground);
@@ -322,7 +330,7 @@ int main()
                 window.clear();
                 view.setCenter(character.getPosition());
                 window.setView(view);
-                testRoom.draw(window);
+                room.draw(window);
                 character.draw(window);
                 window.setView(guiView);
                 if (inventory) {
