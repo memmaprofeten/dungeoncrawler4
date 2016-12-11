@@ -52,6 +52,7 @@ Room& Map::switchRoom(int neighbour) {
     // TODO: Clean old room? Copy constructor?
     if (roomMap[atRoom].type == open) {
         room = Room(roomMap[atRoom].roomPath, character);
+	room.addmonster( new MeleeMonster(sf::Vector2f(20,20), &room, 1) );
     } else {
         srand(time(NULL));
         float p = (float)(rand() % 1000) / 999.0f * 0.13f + 0.6f;
