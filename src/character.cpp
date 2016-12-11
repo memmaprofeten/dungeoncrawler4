@@ -153,6 +153,7 @@ int Character::getlevel(){
 }
 
 void Character::equipweapon(Weapon* newweapon){
+  /* Commented out. Causes crash. Will feex.
   int weapontype = newweapon->getType();
   switch(weapontype){
   case 1:
@@ -161,5 +162,5 @@ void Character::equipweapon(Weapon* newweapon){
   case 2:
     equippedrangedweapon = newweapon;
     break;
-  }
+    }*/
 }
