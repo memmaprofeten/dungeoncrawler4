@@ -23,9 +23,14 @@ public:
   bool isactive() const;
   sf::Vector2f getpos() const;
   sf::Texture getTexture() const;
-  Item(std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi, int leveli); //Constructor for consumeables.
-  Item(sf::Vector2f positioni, int leveli); //Constructor for random item.
+  //Assorted contructors
+  Item(std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi, int leveli);
+  Item(sf::Vector2f positioni, int leveli); //RAndom item.
   Item(std::string namei, Weapon* weaponi, int leveli, std::string texturefilei, sf::Vector2f posi);
+
+  //Destructor
+  ~Item();
+  
   //Constructor for weapon type items.
   
   void dogoldthingy(Character& player);

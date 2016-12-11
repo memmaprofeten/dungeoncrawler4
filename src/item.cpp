@@ -9,6 +9,12 @@
 #include <time.h>
 #include <cmath>
 
+Item::~Item(){
+  if (type == 3){
+    //delete(representedweapon); LIKELY TO CAUSE NEW AND FUN ISSUES.
+  }
+}
+
 std::string Item::getname() const{
   return name;
 }
@@ -57,8 +63,8 @@ void Item::dohealythingy(Character& player){
 }
 
 void Item::doweaponthingy(Character& player){
-  //std::cout << "Player has equipped weapon " << representedweapon->getName() << "." << std::endl;
-  //  player.equipweapon(representedweapon);
+  std::cout << "Player has equipped weapon " << representedweapon->getName() << "." << std::endl;
+  player.equipweapon(representedweapon);
 }
 
 void Item::draw(sf::RenderWindow& window, Character& player){
@@ -140,20 +146,19 @@ Item::Item(sf::Vector2f position, int leveli){
    representedweapon = NULL;
    break;
  case 3:
-   name = "Weapon!";
    textureFile = "../resources/img/sword1_32.png";
    value = ((rand() % 255) + 1);
 
    int weapontype = (rand()%2)+1;
    switch(weapontype){
    case 1:{
-     RangedWeapon tempweapon = RangedWeapon(leveli, value);
-     representedweapon = &tempweapon;
+     representedweapon = new RangedWeapon(leveli, value);
+     name = representedweapon->getName();
      break;
    }
    case 2:{
-     MeleeWeapon tempweapon = MeleeWeapon(leveli, value);
-     representedweapon = &tempweapon;
+     representedweapon = new MeleeWeapon(leveli, value);
+     name = representedweapon->getName();
      break;
    }
    }

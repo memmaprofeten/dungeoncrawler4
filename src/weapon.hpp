@@ -17,7 +17,7 @@ public:
   int getProjectilespeed() const;
   Projectile& createProjectile(Room& room);
   virtual void attack();
-
+  //~Weapon(){} // LIKELY TO CAUSE NEW AND EXCITING ISSUES. DANGERZONE.
 protected:
   Weapon(int level, float seed);
   std::string name;
