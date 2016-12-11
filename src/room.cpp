@@ -105,8 +105,8 @@ Room::Room(int width, int height, float p, int randomGenIterations, std::vector<
 Room::~Room() {
 	for (unsigned i=0; i<monsters.size(); ++i) {
 		delete monsters[i];
-		monsters.clear();
 	}
+	monsters.clear();
 }
 
 int Room::getWidth() const {

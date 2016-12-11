@@ -140,8 +140,7 @@ int main()
     // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
     //CreateMonster(sf::Vector2f(75,75), &room, 1);
     //CreateMonster(sf::Vector2f(50,50), &room, 1);
-    MeleeMonster tempmon = MeleeMonster(sf::Vector2f(20,20), &(map.getRoom()), 1);
-    map.getRoom().addmonster(&tempmon);
+    map.getRoom().addmonster( new MeleeMonster(sf::Vector2f(20,20), &(map.getRoom()), 1) );
 
 
 /*    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &room, 1.0));
