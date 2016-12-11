@@ -78,6 +78,11 @@ public:
 	 */
 	std::vector<sf::Vector2i> getNeighbours(int x, int y, bool includingSelf, bool includingDiagonals, bool includingOutsiders);
 
+	/**
+	 * Performs an attack from the given position, in the given direction, with
+	 * the given weapon. If friendly, the attack targets only monsters. If not,
+	 * it targets only monsters.
+	 */
 	void performAttack(bool friendly, sf::Vector2f source, float direction, const Weapon& weapon);
 
 	/**

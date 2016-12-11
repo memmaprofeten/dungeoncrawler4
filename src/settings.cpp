@@ -8,7 +8,7 @@ namespace s {
 	std::string projectileTextureFile = "../resources/img/projectile_32.png";
 	std::string characterShadowFile = "../resources/img/shadowtest2.png";
 	std::string wallTextureFile = "../resources/img/wall_32.png";
-	std::vector<std::string> texturePaths = {characterTextureFile,
+	std::vector<std::string> texturePaths = {characterTextureFile,		// NB! Do not switch the order of these. Their indexes are being used.
 						fireballTextureFile,
 						floor2TextureFile,
 						hpContainerTextureFile,
