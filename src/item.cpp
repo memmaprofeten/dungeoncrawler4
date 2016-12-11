@@ -58,7 +58,7 @@ void Item::dohealythingy(Character& player){
 
 void Item::doweaponthingy(Character& player){
   std::cout << "Player has equipped weapon " << representedweapon->getName() << "." << std::endl;
-  player.equipweapon(representedweapon);
+  //  player.equipweapon(representedweapon);
 }
 
 void Item::draw(sf::RenderWindow& window, Character& player){
