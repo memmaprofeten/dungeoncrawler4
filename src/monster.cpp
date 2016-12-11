@@ -97,7 +97,7 @@ void Monster::reducehealth(int reducedby){
     //Sets monster as inactive.
     active = false;
     //Drops item
-    Item tempitem = Item(position, room->getcharacter()->getlevel());
+    Item* tempitem = new Item(position, room->getcharacter()->getlevel());
 	room->additem(tempitem);
     //Awards player XP
     room->getcharacter()->givexp(xponkill);
