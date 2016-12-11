@@ -274,12 +274,12 @@ RangedMonster::RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli){
 
     monstername = "PewPew the Dastardly";
 	health = (rand() % 3) + leveli;
-	xponkill = leveli + 3;	
-	attackdamage =  (rand() % 4) + leveli;	
+	xponkill = leveli + 3;
+	attackdamage =  (rand() % 4) + leveli;
 	movespeed = ((rand()%3))*50.0f;
-	aggrorange = 200.0f;	
-	projectilespeed = ((rand() % 3) + 1)*90.0f;	
-	attackrange = ((rand() % 5)+10)*50;	
+	aggrorange = 200.0f;
+	projectilespeed = ((rand() % 3) + 1)*90.0f;
+	attackrange = ((rand() % 5)+10)*50;
 	room = roomi;
 	timebetweenattacks = 0.8f;
 	position = positioni;
@@ -290,12 +290,12 @@ RangedMonster::RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli){
 
 MeleeMonster::MeleeMonster(sf::Vector2f positioni, Room* roomi, int leveli){
   srand (time(NULL));
-  
+
   monstername = "ChopChop the Dangerous";
 	health = (rand() % 4)+leveli;
 	xponkill = leveli + 2;
 	attackdamage = (rand()%3)+leveli;
-	movespeed = ((rand()%2)+1)*50.0f;
+	movespeed = ((rand()%2)+1)*20.0f;
 	aggrorange = 200.0f;
 	attackrange = (rand()%5)+10;
 	room = roomi;
