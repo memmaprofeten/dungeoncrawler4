@@ -4,6 +4,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
+class Weapon;
 class Character;
 
 /*examples of item types:
@@ -22,14 +23,16 @@ public:
   bool isactive() const;
   sf::Vector2f getpos() const;
   sf::Texture getTexture() const;
-  Item(std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi, int leveli);
-  Item(sf::Vector2f positioni, int leveli);
+  Item(std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi, int leveli); //Constructor for consumeables.
+  Item(sf::Vector2f positioni, int leveli); //Constructor for random item.
+  Item(std::string namei, Weapon* weaponi, int leveli, std::string texturefilei, sf::Vector2f posi);
+  //Constructor for weapon type items.
   
   void dogoldthingy(Character& player);
   void dohealythingy(Character& player);
   void doweaponthingy(Character& player);
-       /*
-constructor
+  /*
+  constructor
 
 some kind of draw function*/
 private:
@@ -44,11 +47,12 @@ type, uses switch in order to have to track multiple types of item in play.
   sf::Texture texture;
   sf::Vector2f pos; //Item XY Positiony
   bool active; //To track if the item is active.
-  int type;
-  float value;
-  int level;
+  int type; // Type of item. Elaborated on above.
+  float value; // Used for consumeables for amount of whatever it does.
+  int level; //Used to save what level the item is. Used in generation functions.
+  Weapon* representedweapon; //What weapon the item represents.
+  bool sellable;//If the item is sellable or not.
+  int baseprice; //Base price for sold item.
 };
-
-void CreateItem(std::vector<Item>& itemstorage, sf::Vector2f position, int leveli); //Funtion to create item. Called when player kills monster.
 
 #endif

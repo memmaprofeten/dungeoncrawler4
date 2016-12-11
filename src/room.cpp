@@ -3,6 +3,7 @@
 #include "convenience.hpp"
 #include "character.hpp"
 #include "weapon.hpp"
+#include "item.hpp"
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
