@@ -57,7 +57,7 @@ void Item::dohealythingy(Character& player){
 }
 
 void Item::doweaponthingy(Character& player){
-  std::cout << "Player has equipped weapon " << representedweapon->getName() << "." << std::endl;
+  //std::cout << "Player has equipped weapon " << representedweapon->getName() << "." << std::endl;
   //  player.equipweapon(representedweapon);
 }
 
