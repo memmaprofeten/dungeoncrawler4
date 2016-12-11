@@ -171,13 +171,13 @@ void Room::performAttack(bool byPlayer, sf::Vector2f source, sf::Vector2f direct
 	// TODO: Get weapon's min/max radius and angle.
 	float minRadius = 0.0f;
 	float maxRadius = 12.5f;
-	float angle = 30.0f;
+	float angle = 60.0f;
 	if (byPlayer) {		// Target all monsters within range
 		for (unsigned i=0; i<monsters.size(); ++i) {
 			if (monsters[i]->isactive()) {
 				sf::Vector2f cVec = monsters[i]->getPosition() - source;
 				float d = cv::norm(cVec);
-				if (d <= maxRadius && d >= minRadius && acos(cv::dotP(direction, cv::normalized(cVec))) * 180.0f / cv::PI <= angle) {
+				if (d <= maxRadius && d >= minRadius && acos(cv::dotP(direction, cv::normalized(cVec))) * 180.0f / cv::PI <= angle / 2.0f) {
 					monsters[i]->reducehealth(weapon.getDamage());
 				}
 			}
