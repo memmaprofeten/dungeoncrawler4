@@ -52,13 +52,29 @@ Room& Map::switchRoom(int neighbour) {
     // TODO: Clean old room? Copy constructor?
     if (roomMap[atRoom].type == open) {
         room = Room(roomMap[atRoom].roomPath, character);
-	room.addmonster( new MeleeMonster(sf::Vector2f(20,20), &room, 1) );
     } else {
         srand(time(NULL));
         float p = (float)(rand() % 1000) / 999.0f * 0.13f + 0.6f;
         std::cout << "Generating dungeon with p = " << p << "." << std::endl;
-        room = Room(60, 60, p, 3, std::vector<bool>{true, true, true, true});
+        room = Room(60, 60, p, 3, std::vector<bool>{true, true, true, true}, character);
     }
+	for (int i=0; i < s::monstersPerRoom; i++){
+		bool found = false;
+		//Iterate to find a free place in the room
+		while(!found){
+			sf::Vector2f position((float) (rand() % room.getWidth()), (float) (rand() % room.getHeight()));
+			if(room.getTile(position).isPenetrable()){
+				found = true;
+				//randomize the monster created
+				if(rand() % 2 == 0){
+					room.addmonster(new MeleeMonster(position, &room, 1));
+				}
+				else {
+					room.addmonster(new RangedMonster(position, &room, 1));
+				}
+			}
+		}
+	}
     return room;
 }
 

@@ -32,6 +32,7 @@ namespace s {
 	extern int standardEntrancePosY;		// The standard Y coordinate of a vertical room entrance
 	extern int standardEntranceWidth;		// The standard width of a room entrance (in blocks)
 	extern int startingRoomIndex;
+	extern int monstersPerRoom;
 }
 
 #endif
