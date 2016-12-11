@@ -123,6 +123,7 @@ int main()
     bool paused = false;
     bool pauseReleased = true;
     bool pauseReset = true;
+    bool focused = true;
     bool inventory = false;
     bool tooltipShowing = true;
     sf::Clock frameClock;
@@ -167,6 +168,14 @@ int main()
                 case sf::Event::Closed:
                     window.close();
                     break;
+                case sf::Event::LostFocus:
+                    std::cout << "Lost focus" << std::endl;
+                    focused = false;
+                    break;
+                case sf::Event::GainedFocus:
+                    std::cout << "Gained focus" << std::endl;
+                    focused = true;
+                    break;
                 case sf::Event::Resized:
                 {
                     sf::Vector2f eventSize(event.size.width, event.size.height);
@@ -192,7 +201,7 @@ int main()
         }
 
         /* === GAMEPLAY LOOP === */
-        if (!paused) {
+        if (!paused && focused) {
             elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame
             elapsedSinceLastAttack += elapsed;
             elapsedSinceLastShot += elapsed;                // The time elapsed since player's last shot
@@ -325,7 +334,7 @@ int main()
             }
 
             /* === PAUSED RENDERING === */
-            if (paused) {               // Check if still paused
+            if (paused || !focused) {               // Check if still paused
                 window.clear();
                 view.setCenter(character.getPosition());
                 window.setView(view);
