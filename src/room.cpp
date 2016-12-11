@@ -42,7 +42,7 @@ Room::Room(std::string const file, Character* character) : character(character) 
 	}
 }
 
-Room::Room(int width, int height, float p, int randomGenIterations, std::vector<bool> entrances) : width(width), height(height) {
+Room::Room(int width, int height, float p, int randomGenIterations, std::vector<bool> entrances, Character* character) : width(width), height(height), character(character) {
 	srand(time(NULL));
 	sf::Sprite dummy;
 	room = std::vector<std::vector<Tile>>(width, std::vector<Tile>(height, Tile(0,sf::Vector2f(0,0), sf::Vector2i(0,0), &dummy)));
