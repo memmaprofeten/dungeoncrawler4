@@ -23,6 +23,8 @@ Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, int 
     shadowSprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
     shadowSprite.setPosition(p);
 
+    weaponAnim.set(p, sf::Vector2f(0, 0), 0.0f, 600.0f,  8, sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f), sf::Vector2f(32, 32), 0.2f);
+
     health = getMaxHealth();
     gold = 0;
     room = NULL;
@@ -30,9 +32,9 @@ Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, int 
 }
 
 Character::~Character() {
-    for (unsigned i=0; i<inventory.size(); ++i) {
-        //delete inventory[i];
-    }
+    /*for (unsigned i=0; i<inventory.size(); ++i) {     // This should no longer be needed (make sure)
+        delete inventory[i];
+    }*/
 }
 
 std::string Character::getName() const { return name; }
@@ -77,11 +79,19 @@ Room* Character::getRoom() { return room; }
 
 void Character::setRoom(Room* r) { room = r; }
 
-void Character::draw(sf::RenderWindow& window) {
+void Character::draw(sf::RenderWindow& window, float elapsed) {
     shadowSprite.setPosition(pos.x, pos.y);
     sprite.setPosition(pos.x, pos.y);
     window.draw(shadowSprite);
+    if (weaponAnim.active) {
+        weaponAnim.pos = pos;
+        weaponAnim.draw(window, elapsed);
+    }
     window.draw(sprite);
+}
+
+void Character::initiateMeleeAttack() {
+    weaponAnim.restart();
 }
 
 std::vector<Item*>& Character::getInventory() { return inventory; }
@@ -126,9 +136,9 @@ int Character::getMaxHealth() const {
     return 9 + level;      // NB! This algorithm can be changed for something more complex if there is need for it.
 }
 
-void Character::reducehealth(int damage){ 
+void Character::reducehealth(int damage){
   health -= damage;
-  
+
   if (health <= 0){
     minorcharactersound.setBuffer(s::soundbuffers[4]);
     minorcharactersound.play();

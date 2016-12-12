@@ -1,6 +1,7 @@
 #ifndef CHARACTER_HH
 #define CHARACTER_HH
 
+#include "settings.hpp"
 #include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
@@ -43,7 +44,9 @@ public:
 
 	void setRoom(Room* r);
 
-	void draw(sf::RenderWindow& window);
+	void draw(sf::RenderWindow& window, float elapsed);
+
+	void initiateMeleeAttack();
 
 	//attacking and getting attacked functions
 
@@ -102,6 +105,7 @@ private:
   sf::Sprite sprite;
   sf::Texture shadowTexture;
   sf::Sprite shadowSprite;
+  s::animation weaponAnim;
 
   sf::Sound minorcharactersound;
   sf::Sound majorcharactersound;
