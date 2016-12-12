@@ -17,6 +17,7 @@ public:
   int getProjectilespeed() const;
   Projectile& createProjectile(Room& room);
   float getcooldown() const;
+  int gettextureindex() const;
   virtual void attack();
   virtual ~Weapon(); // LIKELY TO CAUSE NEW AND EXCITING ISSUES. DANGERZONE.
 protected:
