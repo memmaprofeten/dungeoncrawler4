@@ -273,7 +273,9 @@ sf::Sprite* Room::getSprite() {
 			spritesInUse[i] = true;
 			return &sprites[i];
 		}
+
 	}
+
 	sf::Sprite sprite;
 	sprites.push_back(sprite);
 	spritesInUse.push_back(true);

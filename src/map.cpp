@@ -62,7 +62,7 @@ Room& Map::switchRoom(int neighbour) {
 		bool found = false;
 		//Iterate to find a free place in the room
 		while(!found){
-			sf::Vector2f position((float) (rand() % room.getWidth()), (float) (rand() % room.getHeight()));
+			sf::Vector2f position((float) (rand() % (room.getWidth() * (int) s::blockDim)), (float) (rand() % (room.getHeight() * (int) s::blockDim)));
 			if(room.getTile(position).isPenetrable()){
 				found = true;
 				//randomize the monster created
