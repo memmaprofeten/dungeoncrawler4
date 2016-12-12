@@ -161,8 +161,8 @@ int main()
 */
 
     // Mock parameters start here:
-    float meleeCooldown = 0.2f;             // In seconds
-    float projectileCooldown = 0.6f;        // In seconds
+    //float meleeCooldown = 0.2f;             // In seconds
+    //float projectileCooldown = 0.6f;        // In seconds
     // Mock parameters end here
 
     window.setView(view);
@@ -273,15 +273,15 @@ int main()
 
             /* === EVENT HANDLING FOR ATTACKING === */
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {      // Melee attack
-                if (elapsedSinceLastAttack < 0.0f || elapsedSinceLastAttack > meleeCooldown) {
+	      if (elapsedSinceLastAttack < 0.0f || elapsedSinceLastAttack > character.getmeleeweapon()->getcooldown()) {
                     elapsedSinceLastAttack = 0.0f;
-                    room.performAttack(true, character.getPosition(), cv::normalized(mousepos - charpos), MeleeWeapon("test", 3, 0, 0));  // TODO. Replace with player's real weapon
+                    room.performAttack(true, character.getPosition(), cv::normalized(mousepos - charpos), *character.getmeleeweapon());  // TODO. Replace with player's real weapon
                 }
             }
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {     // Missile attack
-                if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > projectileCooldown) {
+	      if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > character.getrangedweapon()->getcooldown()) {
                     elapsedSinceLastShot = 0.0f;
-                    Projectile& projectile = fireball_weapon.createProjectile(room);
+                    Projectile& projectile = character.getrangedweapon()->createProjectile(room);
                     projectile.setPosition(charpos);
                     // Calculate the velocity of the projectile based on the location of the aim (mouse click) and the player's momentum:
                     sf::Vector2f vel = cv::normalized(mousepos - charpos) * projectile.getSpeed() + cv::normalized(cDir) * s::characterSpeed;

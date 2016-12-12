@@ -8,14 +8,15 @@ class Projectile;
 
 class Weapon {
 public:
-  Weapon(std::string n, bool t, int d, float r, int txtrIndex);
+  Weapon(std::string n, int t, int d, float r, int txtrIndex);
   std::string getName() const;
-  bool getType() const;
+  int getType() const;
   int getDamage() const;
   //int getRange() const;
   float getRadius() const;
   int getProjectilespeed() const;
   Projectile& createProjectile(Room& room);
+  float getcooldown() const;
   virtual void attack();
   virtual ~Weapon(); // LIKELY TO CAUSE NEW AND EXCITING ISSUES. DANGERZONE.
 protected:
