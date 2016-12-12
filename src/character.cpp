@@ -28,6 +28,12 @@ Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, cons
     room = NULL;
 }
 
+Character::~Character() {
+    for (unsigned i=0; i<inventory.size(); ++i) {
+        //delete inventory[i];
+    }
+}
+
 std::string Character::getName() const { return name; }
 
 sf::Vector2f Character::getPosition() const { return pos; }
@@ -87,13 +93,30 @@ bool Character::consumeItem(int i) {
     if (i < 0 || i >= (int)inventory.size()) return false;
     // TODO: Check if item can be consumed
     // TODO: If it can, get the perks and remove it from the inventory. If not, return false.
-    inventory[i]->dothing(*this);
+    //inventory[i]->dothing(*this);
     /*if (inventory[i]->gettype() == 2){
       delete inventory[i];
       inventory.erase(inventory.begin() + i);
       return true;
     }*/
-    return false;
+    Item* item = inventory[i];
+    bool res = false;
+    switch(item->gettype()) {
+        case 1:     // gold
+            break;
+        case 2:     // consumable
+            res = true;
+            break;
+        case 3:     // weapon
+            break;
+        default:
+            break;
+    }
+    item->dothing(*this);
+    if (res) {
+        inventory.erase(inventory.begin() + i);
+    }
+    return res;
 }
 
 int Character::getHealth() const { return health; }
