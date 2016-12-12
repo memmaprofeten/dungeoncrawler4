@@ -239,14 +239,14 @@ void Room::drawmonsters(sf::RenderWindow& window, float elapsed){
 }
 
 void Room::drawitems(sf::RenderWindow& window){
-	for (auto it = itemstorage.begin(); it != itemstorage.end(); it++){
-		if (it->isactive()){
-			it->draw(window, *character);
-		}
-	}
+  for (auto it = itemstorage.begin(); it != itemstorage.end(); it++){
+    if ((*it)->isactive()){
+      (*it)->draw(window, *character);
+    }
+  }
 }
 
-void Room::additem(Item& newitem){
+void Room::additem(Item* newitem){
 	itemstorage.push_back(newitem);
 }
 
@@ -302,7 +302,7 @@ std::vector<Monster*>& Room::getmonsters(){
   return monsters;
 }
 
-std::vector<Item>& Room::getitems(){
+std::vector<Item*>& Room::getitems(){
   return itemstorage;
 }
 

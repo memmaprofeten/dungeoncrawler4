@@ -182,7 +182,7 @@ Item::Item(std::string namei, Weapon* weaponi, int leveli, std::string texturefi
   active = true;
   type = 3;
   value = 0;
-  sellable = true;
+  sellable = false;
   baseprice = 100;
 }
 

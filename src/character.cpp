@@ -165,3 +165,11 @@ void Character::equipweapon(Weapon* newweapon){
     break;
     }
 }
+
+Weapon* Character::getmeleeweapon() const{
+  return equippedmeleeweapon;
+}
+
+Weapon* Character::getrangedweapon() const{
+  return equippedrangedweapon;
+}

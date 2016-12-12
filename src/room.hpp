@@ -127,10 +127,10 @@ public:
 	Projectile& createProjectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex);
 
 	std::vector<Monster*>& getmonsters();
-	std::vector<Item>& getitems();
+	std::vector<Item*>& getitems();
 	Character* getcharacter();
 	void addmonster(Monster* monsteri);
-	void additem(Item& newitem);
+	void additem(Item* newitem);
 	void drawitems(sf::RenderWindow& window);
 
 private:
@@ -143,7 +143,7 @@ private:
 	std::vector<Projectile> projectiles; //Projectile objects
 	std::vector<int> freeProjectiles;		// A vector of projectile indices that are free for replacing
 	std::vector<Monster*> monsters; //Vector containing pointers to monsters on the level.
-	std::vector<Item> itemstorage; //Vector containing items in level.
+	std::vector<Item*> itemstorage; //Vector containing items in level.
 };
 
 #endif
