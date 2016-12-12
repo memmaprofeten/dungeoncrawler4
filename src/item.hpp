@@ -22,17 +22,19 @@ public:
   void dothing(Character& player); //Does a thing.
   bool isactive() const;
   sf::Vector2f getpos() const;
-  sf::Texture getTexture() const;
+  sf::Sprite& getDropSprite();
+  sf::Sprite& getInventorySprite();
+  //sf::Texture getTexture() const;
   //Assorted contructors
-  Item(std::string namei, int typei, float valuei, std::string texturefilei, sf::Vector2f posi, int leveli);
-  Item(sf::Vector2f positioni, int leveli); //RAndom item.
-  Item(std::string namei, Weapon* weaponi, int leveli, std::string texturefilei, sf::Vector2f posi);
+  Item(std::string namei, int typei, float valuei, int textureIndexi, sf::Vector2f posi, int leveli);
+  Item(sf::Vector2f positioni, int leveli); //Random item.
+  Item(std::string namei, Weapon* weaponi, int leveli, int textureIndexi, sf::Vector2f posi);
 
   //Destructor
   ~Item();
-  
+
   //Constructor for weapon type items.
-  
+
   void dogoldthingy(Character& player);
   void dohealythingy(Character& player);
   void doweaponthingy(Character& player);
@@ -48,8 +50,10 @@ type, uses switch in order to have to track multiple types of item in play.
 3: Weapon. Calls function to give player random weapon (or weapon based on value) when player walks over.
 */
   std::string name;//Name, used for message player gets when picking up item.
-  std::string textureFile; //Filepath for texture to be drawn on ground.
-  sf::Texture texture;
+  //std::string textureFile; //Filepath for texture to be drawn on ground.
+  int textureIndex;
+  sf::Sprite inventorySprite;
+  sf::Sprite dropSprite;
   sf::Vector2f pos; //Item XY Positiony
   bool active; //To track if the item is active.
   int type; // Type of item. Elaborated on above.

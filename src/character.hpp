@@ -19,6 +19,8 @@ public:
 	to implement a save feature */
 	Character(const std::string& n, bool t, float s, sf::Vector2f p, const std::string& txtrPath, const std::string& sdwPath, int l = 1);
 
+	~Character();
+
 	std::string getName() const;
 
 	sf::Vector2f getPosition() const;
@@ -75,7 +77,7 @@ public:
   Weapon* getmeleeweapon() const;
 
   Weapon* getrangedweapon() const;
-  
+
 private:
   std::string name; 				//Name of player. User input or based on class?
   bool type;						// TODO: Is this supposed to define anything?
@@ -88,13 +90,13 @@ private:
   float speed;					//Players movement speed.
   int xp;							//Player's current experience amount.
   int xpfornextlevel;				//amount required for player to level up.
-  
+
   int gold;						//Amount of gold player has.
-  
+
   Room* room;
   sf::Vector2f pos;
   int rotation;
-  
+
   std::string texturePath;
   sf::Texture texture;
   sf::Sprite sprite;

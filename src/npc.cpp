@@ -25,9 +25,8 @@ void Npc::draw(sf::RenderWindow& window) {
     window.draw(sprite);
 }
 
-
 Shopkeeper::Shopkeeper(int texture, sf::Vector2f pos) : Npc(texture, pos) {
-  inventory.push_back(Item("Doughnut", 4, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0),1));
-  inventory.push_back(Item("Ice cream", 4, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-  inventory.push_back(Item("Cake", 4, 5, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
+    inventory.push_back(Item("Doughnut", 4, 3, 7, sf::Vector2f(0, 0),1));
+    inventory.push_back(Item("Ice cream", 4, 2, 8, sf::Vector2f(0, 0),1));
+    inventory.push_back(Item("Cake", 4, 5, 8, sf::Vector2f(0, 0),1));
 }
