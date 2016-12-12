@@ -95,8 +95,8 @@ public:
 	 */
 	void drawProjectiles(sf::RenderWindow& window, float elapsed);
 
-  // Runs the monster AI and draws them.
-  void drawmonsters(sf::RenderWindow& window, float elapsed);
+  // Runs the monster AI
+  void drawmonsters(float elapsed);
 
 	/**
 	 * Prints the room to std::cout.
@@ -110,9 +110,14 @@ public:
 	 */
 	std::vector<std::vector<bool>> getPenetrabilityMap();
 
-	//Returns refernce to a sprite that is not in use
+//Sprite resuse ecosystem
+	//Returns refernce to a sprite
 	sf::Sprite* getSprite();
-
+	
+	//Deactivates sprite for other instances to use
+	void deactivateSprite(sf::Sprite* sprite);
+	
+	
 	//std::vector<Projectile> getProjectiles();
 
 	/**

@@ -14,6 +14,11 @@ namespace s {
 	extern std::string projectileTextureFile;
 	extern std::string characterShadowFile;
 	extern std::string wallTextureFile;
+	extern std::string doughnutTextureFile;
+	extern std::string shadowtest1TextureFile;
+	extern std::string shadowtest2TextureFile;
+	extern std::string sword1TextureFile;
+	extern std::string monstertest1TextureFile;
 	extern std::vector<std::string> texturePaths;
 	extern std::vector<sf::Texture> textures;
 	void loadTextures();

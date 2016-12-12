@@ -66,7 +66,7 @@ Room& Map::switchRoom(int neighbour) {
 			position = sf::Vector2f((float) (rand() % (room.getWidth() * (int) s::blockDim)), (float) (rand() % (room.getHeight() * (int) s::blockDim)));
 			if(room.getTile(position).isPenetrable()){
 				found = true;
-				//randomize the monster created
+				//random monster created
 				if(rand() % 2 == 0){
 					room.addmonster(new MeleeMonster(position, &room, 1));
 				}

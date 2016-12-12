@@ -308,7 +308,7 @@ int main()
         	  p.monsterai(character,window,elapsed);
         	}
 */
-            map.getRoom().drawmonsters(window, elapsed);
+            map.getRoom().drawmonsters(elapsed);
             map.getRoom().drawitems(window);
 
             character.draw(window);

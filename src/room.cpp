@@ -200,8 +200,10 @@ void Room::draw(sf::RenderWindow& window) {
         }
     }
 */
-	for (auto sprite : sprites){
-		window.draw(sprite);
+	for (unsigned int i = 0; i < sprites.size(); i++){
+		if (spritesInUse[i]) {
+			window.draw(sprites[i]);
+		}
 	}
 }
 
@@ -230,10 +232,10 @@ void Room::drawProjectiles(sf::RenderWindow& window, float elapsed) {
 	}
 }
 
-void Room::drawmonsters(sf::RenderWindow& window, float elapsed){
+void Room::drawmonsters(float elapsed){
   for (auto it = monsters.begin(); it != monsters.end(); it++){
     if ((*it)->isactive()){
-      (*it)->monsterai(*character, window, elapsed);
+      (*it)->monsterai(*character, elapsed);
     }
   }
 }
@@ -281,7 +283,9 @@ sf::Sprite* Room::getSprite() {
 	spritesInUse.push_back(true);
 	return &sprites.back();
 }
-
+void Room::deactivateSprite(sf::Sprite* sprite) {
+	spritesInUse[sprite - &sprites[0]] = false;
+}
 /*std::vector<Projectile> Room::getProjectiles() {
 	return projectiles;
 }*/

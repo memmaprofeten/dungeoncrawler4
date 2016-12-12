@@ -87,6 +87,7 @@ void Monster::monstermove(sf::Vector2f direction, float elapsed){
         position += dposVer;
         //sprite.move(0, dpos.y);
     }
+    sprite->setPosition(position);
 
 }
 
@@ -101,6 +102,7 @@ void Monster::reducehealth(int reducedby){
 	room->additem(tempitem);
     //Awards player XP
     room->getcharacter()->givexp(xponkill);
+    room->deactivateSprite(sprite);
     /*
     for(auto iter=monsters->begin(); iter != monsters->end(); iter++){
       //if (monstername == iter->getname()){
@@ -130,6 +132,11 @@ RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int 
   timebetweenattacks = timebetweenattacksi;
   attacktimer = 0.0;
   active = true;
+  textureIndex = 11;
+  sprite = room->getSprite();
+  sprite->setOrigin(16.0f,16.0f);
+  sprite->setTexture(s::textures[textureIndex]);
+  sprite->setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
 }
 
 RangedMonster::~RangedMonster() {}
@@ -147,6 +154,11 @@ MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int at
   timebetweenattacks = timebetweenattacksi;
   attacktimer = 0.0;
   active = true;
+  textureIndex = 11;
+  sprite = room->getSprite();
+  sprite->setOrigin(16.0f,16.0f);
+  sprite->setTexture(s::textures[textureIndex]);
+  sprite->setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
 }
 
 MeleeMonster::~MeleeMonster() {}
@@ -201,7 +213,7 @@ After that, it attacks the player if it is within range.
 */
 
 
-void RangedMonster::monsterai(Character& player, sf::RenderWindow& window, float elapsed){
+void RangedMonster::monsterai(Character& player, float elapsed){
   sf::Vector2f direction;
   if (!active) {
 	return;
@@ -214,8 +226,8 @@ void RangedMonster::monsterai(Character& player, sf::RenderWindow& window, float
   if(aggrostate) {
 
 //Determines direction. Will be replaced by pathfinding later.
-    direction.x = player.getPosition().x - position.x;
-    direction.y = player.getPosition().y - position.y;
+    direction = player.getPosition() - position;
+//  direction.y = player.getPosition().y - position.y;
     direction = cv::normalized(direction);
 
 //Moves enemy in chosen direction.
@@ -228,10 +240,10 @@ void RangedMonster::monsterai(Character& player, sf::RenderWindow& window, float
       monsterattack(player);
     }
   }
-  draw(window);
+  //draw(window);
 }
 
-void MeleeMonster::monsterai(Character& player, sf::RenderWindow& window, float elapsed){
+void MeleeMonster::monsterai(Character& player, float elapsed){
   sf::Vector2f direction;
   if(!active){
 	return;
@@ -242,8 +254,8 @@ void MeleeMonster::monsterai(Character& player, sf::RenderWindow& window, float 
 
   if(aggrostate){
 //Determines direction. Will be replaced by pathfinding later.
-    direction.x = player.getPosition().x - position.x;
-    direction.y = player.getPosition().y - position.y;
+    direction = player.getPosition() - position;
+//  direction.y = player.getPosition().y - position.y;
     direction = cv::normalized(direction);
 
 //Moves enemy in chosen direction.
@@ -257,9 +269,9 @@ void MeleeMonster::monsterai(Character& player, sf::RenderWindow& window, float 
     }
   }
 
-  draw(window);
+  //draw(window);
 }
-
+/*
 void Monster::draw(sf::RenderWindow& window){
   sf::CircleShape tile(3.0f);
   tile.setOrigin(1.5f, 1.5f);
@@ -267,12 +279,12 @@ void Monster::draw(sf::RenderWindow& window){
   tile.setFillColor(sf::Color::Blue);
   window.draw(tile);
 }
-
+*/
 //Creates a random ranged monster at position determined by the position input.
 RangedMonster::RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli){
   srand(time(NULL));
 
-    monstername = "PewPew the Dastardly";
+    	monstername = "PewPew the Dastardly";
 	health = (rand() % 3) + leveli;
 	xponkill = leveli + 3;
 	attackdamage =  (rand() % 4) + leveli;
@@ -283,9 +295,13 @@ RangedMonster::RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli){
 	room = roomi;
 	timebetweenattacks = 0.8f;
 	position = positioni;
-
-    active = true;
+	active = true;
 	attacktimer = 0;
+	textureIndex = 11;
+	sprite = room->getSprite();
+	sprite->setOrigin(16.0f,16.0f);
+	sprite->setTexture(s::textures[textureIndex]);
+	sprite->setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
 }
 
 MeleeMonster::MeleeMonster(sf::Vector2f positioni, Room* roomi, int leveli){
@@ -301,7 +317,11 @@ MeleeMonster::MeleeMonster(sf::Vector2f positioni, Room* roomi, int leveli){
 	room = roomi;
 	timebetweenattacks = 0.8f;
 	position = positioni;
-
 	active = true;
 	attacktimer = 0;
+	textureIndex = 11;
+	sprite = room->getSprite();
+	sprite->setOrigin(16.0f,16.0f);
+	sprite->setTexture(s::textures[textureIndex]);
+	sprite->setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
 }

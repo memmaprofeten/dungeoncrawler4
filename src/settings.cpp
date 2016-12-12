@@ -8,13 +8,23 @@ namespace s {
 	std::string projectileTextureFile = "../resources/img/projectile_32.png";
 	std::string characterShadowFile = "../resources/img/shadowtest2.png";
 	std::string wallTextureFile = "../resources/img/wall_32.png";
+	std::string doughnutTextureFile = "../resources/img/doughnut_32.png";
+	std::string shadowtest1TextureFile = "../resources/img/shadowtest1.png"; 
+	std::string shadowtest2TextureFile = "../resources/img/shadowtest2.png"; 
+	std::string sword1TextureFile = "../resources/img/sword1_32.png"; 
+	std::string monstertest1TextureFile = "../resources/img/monstertest1_32.png"; 
 	std::vector<std::string> texturePaths = {characterTextureFile,		// NB! Do not switch the order of these. Their indexes are being used.
 						fireballTextureFile,
 						floor2TextureFile,
 						hpContainerTextureFile,
 						projectileTextureFile,
 						characterShadowFile,
-						wallTextureFile};
+						wallTextureFile,
+						doughnutTextureFile,
+						shadowtest1TextureFile,
+						shadowtest2TextureFile,
+						sword1TextureFile,
+						monstertest1TextureFile};
 	std::vector<sf::Texture> textures;
 	void loadTextures(){
 		for (auto &i : texturePaths){
