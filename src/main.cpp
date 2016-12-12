@@ -172,8 +172,8 @@ int main()
 
     window.setView(view);
     /* === THE MAIN GAME LOOP === */
-	while (window.isOpen())
-	{
+    while (window.isOpen())
+    {
 
         /* === GENERAL EVENT HANDLING === */
         sf::Event event;
@@ -256,10 +256,10 @@ int main()
 
             /* === EVENT HANDLING FOR MOVEMENT === */
             sf::Vector2f cDir(0, 0);
-        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) cDir.x += 1;
-        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
-        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) cDir.y += 1;
-        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) cDir.y -= 1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) cDir.x += 1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) cDir.y += 1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) cDir.y -= 1;
             sf::Vector2f cdPos = cv::normalized(cDir);
             sf::Vector2i offset = room.getOffsetDirection(character.getHypotheticalPosition(cdPos, elapsed));   // Check if the player has left the room
             if (offset.x > 0)       switchRoom(0, map, character);
@@ -269,12 +269,12 @@ int main()
             character.move(cdPos, elapsed);
 
             /* === EVENT HANDLING FOR TURNING === */
-        	sf::Vector2f charpos = character.getPosition();
-        	sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-        	float dx = charpos.x - mousepos.x;
-        	float dy = charpos.y - mousepos.y;
-        	float rotation = (atan2(dy,dx)) * 180 / cv::PI;
-        	character.setRotation(rotation);
+            sf::Vector2f charpos = character.getPosition();
+            sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+            float dx = charpos.x - mousepos.x;
+            float dy = charpos.y - mousepos.y;
+            float rotation = (atan2(dy,dx)) * 180 / cv::PI;
+            character.setRotation(rotation);
 
             /* === EVENT HANDLING FOR ATTACKING === */
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {      // Melee attack
