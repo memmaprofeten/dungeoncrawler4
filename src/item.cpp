@@ -125,6 +125,8 @@ Item::Item (std::string namei, int typei, float valuei, int textureIndexi, sf::V
   baseprice = 100;
 
   dropSprite.setTexture(s::textures[textureIndex]);
+  dropSprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
+  dropSprite.setPosition(pos);
   inventorySprite.setTexture(s::textures[textureIndex]);
 }
 
@@ -177,6 +179,8 @@ Item::Item(sf::Vector2f position, int leveli){
  baseprice = rand()%400+1;
 
  dropSprite.setTexture(s::textures[textureIndex]);
+ dropSprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
+ dropSprite.setPosition(pos);
  inventorySprite.setTexture(s::textures[textureIndex]);
 }
 
@@ -195,5 +199,7 @@ Item::Item(std::string namei, Weapon* weaponi, int leveli, int textureIndexi, sf
   baseprice = 100;
 
   dropSprite.setTexture(s::textures[textureIndex]);
+  dropSprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
+  dropSprite.setPosition(pos);
   inventorySprite.setTexture(s::textures[textureIndex]);
 }
