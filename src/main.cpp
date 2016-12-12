@@ -47,7 +47,10 @@ int main()
     sf::Music backgroundmusic;
     backgroundmusic.openFromFile(s::musicstring);
     backgroundmusic.setLoop(true);
+    backgroundmusic.setVolume(50);
     backgroundmusic.play();
+
+    sf::Sound newsound;
 
     /* === WINDOW === */
    	sf::RenderWindow window(sf::VideoMode(800, 600), "Lost in pohjanmaa!");
@@ -273,12 +276,27 @@ int main()
             /* === EVENT HANDLING FOR ATTACKING === */
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {      // Melee attack
 	      if (elapsedSinceLastAttack < 0.0f || elapsedSinceLastAttack > character.getmeleeweapon()->getcooldown()) {
+                //Melee attack sound sf::Sound newsound;
+		newsound.setBuffer(s::soundbuffers[0]);
+		newsound.play();
                     elapsedSinceLastAttack = 0.0f;
                     room.performAttack(true, character.getPosition(), cv::normalized(mousepos - charpos), *character.getmeleeweapon());  // TODO. Replace with player's real weapon
                 }
             }
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {     // Missile attack
 	      if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > character.getrangedweapon()->getcooldown()) {
+                //Sound for ranged attacks sf::Sound newsound;
+		switch(character.getrangedweapon()->gettextureindex()){
+		case 1:{
+		  newsound.setBuffer(s::soundbuffers[2]);
+		  break;
+		}
+		case 4:{
+		  newsound.setBuffer(s::soundbuffers[1]);
+		  break;
+		}
+		}
+		newsound.play();
                     elapsedSinceLastShot = 0.0f;
                     Projectile& projectile = character.getrangedweapon()->createProjectile(room);
                     projectile.setPosition(charpos);

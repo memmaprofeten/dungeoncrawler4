@@ -1,3 +1,4 @@
+
 #include "weapon.hpp"
 #include "projectile.hpp"
 #include "room.hpp"
@@ -30,6 +31,10 @@ int Weapon::getProjectilespeed() const { return projectilespeed; }
 
 Projectile& Weapon::createProjectile(Room& room) {
     return room.createProjectile(true, damage, radius, 250.0f, textureIndex);
+}
+
+int Weapon::gettextureindex() const{
+  return textureIndex;
 }
 
 void Weapon::attack() {}
