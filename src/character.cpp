@@ -5,20 +5,19 @@
 #include "room.hpp"
 #include "weapon.hpp"
 
-Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, const std::string& txtrPath, const std::string& sdwPath, int l) : name(n), type(t), level(l), speed(s), pos(p), texturePath(txtrPath), shadowPath(sdwPath) {
-    if (!texture.loadFromFile(texturePath)) {
+Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, int textureIndex, int shadowIndex, int l) : name(n), type(t), level(l), speed(s), pos(p) {
+    /*if (!texture.loadFromFile(texturePath)) {
         throw std::runtime_error("Could not load character texture.");
-    }
-    sprite.setTexture(texture);
+    }*/
+    sprite.setTexture(s::textures[textureIndex]);
     setRotation(s::characterRotationOffset);
     sprite.setOrigin(16, 16);
     sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
     sprite.setPosition(p);
-
-    if (!shadowTexture.loadFromFile(shadowPath)) {
+    /*if (!shadowTexture.loadFromFile(shadowPath)) {
         throw std::runtime_error("Could not load character shadow.");
-    }
-    shadowSprite.setTexture(shadowTexture);
+    }*/
+    shadowSprite.setTexture(s::textures[shadowIndex]);
     shadowSprite.setOrigin(16, 8);
     shadowSprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
     shadowSprite.setPosition(p);

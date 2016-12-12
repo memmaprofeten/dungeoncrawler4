@@ -8,18 +8,11 @@
 
 namespace s {
 
-	extern std::string characterTextureFile;
-	extern std::string fireballTextureFile;
-	extern std::string floor2TextureFile;
-	extern std::string hpContainerTextureFile;
-	extern std::string projectileTextureFile;
-	extern std::string characterShadowFile;
-	extern std::string wallTextureFile;
+	extern std::string mapPath;
+
 	extern std::vector<std::string> texturePaths;
 	extern std::vector<sf::Texture> textures;
 	void loadTextures();
-
-	extern std::string mapPath;
 
 	extern float characterSpeed;
     extern std::string defaultProjectileTextureFile;
@@ -35,16 +28,16 @@ namespace s {
 	extern int startingRoomIndex;
 	extern int monstersPerRoom;
 
-  extern std::string meleattacksoundstring;
-  extern std::string bowattacksoundstring;
-  extern std::string fireballattacksoundstring;
-  extern std::string levelupsoundstring;
-  extern std::string deathsoundstring;
-  extern std::string musicstring;
-  extern std::string hitsoundstring;
-  extern std::vector<std::string> soundfilepaths;
-  extern std::vector<sf::SoundBuffer> soundbuffers;
-  void loadsounds();
+	extern std::string meleattacksoundstring;
+	extern std::string bowattacksoundstring;
+	extern std::string fireballattacksoundstring;
+	extern std::string levelupsoundstring;
+	extern std::string deathsoundstring;
+	extern std::string musicstring;
+	extern std::string hitsoundstring;
+	extern std::vector<std::string> soundfilepaths;
+	extern std::vector<sf::SoundBuffer> soundbuffers;
+	void loadsounds();
 }
 
 #endif

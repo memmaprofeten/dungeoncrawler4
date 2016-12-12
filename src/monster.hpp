@@ -50,12 +50,12 @@ Monster attack function virtual so ranged and melee monsters attack differently.
   bool monsteraggrocheck(Character player);
   float getdistancetoplayer(Character player);
   virtual void monsterattack(Character& player) =0; //Handles attack by the monster.
-  virtual void monsterai(Character& player, sf::RenderWindow& window, float elapsed) =0; //Handles monster AI.
+  virtual void monsterai(Character& player, float elapsed) =0; //Handles monster AI.
   void monstermove(sf::Vector2f direction, float elapsed); //Handles movement.
   //bool monsteraggrocheck(Character player);//Checks if player is within range of monster.
 
   //For drawing the monster.
-  void draw(sf::RenderWindow& window);
+  //void draw(sf::RenderWindow& window);
 
 protected:
   std::string monstername; //Enemy name.
@@ -70,6 +70,8 @@ protected:
   float attacktimer; //Amount of time inbetween attacks.
   float timebetweenattacks; //explanatory
   bool active;
+  sf::Sprite* sprite; //Pointer to sprite object
+  int textureIndex;
 /*
 type
 health
@@ -84,7 +86,7 @@ class RangedMonster : public Monster {
 public:
   //Virtual functions from Monster.
   void monsterattack(Character& player);
-  void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
+  void monsterai(Character& player, float elapsed);
   //Constructor
   RangedMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, float projectilespeedi, float attackrangei, Room* roomi, /*std::vector<Projectile>* projectiles*/ float timebetweenattacksi);
   RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli);
@@ -99,7 +101,7 @@ class MeleeMonster : public Monster{
 public:
   //Virtual functions from Monster.
   void monsterattack(Character& player);
-  void monsterai(Character& player, sf::RenderWindow& window, float elapsed);
+  void monsterai(Character& player, float elapsed);
   //Constructor
   MeleeMonster(std::string namei, int healthi, int xponkilli, int attackdamagei, float movespeedi, float aggrorangei, int attackrangei, Room* roomi, float timebetweenattacksi);
   MeleeMonster(sf::Vector2f positioni, Room* roomi, int leveli);

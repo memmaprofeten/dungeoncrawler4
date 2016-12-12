@@ -1,37 +1,38 @@
 #include "settings.hpp"
 
 namespace s {
-	std::string characterTextureFile = "../resources/img/character_32.png";
-	std::string fireballTextureFile = "../resources/img/fireball_32.png";
-	std::string floor2TextureFile = "../resources/img/floor_32_2.png";
-	std::string hpContainerTextureFile = "../resources/img/hp_container1.png";
-	std::string projectileTextureFile = "../resources/img/projectile_32.png";
-	std::string characterShadowFile = "../resources/img/shadowtest2.png";
-	std::string wallTextureFile = "../resources/img/wall_32.png";
+
+	std::string mapPath = "../resources/rooms/";
+	std::string texturePath = "../resources/img/";
+
 	std::vector<std::string> texturePaths = {	// NB! Do not switch the order of these. Their indexes are being used.
-						characterTextureFile,	// 0
-						fireballTextureFile,	// 1
-						floor2TextureFile,		// 2
-						hpContainerTextureFile,	// 3
-						projectileTextureFile,	// 4
-						characterShadowFile,	// 5
-						wallTextureFile,		// 6
-						"../resources/img/doughnut_32.png",			// 7
-						"../resources/img/sword1_32.png",			// 8
-						"../resources/img/bread1_32.png",			// 9
-						"../resources/img/character2_32.png",		// 10
-						"../resources/img/flail1_32.png",			// 11
-						"../resources/img/gold1_32.png",			// 12
-						"../resources/img/potion_blue1_32.png",		// 13
-						"../resources/img/potion_red1_32.png",		// 14
-						"../resources/img/reissumies_32.png",		// 15
-						"../resources/img/spear1_32.png",			// 16
-					};
+			"character_32.png",				// 0
+			"fireball_32.png",				// 1
+			"floor_32_2.png",				// 2
+			"hp_container1.png",			// 3
+			"projectile_32.png",			// 4
+			"shadowtest2.png",				// 5
+			"wall_32.png",					// 6
+			"doughnut_32.png",				// 7
+			"sword1_32.png",				// 8
+			"shadowtest1.png",				// 9
+			"shadowtest2.png",				// 10
+			"monstertest1_32.png",			// 11
+			"bread1_32.png",				// 12
+			"character2_32.png",			// 13
+			"flail1_32.png",				// 14
+			"gold1_32.png",					// 15
+			"potion_blue1_32.png",			// 16
+			"potion_red1_32.png",			// 17
+			"reissumies_32.png",			// 18
+			"spear1_32.png",				// 19
+		};
+
 	std::vector<sf::Texture> textures;
 	void loadTextures(){
-		for (auto &i : texturePaths){
+		for (auto &path : texturePaths){
 			sf::Texture tex;
-			tex.loadFromFile(i);
+			tex.loadFromFile(texturePath + path);
 			textures.push_back(tex);
 		}
 	}
@@ -59,8 +60,6 @@ namespace s {
       soundbuffers.push_back(buf);
     }
   }
-
-	std::string mapPath = "../resources/rooms/";
 
 	float characterSpeed = 80.0f;
 	int characterRotationOffset = 270;

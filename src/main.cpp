@@ -55,7 +55,7 @@ int main()
     sf::View guiView(sf::Vector2f(window.getSize()) / 2.0f, sf::Vector2f(window.getSize()));
 
     /* === GAME VARIABLES === */
-    Character character("Test man", true, s::characterSpeed, sf::Vector2f(30.0f, 30.0f), s::texturePaths[10], s::characterShadowFile);
+    Character character("Test man", true, s::characterSpeed, sf::Vector2f(30.0f, 30.0f), 13, 10);
     view.move(character.getPosition().x, character.getPosition().y);
     Map map(character);
     Room& room = map.getRoom();
@@ -65,13 +65,13 @@ int main()
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
 
     character.addItem(new Item("Doughnut", 2, 3, 7, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Bread", 2, 2, 9, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Bread", 2, 2, 12, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Cake", 2, 5, 7, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Gold", 1, 10, 12, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Trophy", 4, 0, 8, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Potion of wisdom", 2, 8, 13, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Potion of strength", 2, 6, 14, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Reissumies TM", 2, 12, 15, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Gold", 1, 10, 15, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Trophy", 4, 0, 19, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Potion of wisdom", 2, 8, 16, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Potion of strength", 2, 6, 17, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Reissumies TM", 2, 12, 18, sf::Vector2f(0, 0),1));
 
     /* ADD STARTING WEAPONS FOR PLAYER */
     RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 0.8f * s::blockDim, 4);
@@ -307,7 +307,7 @@ int main()
         	  p.monsterai(character,window,elapsed);
         	}
 */
-            map.getRoom().drawmonsters(window, elapsed);
+            map.getRoom().drawmonsters(elapsed);
             map.getRoom().drawnpcs(window);
             map.getRoom().drawitems(window);
 

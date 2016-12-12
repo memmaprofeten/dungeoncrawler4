@@ -17,7 +17,7 @@ public:
 	/*Constructor taking name, type and level with default value 1
 	This can be used to initiate higher level characters if we decide
 	to implement a save feature */
-	Character(const std::string& n, bool t, float s, sf::Vector2f p, const std::string& txtrPath, const std::string& sdwPath, int l = 1);
+	Character(const std::string& n, bool t, float s, sf::Vector2f p, int textureIndex, int shadowIndex, int l = 1);
 
 	~Character();
 
@@ -97,10 +97,8 @@ private:
   sf::Vector2f pos;
   int rotation;
 
-  std::string texturePath;
   sf::Texture texture;
   sf::Sprite sprite;
-  std::string shadowPath;
   sf::Texture shadowTexture;
   sf::Sprite shadowSprite;
 };
