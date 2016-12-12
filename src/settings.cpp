@@ -28,6 +28,30 @@ namespace s {
 		}
 	}
 
+  std::string meleattacksoundstring = "../resources/sound/52458__audione__sword-01.wav";
+  std::string bowattacksoundstring = "../resources/sound/319550__debsound__cartoon-arrow-08.wav";
+  std::string fireballattacksoundstring = "../resources/sound/220191__gameaudio__space-swoosh-brighter.wav";
+  std::string levelupsoundstring = "../resources/sound/220184__gameaudio__win-spacey.wav";
+  std::string deathsoundstring = "../resources/sound/81822__bennstir__trumpet3.wav";
+  std::string musicstring = "../resources/sound/Tri-Tachyon_-_04_-_Hundred_Years_in_Helheim.wav";
+  std::string hitsoundstring = "../resources/sound/215162__otisjames__thud.wav";
+  //DO NOT REORDER
+  std::vector<std::string> soundfilepaths = {meleattacksoundstring,
+					     bowattacksoundstring,
+					     fireballattacksoundstring,
+					     levelupsoundstring,
+					     deathsoundstring,
+					     hitsoundstring};
+  std::vector<sf::SoundBuffer>soundbuffers;
+ 
+  void loadsounds(){
+    for (auto &it : soundfilepaths){
+      sf::SoundBuffer buf;
+      buf.loadFromFile(it);
+      soundbuffers.push_back(buf);
+    }
+  }
+
 	std::string mapPath = "../resources/rooms/";
 
 	float characterSpeed = 80.0f;

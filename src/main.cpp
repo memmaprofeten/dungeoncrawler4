@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <cmath>
 #include <string>
 #include <sstream>
@@ -39,6 +40,14 @@ int main()
         throw std::runtime_error("Could not load hp container texture.");
     }
     s::loadTextures();
+    s::loadsounds();
+
+    /* == MUSIC == */
+    // Load and loop background music.
+    sf::Music backgroundmusic;
+    backgroundmusic.openFromFile(s::musicstring);
+    backgroundmusic.setLoop(true);
+    backgroundmusic.play();
 
     /* === WINDOW === */
    	sf::RenderWindow window(sf::VideoMode(800, 600), "Lost in pohjanmaa!");

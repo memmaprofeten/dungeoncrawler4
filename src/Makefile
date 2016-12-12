@@ -1,4 +1,4 @@
-LIBS=-lsfml-graphics -lsfml-window -lsfml-system
+LIBS=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 CC=g++
 CPPFLAGS=-c -g -std=c++0x -Wall -Wextra -pedantic
 SOURCES=item.cpp item.hpp main.cpp character.cpp character.hpp convenience.cpp convenience.hpp map.cpp map.hpp npc.cpp npc.hpp projectile.cpp projectile.hpp room.cpp room.hpp settings.cpp settings.hpp tile.cpp tile.hpp weapon.cpp weapon.hpp monster.cpp monster.hpp
