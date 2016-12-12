@@ -8,7 +8,7 @@ class Item;
 
 class Npc{
 public:
-  Npc(std::string s);
+  Npc(int, sf::Vector2f);
   
   void setPosition(sf::Vector2f);
   
@@ -24,7 +24,7 @@ private:
 
 class Shopkeeper : public Npc {
 public:
-  Shopkeeper(std::string s);
+  Shopkeeper(int, sf::Vector2f);
 private:
   std::vector<Item> inventory;
 };

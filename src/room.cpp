@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "weapon.hpp"
 #include "item.hpp"
+#include "npc.hpp"
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
@@ -238,6 +239,12 @@ void Room::drawmonsters(sf::RenderWindow& window, float elapsed){
   }
 }
 
+void Room::drawnpcs(sf::RenderWindow& window){
+  for (auto it = npcs.begin(); it != npcs.end(); it++){
+    (*it)->draw(window);
+  }
+}
+
 void Room::drawitems(sf::RenderWindow& window){
   for (auto it = itemstorage.begin(); it != itemstorage.end(); it++){
     if ((*it)->isactive()){
@@ -273,7 +280,9 @@ sf::Sprite* Room::getSprite() {
 			spritesInUse[i] = true;
 			return &sprites[i];
 		}
+
 	}
+
 	sf::Sprite sprite;
 	sprites.push_back(sprite);
 	spritesInUse.push_back(true);
@@ -310,4 +319,8 @@ Character* Room::getcharacter(){
 
 void Room::addmonster(Monster* monsteri){
 	monsters.push_back(monsteri);
+}
+
+void Room::addNpc(Npc* npc) {
+	npcs.push_back(npc);
 }

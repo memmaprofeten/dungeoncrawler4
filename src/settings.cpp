@@ -41,5 +41,5 @@ namespace s {
 	int standardEntrancePosY = 17;
 	int standardEntranceWidth = 3;
 	int startingRoomIndex = 4;
-	int monstersPerRoom = 3;
+	int monstersPerRoom = 20;
 }

@@ -26,6 +26,7 @@ Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, cons
     health = getMaxHealth();
     gold = 0;
     room = NULL;
+    xpfornextlevel = 10;
 }
 
 Character::~Character() {
@@ -166,6 +167,7 @@ void Character::givexp(int amount){
     xp = (xp+amount)-xpfornextlevel;
     level += 1;
     health = 9 + level;
+    xpfornextlevel += 10;
   }
   else{
     xp += amount;
