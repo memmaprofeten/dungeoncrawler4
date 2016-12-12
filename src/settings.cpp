@@ -16,8 +16,16 @@ namespace s {
 						projectileTextureFile,	// 4
 						characterShadowFile,	// 5
 						wallTextureFile,		// 6
-						"../resources/img/doughnut_32.png",	// 7
-						"../resources/img/sword1_32.png",		// 8
+						"../resources/img/doughnut_32.png",			// 7
+						"../resources/img/sword1_32.png",			// 8
+						"../resources/img/bread1_32.png",			// 9
+						"../resources/img/character2_32.png",		// 10
+						"../resources/img/flail1_32.png",			// 11
+						"../resources/img/gold1_32.png",			// 12
+						"../resources/img/potion_blue1_32.png",		// 13
+						"../resources/img/potion_red1_32.png",		// 14
+						"../resources/img/reissumies_32.png",		// 15
+						"../resources/img/spear1_32.png",			// 16
 					};
 	std::vector<sf::Texture> textures;
 	void loadTextures(){
@@ -43,7 +51,7 @@ namespace s {
 					     deathsoundstring,
 					     hitsoundstring};
   std::vector<sf::SoundBuffer>soundbuffers;
- 
+
   void loadsounds(){
     for (auto &it : soundfilepaths){
       sf::SoundBuffer buf;

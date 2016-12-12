@@ -55,7 +55,7 @@ int main()
     sf::View guiView(sf::Vector2f(window.getSize()) / 2.0f, sf::Vector2f(window.getSize()));
 
     /* === GAME VARIABLES === */
-    Character character("Test man", true, s::characterSpeed, sf::Vector2f(30.0f, 30.0f), s::characterTextureFile, s::characterShadowFile);
+    Character character("Test man", true, s::characterSpeed, sf::Vector2f(30.0f, 30.0f), s::texturePaths[10], s::characterShadowFile);
     view.move(character.getPosition().x, character.getPosition().y);
     Map map(character);
     Room& room = map.getRoom();
@@ -65,13 +65,13 @@ int main()
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
 
     character.addItem(new Item("Doughnut", 2, 3, 7, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Ice cream", 2, 2, 7, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Bread", 2, 2, 9, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Cake", 2, 5, 7, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Pizza", 2, 6, 7, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Gold", 1, 10, 12, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Trophy", 4, 0, 8, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Potion of wisdom", 2, 8, 8, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Potion of strength", 2, 6, 8, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Potion of being badass", 2, 12, 8, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Potion of wisdom", 2, 8, 13, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Potion of strength", 2, 6, 14, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Reissumies TM", 2, 12, 15, sf::Vector2f(0, 0),1));
 
     /* ADD STARTING WEAPONS FOR PLAYER */
     RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 0.8f * s::blockDim, 4);
