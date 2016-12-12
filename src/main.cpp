@@ -309,7 +309,7 @@ int main()
 */
             map.getRoom().drawmonsters(elapsed);
             map.getRoom().drawnpcs(window);
-//            map.getRoom().drawitems(window);
+            map.getRoom().drawitems(window);
 
             character.draw(window);
 
