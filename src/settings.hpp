@@ -9,6 +9,7 @@
 namespace s {
 
 	extern std::string mapPath;
+	extern std::string texturePath;
 
 	extern std::vector<std::string> texturePaths;
 	extern std::vector<sf::Texture> textures;

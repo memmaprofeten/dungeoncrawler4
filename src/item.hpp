@@ -26,9 +26,9 @@ public:
   sf::Sprite& getInventorySprite();
   //sf::Texture getTexture() const;
   //Assorted contructors
-  Item(std::string namei, int typei, float valuei, int textureIndexi, sf::Vector2f posi, int leveli);
+  Item(std::string namei, int typei, float valuei, int textureIndexi, sf::Vector2f posi, int leveli);   // Standard constructor
   Item(sf::Vector2f positioni, int leveli); //Random item.
-  Item(std::string namei, Weapon* weaponi, int leveli, int textureIndexi, sf::Vector2f posi);
+  Item(std::string namei, Weapon* weaponi, int leveli, int textureIndexi, sf::Vector2f posi);   // Weapon constructor
 
   //Destructor
   ~Item();

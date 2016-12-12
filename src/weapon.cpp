@@ -83,7 +83,7 @@ RangedWeapon::RangedWeapon(int level, float seed) : Weapon (level, seed){
     textureIndex = 4;
     switch (nameaccent){
     case 1:{
-      name = "Thori'dal"; 
+      name = "Thori'dal";
       break;
     }
     case 2:{
@@ -145,7 +145,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
     minradius = 0;
     maxradius = 25.0f;
     angle = 120.0f;
-    
+
     switch(nameaccent){
     case 1:{
       name = "Vorpal Blade";
@@ -166,9 +166,9 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
     case 5:{
       name = "Jade Tiger";
       break;
-    }  
     }
-    
+    }
+
     break;
   }
   case 2:{//Dagger
@@ -177,7 +177,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
     minradius = 0;
     maxradius = 15.0f;
     angle = 90.0f;
-    
+
     switch(nameaccent){
     case 1:{
       name = "Thunderfury, Blessed Blade of the Windseeker";
@@ -200,7 +200,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
       break;
     }
     }
-    
+
     break;
   }
 
@@ -210,7 +210,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
     minradius = 10.0f;
     maxradius = 50.0f;
     angle = 60.0f;
-    
+
     switch(nameaccent){
     case 1:{
       name = "Talonwrath";
@@ -241,7 +241,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
     minradius = 0;
     maxradius = 25.0f;
     angle = 360.0f;
-    
+
     switch(nameaccent){
     case 1:{
       name = "Sulfuras";
@@ -270,7 +270,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
 
   textureIndex = 1;
   radius = 0;
-  projectilespeed = 0;  
+  projectilespeed = 0;
 }
 
 void MeleeWeapon::attack() { }
