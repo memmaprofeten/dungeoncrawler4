@@ -85,7 +85,7 @@ void Item::draw(sf::RenderWindow& window, Character& player){
     }
 
     //Checks if player's xy position is within the item's area. If it is, calls the relevant "do thing" function, and disables the item.
-    if (((pos.x - 3.0f)< player.getPosition().x) && (player.getPosition().x < (pos.x + 3.0f)) && ((pos.y - 3.0f) < player.getPosition().y) && (player.getPosition().y < (pos.y + 3.0f))){
+    if (((pos.x - 5.0f)< player.getPosition().x) && (player.getPosition().x < (pos.x + 5.0f)) && ((pos.y - 5.0f) < player.getPosition().y) && (player.getPosition().y < (pos.y + 5.0f))){
     //if (cv::distance(pos, player.getPosition()) < 1.5f){
       switch(type){
       case 1:
