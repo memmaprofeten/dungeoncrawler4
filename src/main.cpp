@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <cmath>
 #include <string>
 #include <sstream>
@@ -19,7 +20,7 @@
 #define FPS_SAMPLE_COUNT 80
 #define FLOAT_CORRECTION 0.001F     // The Epsilon value to be used to avoid floating point errors
 
-void drawInventory(const sf::Window& window, const sf::RectangleShape& inventoryBackground, const std::vector<sf::Texture>& itemTextureVector, std::vector<sf::Sprite>& itemSpriteVector);
+void drawInventory(const sf::Window& window, const sf::RectangleShape& inventoryBackground, std::vector<Item*>& inventory);
 void switchRoom(int neighbour, Map& map, Character& character);
 
 int main()
@@ -39,6 +40,14 @@ int main()
         throw std::runtime_error("Could not load hp container texture.");
     }
     s::loadTextures();
+    s::loadsounds();
+
+    /* == MUSIC == */
+    // Load and loop background music.
+    sf::Music backgroundmusic;
+    backgroundmusic.openFromFile(s::musicstring);
+    backgroundmusic.setLoop(true);
+    backgroundmusic.play();
 
     /* === WINDOW === */
    	sf::RenderWindow window(sf::VideoMode(800, 600), "Lost in pohjanmaa!");
@@ -54,37 +63,26 @@ int main()
 
     /* === TESTING === */
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
-    Shopkeeper shopkeeper("../resources/img/character_32.png");
-    shopkeeper.setPosition(sf::Vector2f(40,40));
-    /*
-    character.addItem(Item("Doughnut", 2, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Ice cream", 2, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Cake", 2, 5, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Pizza", 2, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Trophy", 4, 0, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Potion of wisdom", 2, 8, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Potion of strength", 2, 6, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    character.addItem(Item("Potion of being badass", 2, 12, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
-    */
-    std::vector<sf::Texture> testItemTextureVector;         // TODO: Move out to global texture vector?
-    std::vector<sf::Sprite> testItemSpriteVector;           // TODO: Move out to global sprite vector?
-    for (unsigned i=0; i<character.getInventory().size(); ++i) {
-        testItemTextureVector.push_back(character.getInventory()[i]->getTexture());
-        sf::Sprite sprite;
-        sprite.setTexture(testItemTextureVector[i]);
-        testItemSpriteVector.push_back(sprite);
-    }
+
+    character.addItem(new Item("Doughnut", 2, 3, 7, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Ice cream", 2, 2, 7, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Cake", 2, 5, 7, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Pizza", 2, 6, 7, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Trophy", 4, 0, 8, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Potion of wisdom", 2, 8, 8, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Potion of strength", 2, 6, 8, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Potion of being badass", 2, 12, 8, sf::Vector2f(0, 0),1));
 
     /* ADD STARTING WEAPONS FOR PLAYER */
     RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 0.8f * s::blockDim, 4);
     MeleeWeapon* startingmeleeweapon = new MeleeWeapon("Novice's Sword", 3, 0.8f*s::blockDim, 1);
-    Item* startingrangedweaponitem = new Item("Novice's Bow", startingrangedweapon, 1, "../resources/img/sword1_32.png",sf::Vector2f(0,0));
-    Item* startingmeleeweaponitem = new Item("Novice's Sword", startingmeleeweapon, 1, "../resources/img/sword1_32.png",sf::Vector2f(0,0));
+    Item* startingrangedweaponitem = new Item("Novice's Bow", startingrangedweapon, 1, 8,sf::Vector2f(0,0));
+    Item* startingmeleeweaponitem = new Item("Novice's Sword", startingmeleeweapon, 1, 8,sf::Vector2f(0,0));
     character.addItem(startingrangedweaponitem);
     character.addItem(startingmeleeweaponitem);
     startingrangedweaponitem->dothing(character);
     startingmeleeweaponitem->dothing(character);
-    
+
     /* === GUI === */
     sf::Vector2f healthBarMargin(15, 15);
 
@@ -152,6 +150,7 @@ int main()
     //CreateMonster(sf::Vector2f(75,75), &room, 1);
     //CreateMonster(sf::Vector2f(50,50), &room, 1);
     map.getRoom().addmonster( new MeleeMonster(sf::Vector2f(20,20), &(map.getRoom()), 1) );
+    map.getRoom().addNpc(new Shopkeeper(0, sf::Vector2f(40,40)));
 
 
 /*    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &room, 1.0));
@@ -202,7 +201,7 @@ int main()
                     inventoryBackground.setSize(s::relativeInventoryBackgroundWidth * sf::Vector2f(window.getSize()));
                     inventoryBackground.setOrigin(sf::Vector2f(inventoryBackground.getLocalBounds().width / 2.0f, inventoryBackground.getLocalBounds().height / 2.0f));
                     inventoryBackground.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
-                    drawInventory(window, inventoryBackground, testItemTextureVector, testItemSpriteVector);
+                    drawInventory(window, inventoryBackground, character.getInventory());
                     break;
                 }
                 default:
@@ -309,10 +308,10 @@ int main()
         	}
 */
             map.getRoom().drawmonsters(elapsed);
-            map.getRoom().drawitems(window);
+            map.getRoom().drawnpcs(window);
+//            map.getRoom().drawitems(window);
 
             character.draw(window);
-            shopkeeper.draw(window);
 
             room.drawProjectiles(window, elapsed);
 
@@ -378,9 +377,10 @@ int main()
                             std::cout << "Using " + character.getInventory()[itemIndex]->getname() << "." << std::endl;
                             bool couldConsume = character.consumeItem(itemIndex);
                             if (couldConsume) {
-                                testItemTextureVector.erase(testItemTextureVector.begin() + itemIndex);
-                                testItemSpriteVector.erase(testItemSpriteVector.begin() + itemIndex);
-                                drawInventory(window, inventoryBackground, testItemTextureVector, testItemSpriteVector);
+                                //testItemTextureVector.erase(testItemTextureVector.begin() + itemIndex);
+                                //testItemSpriteVector.erase(testItemSpriteVector.begin() + itemIndex);
+                                character.consumeItem(itemIndex);
+                                drawInventory(window, inventoryBackground, character.getInventory());
                             }
                         }
                         mouseReleased = false;
@@ -389,7 +389,8 @@ int main()
                     }
 
                     window.draw(inventoryBackground);
-                    for (const auto& sprite : testItemSpriteVector) window.draw(sprite);
+                    //for (const auto& sprite : testItemSpriteVector) window.draw(sprite);
+                    for (Item* itemPtr : character.getInventory()) window.draw(itemPtr->getInventorySprite());
                     if (tooltipShowing) window.draw(tooltip);
                 }
                 else window.draw(pausedIndicator);
@@ -401,15 +402,14 @@ int main()
     return 0;
 }
 
-void drawInventory(const sf::Window& window, const sf::RectangleShape& inventoryBackground, const std::vector<sf::Texture>& itemTextureVector, std::vector<sf::Sprite>& itemSpriteVector) {
+void drawInventory(const sf::Window& window, const sf::RectangleShape& inventoryBackground, std::vector<Item*>& inventory) {
     sf::Vector2f invDim = inventoryBackground.getSize();
     float invMargin = invDim.x * s::relativeItemMargin;
     float itemDim = (invDim.x - float(s::itemsPerRow) * 2.0f * invMargin) / float(s::itemsPerRow);
-    for (int i=0; i<(int)itemSpriteVector.size(); ++i) {
-        sf::Sprite& sprite = itemSpriteVector[i];
-        sprite.setTexture(itemTextureVector[i]);
-        sprite.setScale(sf::Vector2f(itemDim / 32.0f, itemDim / 32.0f));
-        sprite.setPosition(0.5f * (1.0f - s::relativeInventoryBackgroundWidth) * sf::Vector2f(window.getSize()) + sf::Vector2f((i % s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin, (i / s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin));
+    for (int i=0; i<(int)inventory.size(); ++i) {
+        Item* item = inventory[i];
+        item->getInventorySprite().setScale(sf::Vector2f(itemDim / 32.0f, itemDim / 32.0f));
+        item->getInventorySprite().setPosition(0.5f * (1.0f - s::relativeInventoryBackgroundWidth) * sf::Vector2f(window.getSize()) + sf::Vector2f((i % s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin, (i / s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin));
     }
 }
 

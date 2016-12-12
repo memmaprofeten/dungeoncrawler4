@@ -14,17 +14,17 @@ namespace s {
 	std::string sword1TextureFile = "../resources/img/sword1_32.png"; 
 	std::string monstertest1TextureFile = "../resources/img/monstertest1_32.png"; 
 	std::vector<std::string> texturePaths = {characterTextureFile,		// NB! Do not switch the order of these. Their indexes are being used.
-						fireballTextureFile,
-						floor2TextureFile,
-						hpContainerTextureFile,
-						projectileTextureFile,
-						characterShadowFile,
-						wallTextureFile,
-						doughnutTextureFile,
-						shadowtest1TextureFile,
-						shadowtest2TextureFile,
-						sword1TextureFile,
-						monstertest1TextureFile};
+						fireballTextureFile,		//1
+						floor2TextureFile,		//2
+						hpContainerTextureFile,		//3
+						projectileTextureFile,		//4
+						characterShadowFile,		//5
+						wallTextureFile,		//6
+						doughnutTextureFile,		//7
+						sword1TextureFile,		//8
+						shadowtest1TextureFile,		//9
+						shadowtest2TextureFile,		//10
+						monstertest1TextureFile};	//11
 	std::vector<sf::Texture> textures;
 	void loadTextures(){
 		for (auto &i : texturePaths){
@@ -33,6 +33,30 @@ namespace s {
 			textures.push_back(tex);
 		}
 	}
+
+  std::string meleattacksoundstring = "../resources/sound/52458__audione__sword-01.wav";
+  std::string bowattacksoundstring = "../resources/sound/319550__debsound__cartoon-arrow-08.wav";
+  std::string fireballattacksoundstring = "../resources/sound/220191__gameaudio__space-swoosh-brighter.wav";
+  std::string levelupsoundstring = "../resources/sound/220184__gameaudio__win-spacey.wav";
+  std::string deathsoundstring = "../resources/sound/81822__bennstir__trumpet3.wav";
+  std::string musicstring = "../resources/sound/Tri-Tachyon_-_04_-_Hundred_Years_in_Helheim.wav";
+  std::string hitsoundstring = "../resources/sound/215162__otisjames__thud.wav";
+  //DO NOT REORDER
+  std::vector<std::string> soundfilepaths = {meleattacksoundstring,
+					     bowattacksoundstring,
+					     fireballattacksoundstring,
+					     levelupsoundstring,
+					     deathsoundstring,
+					     hitsoundstring};
+  std::vector<sf::SoundBuffer>soundbuffers;
+ 
+  void loadsounds(){
+    for (auto &it : soundfilepaths){
+      sf::SoundBuffer buf;
+      buf.loadFromFile(it);
+      soundbuffers.push_back(buf);
+    }
+  }
 
 	std::string mapPath = "../resources/rooms/";
 

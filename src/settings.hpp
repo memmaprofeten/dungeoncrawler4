@@ -2,6 +2,7 @@
 #define SETTINGS_HH
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <string>
 #include <vector>
 
@@ -38,6 +39,17 @@ namespace s {
 	extern int standardEntranceWidth;		// The standard width of a room entrance (in blocks)
 	extern int startingRoomIndex;
 	extern int monstersPerRoom;
+
+  extern std::string meleattacksoundstring;
+  extern std::string bowattacksoundstring;
+  extern std::string fireballattacksoundstring;
+  extern std::string levelupsoundstring;
+  extern std::string deathsoundstring;
+  extern std::string musicstring;
+  extern std::string hitsoundstring;
+  extern std::vector<std::string> soundfilepaths;
+  extern std::vector<sf::SoundBuffer> soundbuffers;
+  void loadsounds();
 }
 
 #endif

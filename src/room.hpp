@@ -11,6 +11,7 @@
 class Projectile;
 class Character;
 class Weapon;
+class Npc;
 
 class Room {
 public:
@@ -98,6 +99,8 @@ public:
   // Runs the monster AI
   void drawmonsters(float elapsed);
 
+	void drawnpcs(sf::RenderWindow& window);
+
 	/**
 	 * Prints the room to std::cout.
 	 */
@@ -135,6 +138,7 @@ public:
 	std::vector<Item*>& getitems();
 	Character* getcharacter();
 	void addmonster(Monster* monsteri);
+	void addNpc(Npc* npc);
 	void additem(Item* newitem);
 	void drawitems(sf::RenderWindow& window);
 
@@ -148,6 +152,7 @@ private:
 	std::vector<Projectile> projectiles; //Projectile objects
 	std::vector<int> freeProjectiles;		// A vector of projectile indices that are free for replacing
 	std::vector<Monster*> monsters; //Vector containing pointers to monsters on the level.
+	std::vector<Npc*> npcs; // Vector of NPC:s
 	std::vector<Item*> itemstorage; //Vector containing items in level.
 };
 
