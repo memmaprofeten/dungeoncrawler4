@@ -2,9 +2,9 @@
 #include "npc.hpp"
 #include "item.hpp"
 
-Npc::Npc(std::string s) {
-  texture.loadFromFile(s);
-  sprite.setTexture(texture);
+Npc::Npc(int textureIndex, sf::Vector2f pos) {
+  sprite.setTexture(s::textures[textureIndex]);
+  setPosition(pos);
   sprite.setOrigin(16, 16);
   sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
   setRotation(120);
@@ -26,7 +26,7 @@ void Npc::draw(sf::RenderWindow& window) {
 }
 
 
-Shopkeeper::Shopkeeper(std::string s) : Npc(s) {
+Shopkeeper::Shopkeeper(int texture, sf::Vector2f pos) : Npc(texture, pos) {
   inventory.push_back(Item("Doughnut", 4, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0),1));
   inventory.push_back(Item("Ice cream", 4, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
   inventory.push_back(Item("Cake", 4, 5, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));

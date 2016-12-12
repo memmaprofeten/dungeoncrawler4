@@ -54,8 +54,6 @@ int main()
 
     /* === TESTING === */
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
-    Shopkeeper shopkeeper("../resources/img/character_32.png");
-    shopkeeper.setPosition(sf::Vector2f(40,40));
     /*
     character.addItem(Item("Doughnut", 2, 3, "../resources/img/doughnut_32.png", sf::Vector2f(0, 0),1));
     character.addItem(Item("Ice cream", 2, 2, "../resources/img/sword1_32.png", sf::Vector2f(0, 0),1));
@@ -152,6 +150,7 @@ int main()
     //CreateMonster(sf::Vector2f(75,75), &room, 1);
     //CreateMonster(sf::Vector2f(50,50), &room, 1);
     map.getRoom().addmonster( new MeleeMonster(sf::Vector2f(20,20), &(map.getRoom()), 1) );
+    map.getRoom().addNpc(new Shopkeeper(0, sf::Vector2f(40,40)));
 
 
 /*    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &room, 1.0));
@@ -309,10 +308,10 @@ int main()
         	}
 */
             map.getRoom().drawmonsters(window, elapsed);
+            map.getRoom().drawnpcs(window);
             map.getRoom().drawitems(window);
 
             character.draw(window);
-            shopkeeper.draw(window);
 
             room.drawProjectiles(window, elapsed);
 

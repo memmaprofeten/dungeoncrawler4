@@ -3,6 +3,7 @@
 #include "room.hpp"
 #include <string>
 #include <iostream>
+#include <cmath>
 
 Weapon::~Weapon(){}
 RangedWeapon::~RangedWeapon(){}
