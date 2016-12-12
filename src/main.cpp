@@ -66,6 +66,9 @@ int main()
 
     /* === TESTING === */
     RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
+    s::animation testAnimation;
+    testAnimation.set(sf::Vector2f(50, 50), sf::Vector2f(3, 3), 0.0f, 30.0f,  8, sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f), sf::Vector2f(16, 16), 10.0f);
+    testAnimation.restart();
 
     character.addItem(new Item("Doughnut", 2, 3, 7, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Bread", 2, 2, 12, sf::Vector2f(0, 0),1));
@@ -332,6 +335,8 @@ int main()
             character.draw(window);
 
             room.drawProjectiles(window, elapsed);
+            testAnimation.draw(window, elapsed);
+
 
             /* === GUI === */
             window.setView(guiView);

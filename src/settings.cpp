@@ -73,4 +73,35 @@ namespace s {
 	int standardEntranceWidth = 3;
 	int startingRoomIndex = 4;
 	int monstersPerRoom = 20;
+
+	void animation::set(sf::Vector2f p, sf::Vector2f dp, float r, float dr, int textureIndex, sf::Vector2f scale, sf::Vector2f origin, float dur) {
+		rPos = pos = p; dPos = dp; rRot = rot = r; dRot = dr;
+		duration = dur;
+		sprite.setTexture(s::textures[textureIndex]);
+		sprite.setOrigin(origin);
+		sprite.setScale(scale);
+		accumulator = 0;
+		active = false;
+	}
+	void animation::restart() {
+		pos = rPos; rot = rRot;
+		accumulator = 0;
+		active = true;
+	}
+	void animation::draw(sf::RenderWindow& window, float elapsed) {
+		if (active) {
+			accumulator += elapsed;
+			if (accumulator > duration) {
+				restart();
+				active = false;
+			} else {
+				pos += dPos * elapsed;
+				rot += dRot * elapsed;
+				sprite.setPosition(pos);
+				sprite.setRotation(rot);
+				window.draw(sprite);
+			}
+		}
+	}
+
 }
