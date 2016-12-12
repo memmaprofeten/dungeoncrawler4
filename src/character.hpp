@@ -103,7 +103,8 @@ private:
   sf::Texture shadowTexture;
   sf::Sprite shadowSprite;
 
-  sf::Sound charactersound;
+  sf::Sound minorcharactersound;
+  sf::Sound majorcharactersound;
 };
 
 #endif

@@ -130,12 +130,13 @@ void Character::reducehealth(int damage){
   health -= damage;
   
   if (health <= 0){
-    charactersound.setBuffer(s::soundbuffers[4]);
+    minorcharactersound.setBuffer(s::soundbuffers[4]);
+    minorcharactersound.play();
   }
   else{
-    charactersound.setBuffer(s::soundbuffers[5]);
+    majorcharactersound.setBuffer(s::soundbuffers[5]);
+    majorcharactersound.play();
   }
-  charactersound.play();
 }
 
 void Character::teleport(sf::Vector2f dpos){
@@ -177,8 +178,8 @@ void Character::givexp(int amount){
     health = 9 + level;
     xpfornextlevel += 10;
 
-    charactersound.setBuffer(s::soundbuffers[3]);
-    charactersound.play();
+    majorcharactersound.setBuffer(s::soundbuffers[3]);
+    majorcharactersound.play();
   }
   else{
     xp += amount;
