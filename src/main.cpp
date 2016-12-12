@@ -169,8 +169,8 @@ int main()
 
     window.setView(view);
     /* === THE MAIN GAME LOOP === */
-	while (window.isOpen())
-	{
+    while (window.isOpen())
+    {
 
         /* === GENERAL EVENT HANDLING === */
         sf::Event event;
@@ -253,10 +253,10 @@ int main()
 
             /* === EVENT HANDLING FOR MOVEMENT === */
             sf::Vector2f cDir(0, 0);
-        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) cDir.x += 1;
-        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
-        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) cDir.y += 1;
-        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) cDir.y -= 1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) cDir.x += 1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) cDir.x -= 1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) cDir.y += 1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) cDir.y -= 1;
             sf::Vector2f cdPos = cv::normalized(cDir);
             sf::Vector2i offset = room.getOffsetDirection(character.getHypotheticalPosition(cdPos, elapsed));   // Check if the player has left the room
             if (offset.x > 0)       switchRoom(0, map, character);
@@ -266,37 +266,37 @@ int main()
             character.move(cdPos, elapsed);
 
             /* === EVENT HANDLING FOR TURNING === */
-        	sf::Vector2f charpos = character.getPosition();
-        	sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-        	float dx = charpos.x - mousepos.x;
-        	float dy = charpos.y - mousepos.y;
-        	float rotation = (atan2(dy,dx)) * 180 / cv::PI;
-        	character.setRotation(rotation);
+            sf::Vector2f charpos = character.getPosition();
+            sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+            float dx = charpos.x - mousepos.x;
+            float dy = charpos.y - mousepos.y;
+            float rotation = (atan2(dy,dx)) * 180 / cv::PI;
+            character.setRotation(rotation);
 
             /* === EVENT HANDLING FOR ATTACKING === */
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {      // Melee attack
-	      if (elapsedSinceLastAttack < 0.0f || elapsedSinceLastAttack > character.getmeleeweapon()->getcooldown()) {
+                if (elapsedSinceLastAttack < 0.0f || elapsedSinceLastAttack > character.getmeleeweapon()->getcooldown()) {
                 //Melee attack sound sf::Sound newsound;
-		newsound.setBuffer(s::soundbuffers[0]);
-		newsound.play();
-                    elapsedSinceLastAttack = 0.0f;
-                    room.performAttack(true, character.getPosition(), cv::normalized(mousepos - charpos), *character.getmeleeweapon());  // TODO. Replace with player's real weapon
+                newsound.setBuffer(s::soundbuffers[0]);
+                newsound.play();
+                elapsedSinceLastAttack = 0.0f;
+                room.performAttack(true, character.getPosition(), cv::normalized(mousepos - charpos), *character.getmeleeweapon());  // TODO. Replace with player's real weapon
                 }
             }
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {     // Missile attack
-	      if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > character.getrangedweapon()->getcooldown()) {
-                //Sound for ranged attacks sf::Sound newsound;
-		switch(character.getrangedweapon()->gettextureindex()){
-		case 1:{
-		  newsound.setBuffer(s::soundbuffers[2]);
-		  break;
-		}
-		case 4:{
-		  newsound.setBuffer(s::soundbuffers[1]);
-		  break;
-		}
-		}
-		newsound.play();
+                if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > character.getrangedweapon()->getcooldown()) {
+                    //Sound for ranged attacks sf::Sound newsound;
+                    switch(character.getrangedweapon()->gettextureindex()){
+                        case 1:{
+                            newsound.setBuffer(s::soundbuffers[2]);
+                            break;
+                        }
+                        case 4:{
+                            newsound.setBuffer(s::soundbuffers[1]);
+                            break;
+                        }
+                    }
+                    newsound.play();
                     elapsedSinceLastShot = 0.0f;
                     Projectile& projectile = character.getrangedweapon()->createProjectile(room);
                     projectile.setPosition(charpos);

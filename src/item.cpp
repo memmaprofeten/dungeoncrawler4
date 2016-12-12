@@ -90,20 +90,21 @@ void Item::draw(sf::RenderWindow& window, Character& player){
     //if (cv::distance(pos, player.getPosition()) < 1.5f){
       switch(type){
       case 1:
-	dogoldthingy(player);
-	active = false;
-	break;
+        dogoldthingy(player);
+        active = false;
+        break;
       case 2:
-	player.addItem(this);
-	active = false;
-	break;
+        player.addItem(this);
+        active = false;
+        break;
       case 3:
-	player.addItem(this);
-	active = false;
-	break;
+        player.addItem(this);
+        active = false;
+        break;
       }
+    //}
     }
-	window.draw(dropSprite);
+    window.draw(dropSprite);
 }
 
 //sf::Texture Item::getTexture() const { return texture; }
