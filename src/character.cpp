@@ -4,6 +4,7 @@
 #include "item.hpp"
 #include "room.hpp"
 #include "weapon.hpp"
+#include <SFML/Audio.hpp>
 
 Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, int textureIndex, int shadowIndex, int l) : name(n), type(t), level(l), speed(s), pos(p) {
     /*if (!texture.loadFromFile(texturePath)) {
@@ -125,8 +126,16 @@ int Character::getMaxHealth() const {
     return 9 + level;      // NB! This algorithm can be changed for something more complex if there is need for it.
 }
 
-void Character::reducehealth(int damage){
+void Character::reducehealth(int damage){ 
   health -= damage;
+  
+  if (health <= 0){
+    charactersound.setBuffer(s::soundbuffers[4]);
+  }
+  else{
+    charactersound.setBuffer(s::soundbuffers[5]);
+  }
+  charactersound.play();
 }
 
 void Character::teleport(sf::Vector2f dpos){
@@ -167,6 +176,9 @@ void Character::givexp(int amount){
     level += 1;
     health = 9 + level;
     xpfornextlevel += 10;
+
+    charactersound.setBuffer(s::soundbuffers[3]);
+    charactersound.play();
   }
   else{
     xp += amount;
