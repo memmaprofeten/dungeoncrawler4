@@ -241,8 +241,12 @@ void Room::drawmonsters(float elapsed){
 
 void Room::drawnpcs(sf::RenderWindow& window){
   for (auto it = npcs.begin(); it != npcs.end(); it++){
-    (*it)->draw(window);
+    (*it)->draw(window, *character);
   }
+}
+
+std::vector<Npc*> Room::getNpcs() {
+	return npcs;
 }
 
 void Room::drawitems(sf::RenderWindow& window){

@@ -100,6 +100,7 @@ public:
   void drawmonsters(float elapsed);
 
 	void drawnpcs(sf::RenderWindow& window);
+	std::vector<Npc*> getNpcs();
 
 	/**
 	 * Prints the room to std::cout.
@@ -116,11 +117,11 @@ public:
 //Sprite resuse ecosystem
 	//Returns refernce to a sprite
 	sf::Sprite* getSprite();
-	
+
 	//Deactivates sprite for other instances to use
 	void deactivateSprite(sf::Sprite* sprite);
-	
-	
+
+
 	//std::vector<Projectile> getProjectiles();
 
 	/**

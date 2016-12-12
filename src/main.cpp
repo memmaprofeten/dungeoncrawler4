@@ -139,6 +139,7 @@ int main()
     bool pauseReset = true;
     bool focused = true;
     bool inventory = false;
+    bool shopInventory = false;
     bool tooltipShowing = true;
     sf::Clock frameClock;
     float elapsed;
@@ -149,6 +150,8 @@ int main()
     int fpsIndex = 0;
     bool fpsIsCounting = false;
     for (auto i=0; i<FPS_SAMPLE_COUNT; ++i) fpsSamples[i] = 0;
+    Npc* closestNpc; // Pointer to the last NPC the player has been in range to
+    std::vector<Item*> renderInventory = character.getInventory(); // The inventory to pass when drawing inventory screen
 
     /* === CONTAINERS === */        // TODO: Move these out, e.g. into the Room class.
     //Monster test code. Comment out later.
@@ -156,7 +159,7 @@ int main()
     //CreateMonster(sf::Vector2f(75,75), &room, 1);
     //CreateMonster(sf::Vector2f(50,50), &room, 1);
     map.getRoom().addmonster( new MeleeMonster(sf::Vector2f(20,20), &(map.getRoom()), 1) );
-    map.getRoom().addNpc(new Shopkeeper(0, sf::Vector2f(40,40)));
+    map.getRoom().addNpc(new Shopkeeper(0, sf::Vector2f(40,70)));
 
 
 /*    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &room, 1.0));
@@ -313,6 +316,21 @@ int main()
                 }
             }
 
+            // Should we display NPC dialogs?
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left) || shopInventory) {
+                for (Npc* npcPtr : map.getRoom().getNpcs()) {
+                    if(npcPtr->isInRange()) {
+                        paused = true;
+                        pauseReleased = false;
+                        pauseReset = false;
+                        shopInventory = true;
+                        closestNpc = npcPtr;
+                        renderInventory = closestNpc->getInventory();
+                        drawInventory(window, inventoryBackground, renderInventory);
+                    }
+                }
+            }
+
             healthBar.setSize(sf::Vector2f(std::max(0.0f, 300.0f * float(character.getHealth()) / float(character.getMaxHealth())), 20));
 
             /* === RENDERING === */
@@ -362,6 +380,7 @@ int main()
                 if (pauseReset) {           // Continue game:
                     paused = false;
                     inventory = false;
+                    shopInventory = false;
                     frameClock.restart();   // The time elapsed since the last frame
                 }
             }
@@ -374,7 +393,11 @@ int main()
                 room.draw(window);
                 character.draw(window, elapsed);
                 window.setView(guiView);
-                if (inventory) {
+                if (inventory || shopInventory) {
+                    // Display player's or NPC's inventory?
+                    if(inventory)
+                        renderInventory = character.getInventory();
+
                     // Track mouse position:
                     sf::Vector2f mousepos = sf::Vector2f(sf::Mouse::getPosition(window));
                     sf::Vector2f globalOffset = sf::Vector2f(window.getSize()) * 0.5f * (1.0f - s::relativeInventoryBackgroundWidth);
@@ -386,25 +409,25 @@ int main()
                     int itemIndex = yi * s::itemsPerRow + xi;       // The actual index in the character's inventory of the item being hovered over
                     float relativeItemMarginToItem = s::relativeItemMargin * (float)s::itemsPerRow / s::relativeInventoryBackgroundWidth;
                     if (xi >= 0 && xi < s::itemsPerRow &&
-                        yi >= 0 && itemIndex < (int)character.getInventory().size() &&
+                        yi >= 0 && itemIndex < (int)renderInventory.size() &&
                         xir - (int)xir >= relativeItemMarginToItem && xir - (int)xir <= 1.0f - relativeItemMarginToItem &&  // Check if the cursor is on top of a horizontal margin
                         yir - (int)yir >= relativeItemMarginToItem && yir - (int)yir <= 1.0f - relativeItemMarginToItem     // Check if the cursor is on top of a vertical margin
                     ) {
                         // Show tooltip:
                         std::stringstream tooltipSs;
-                        tooltipSs << character.getInventory()[itemIndex]->getname();
+                        tooltipSs << renderInventory[itemIndex]->getname();
                         tooltip.setString(tooltipSs.str());
                         tooltipShowing = true;
                     }
                     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                         if (tooltipShowing && mouseReleased) {
-                            std::cout << "Using " + character.getInventory()[itemIndex]->getname() << "." << std::endl;
+                            std::cout << "Using " + renderInventory[itemIndex]->getname() << "." << std::endl;
                             bool couldConsume = character.consumeItem(itemIndex);
                             if (couldConsume) {
                                 //testItemTextureVector.erase(testItemTextureVector.begin() + itemIndex);
                                 //testItemSpriteVector.erase(testItemSpriteVector.begin() + itemIndex);
                                 character.consumeItem(itemIndex);
-                                drawInventory(window, inventoryBackground, character.getInventory());
+                                drawInventory(window, inventoryBackground, renderInventory);
                             }
                         }
                         mouseReleased = false;
@@ -414,7 +437,7 @@ int main()
 
                     window.draw(inventoryBackground);
                     //for (const auto& sprite : testItemSpriteVector) window.draw(sprite);
-                    for (Item* itemPtr : character.getInventory()) window.draw(itemPtr->getInventorySprite());
+                    for (Item* itemPtr : renderInventory) window.draw(itemPtr->getInventorySprite());
                     if (tooltipShowing) window.draw(tooltip);
                 }
                 else window.draw(pausedIndicator);
