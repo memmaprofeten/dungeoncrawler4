@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 //#include "weapon.hpp"
 class Room;
 class Weapon;
@@ -101,6 +102,8 @@ private:
   sf::Sprite sprite;
   sf::Texture shadowTexture;
   sf::Sprite shadowSprite;
+
+  sf::Sound charactersound;
 };
 
 #endif
