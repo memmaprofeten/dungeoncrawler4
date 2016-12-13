@@ -10,15 +10,16 @@
 Map::Map(Character& c) : room("welcome_room.txt", &c) {        // TODO: Replace with "welcome_room.txt"
     atRoom = s::startingRoomIndex;
     character = &c;
-    roomMap.push_back(roomContainer { open,     true, "main_cave1.txt",             1, 2, 4, 5 });      // 0    (default room)
-    roomMap.push_back(roomContainer { open,     true, "main_cave2.txt",             -1, 3, 0, -1 });    // 1
-    roomMap.push_back(roomContainer { open,     true, "main_cave3.txt",             3, -1, -1, 0 });    // 2
-    roomMap.push_back(roomContainer { open,     true, "main_cave4.txt",             -1, -1, 2, 1 });    // 3
+    defineRooms();
+}
 
-    roomMap.push_back(roomContainer { open,     true, "welcome_room.txt",           0, -1, -1, -1 });   // 4
-
-    roomMap.push_back(roomContainer { dungeon,  true, "",                           5, 0, 5, 5 });      // 5
-
+void Map::defineRooms() {
+    roomMap.push_back(roomContainer { open,     true, "main_cave1.txt",             1,  2,  4,  5 });       // 0    (default room)
+    roomMap.push_back(roomContainer { open,     true, "main_cave2.txt",             -1, 3,  0,  -1 });      // 1
+    roomMap.push_back(roomContainer { open,     true, "main_cave3.txt",             3,  -1, -1, 0 });       // 2
+    roomMap.push_back(roomContainer { open,     true, "main_cave4.txt",             -1, -1, 2,  1 });       // 3
+    roomMap.push_back(roomContainer { open,     true, "welcome_room.txt",           0,  0,  -1, -1 });      // 4    (welcome room)
+    roomMap.push_back(roomContainer { dungeon,  true, "",                           5,  0,  5,  5 });       // 5    (random dungeon)
 }
 
 Room& Map::getRoom() {
@@ -77,9 +78,4 @@ Room& Map::switchRoom(int neighbour) {
 		}
 	}
     return room;
-}
-
-void Map::defineRooms() {
-    // TODO: Define rooms
-    return;
 }
