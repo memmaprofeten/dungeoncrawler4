@@ -86,7 +86,7 @@ public:
     * The method takes as input a reference to the window to which it needs to
     * draw itself and a float defining the time elapsed since the last frame.
     */
-    void draw(sf::RenderWindow& window, float elapsed, Room* currentRoom);
+    void draw(sf::RenderWindow& window, float elapsed);
 
     /**
      * Constructor of the projectile.

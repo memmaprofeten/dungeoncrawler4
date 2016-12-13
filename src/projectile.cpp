@@ -60,39 +60,21 @@ void Projectile::deactivate() {
   active = false;
 }
 
-void Projectile::draw(sf::RenderWindow& window, float elapsed,Room* currentRoom) {
+void Projectile::draw(sf::RenderWindow& window, float elapsed) {
     if (active) {
-    
-        	if(!currentRoom->hasCoordinate((int)pos.x/s::blockDim,(int)pos.y/s::blockDim)){
-        		this->setSpeed(0.0f);
-        		return;
-        	}
-           	else if(!currentRoom->getTile((int)pos.x/s::blockDim,(int)pos.y/s::blockDim).isPenetrable()){
-        		this->setSpeed(0.0f);
-        		if(firedbyplayer){
-        			return;
-        		}
-        	 }
-        
-
         if (!room->hasPosition(pos)) {
+            speed = 0.0f;
             active = false;
-        } else {
+        } else if(!room->getTile(pos).isPenetrable()) {
+    		speed = 0.0f;
+    		active = firedbyplayer;
+    	 }
+        if (active) {
             pos += speed * elapsed * dir;
-        	//sprite.setTexture(texture);        // TODO: Figure this out (why doesn't it work to do this just once?)
         	sprite.setPosition(pos.x, pos.y);
         	sprite.setRotation(rotation+90);
         	window.draw(sprite);
-            // TODO: If the projectile is to be removed (e.g. has hit a soft target), call 'active = false;'.
         }
-
-        /*below not used, ugly shit
-        	    	sf::Texture arrow;
-        	    	tile.setOrigin(1.0f, 1.0f);
-        	    	tile.setPosition(pos.x, pos.y);
-        		tile.setFillColor(sf::Color::Red);
-        	    	window.draw(tile);
-        */
     }
 }
 

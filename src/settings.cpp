@@ -72,7 +72,7 @@ namespace s {
 	int standardEntrancePosY = 17;
 	int standardEntranceWidth = 3;
 	int startingRoomIndex = 4;
-	int monstersPerRoom = 10;
+	int monstersPerRoom = 6;
 
 	void animation::set(sf::Vector2f p, sf::Vector2f dp, float r, float dr, int textureIndex, sf::Vector2f scale, sf::Vector2f origin, float dur) {
 		rPos = pos = p; dPos = dp; rRot = rot = r; dRot = dr;
