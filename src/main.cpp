@@ -157,18 +157,6 @@ int main()
     //map.getRoom().addmonster( new MeleeMonster(sf::Vector2f(20,20), &(map.getRoom()), 1) );
     map.getRoom().addNpc(new Shopkeeper(0, sf::Vector2f(40,70)));
 
-
-/*    meleemonsters.push_back(MeleeMonster("test", 1, 1, 1, 40.0, 20, 4, &room, 1.0));
-    meleemonsters.begin()->setxypos(50,100);
-    rangedmonsters.push_back(RangedMonster("test2", 1, 1, 1, 30.0, 50, 100.0, 80.0, &room, 1.0));
-    rangedmonsters.begin()->setxypos(50,150);
-*/
-
-    // Mock parameters start here:
-    //float meleeCooldown = 0.2f;             // In seconds
-    //float projectileCooldown = 0.6f;        // In seconds
-    // Mock parameters end here
-
     window.setView(view);
     /* === THE MAIN GAME LOOP === */
     while (window.isOpen())
