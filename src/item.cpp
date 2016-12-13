@@ -38,10 +38,6 @@ void Item::dothing(Character& player){
     }
 }
 
-/*bool Item::isactive() const{
-    return active;
-}*/
-
 sf::Vector2f Item::getpos() const{
     return pos;
 }
@@ -51,13 +47,13 @@ sf::Sprite& Item::getDropSprite() { return dropSprite; }
 sf::Sprite& Item::getInventorySprite() { return inventorySprite; }
 
 void Item::dogoldthingy(Character& player){
-    //Gives player gold equal to value of the item.
+    //Gives player gold equal to value of the item:
     std::cout<< "Player picked up " << value << " gold!" << std::endl;
     player.givegold(value);
 }
 
 void Item::dohealythingy(Character& player){
-    //Set player health to either their max health, or their health + a percentage of max hp.
+    //Set player health to either their max health, or their health + a percentage of max hp:
     std::cout<< "Player has used a healing item, healing for " << value << "  health." << std::endl;
     player.sethealth(int(std::min(float(player.getMaxHealth()),player.getHealth()+value)));
 }
@@ -68,45 +64,17 @@ void Item::doweaponthingy(Character& player){
 }
 
 void Item::draw(sf::RenderWindow& window, Character& player){
-
-    //Checks if player's xy position is within the item's area. If it is, calls the relevant "do thing" function, and disables the item.
-    //if (((pos.x - 0.75f * s::blockDim) < player.getPosition().x) && (player.getPosition().x < (pos.x + 0.75f * s::blockDim)) && ((pos.y - 0.75f * s::blockDim) < player.getPosition().y) && (player.getPosition().y < (pos.y + 0.75f * s::blockDim))){
-    /*if (cv::approxDistance(pos, player.getPosition()) < s::blockDim) {
-        std::cout << "::: item picked up: " << this << std::endl;
-        switch(type){
-            case 1:
-                dogoldthingy(player);
-                active = false;
-                break;
-            case 2:
-                player.addItem(this);
-                active = false;
-                break;
-            case 3:
-                player.addItem(this);
-                active = false;
-                break;
-        }
-    } else {*/
     window.draw(dropSprite);
-    //}
 }
-
-//sf::Texture Item::getTexture() const { return texture; }
 
 Item::Item (std::string namei, int typei, float valuei, int textureIndexi, sf::Vector2f posi, int leveli){
     name = namei;
     type = typei;
     value = valuei;
-    //textureFile = texturefilei;
     textureIndex = textureIndexi;
     pos = posi;
-    //active = true;
     level = leveli;
     representedweapon = NULL;
-    /*if (!texture.loadFromFile(textureFile)) {
-      throw std::runtime_error(std::string("Could not load Item texture") + textureFile + ".");
-    }*/
     sellable = true;
     baseprice = 100;
 
@@ -123,7 +91,7 @@ Item::Item(sf::Vector2f position, int leveli){
     type = rand() % 3 + 1;
     representedweapon = NULL;
     int weapontype;
-    //1: Gold, 1-100 per drop, 2: Healing, between 20% and 50%, 3: Weapon.
+    //1: Gold, 1-100 per drop, 2: Healing, between 20% and 50%, 3: Weapon:
     switch(type){
         case 1:
             name = "Gold!";
@@ -150,7 +118,7 @@ Item::Item(sf::Vector2f position, int leveli){
             }
             textureIndex = representedweapon->gettextureindex();
             break;
-        default:        // This can't currently be reached by the randomizer, but it could in the future.
+        default:        // This can't currently be reached by the randomizer, but it is implemented to allow extension in the future.
             name = "Trinket";
             value = 0;
             textureIndex = 6;
@@ -159,7 +127,6 @@ Item::Item(sf::Vector2f position, int leveli){
 
     pos = position;
     level = leveli;
-    //active = true;
     sellable = true;
     baseprice = rand()%400+1;
 
@@ -174,11 +141,9 @@ Item::Item(std::string namei, Weapon* weaponi, int leveli, int textureIndexi, sf
     name = namei;
     representedweapon = weaponi;
     level = leveli;
-    //textureFile = texturefilei;
     textureIndex = textureIndexi;
     pos = posi;
     level = leveli;
-    //active = true;
     type = 3;
     value = 0;
     sellable = false;
