@@ -249,6 +249,7 @@ int main()
                 pauseReleased = false;
                 pauseReset = false;
                 inventory = true;
+                drawInventory(window, inventoryBackground, character.getInventory());
             }
 
             /* === EVENT HANDLING FOR MOVEMENT === */
