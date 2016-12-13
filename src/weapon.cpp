@@ -52,7 +52,6 @@ float Weapon::getcooldown() const{
 RangedWeapon::RangedWeapon(const std::string name, int damage, int radius, int txtrIndex) : Weapon(name, 2, damage, radius, txtrIndex) { cooldown = 0.8f; }
 
 RangedWeapon::RangedWeapon(int level, float seed) : Weapon (level, seed){
-  srand(int(seed));
   type = 2;
 
   int generalname =(( rand()%2)+1);
@@ -138,7 +137,6 @@ MeleeWeapon::MeleeWeapon(const std::string name, int damage, int radius, int txt
 }
 
 MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
-  srand(int(seed));
   type = 1;
 
   int type = rand()%4+1;

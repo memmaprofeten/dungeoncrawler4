@@ -23,6 +23,10 @@ Aggrocheck requires way to get position of player. **DONE**
 General AI requires above things to be complete. **DONE**
 Ranged monster attack requires code for projectiles, which has yet to be implemented. **DONE**
  */
+
+Monster::Monster() {}
+Monster::~Monster() {}
+
 std::string Monster::getname(){
   return monstername;
 }
@@ -91,17 +95,16 @@ void Monster::monstermove(sf::Vector2f direction, float elapsed){
 
 //Reduces health by given amount. Then checks if health is below 0. If it is, it searches the vectors containing the monster for itself, erases itself, and then returns the amount of experience the player gains.
 void Monster::reducehealth(int reducedby){
-  health -= reducedby;
-  if(health <= 0){
-    //Sets monster as inactive.
-    active = false;
-    //Drops item
-    Item* tempitem = new Item(position, room->getcharacter()->getlevel());
-	room->additem(tempitem);
-    //Awards player XP
-    room->getcharacter()->givexp(xponkill);
-    room->deactivateSprite(sprite);
-  }
+    health -= reducedby;
+    if(health <= 0){
+        //Sets monster as inactive.
+        active = false;
+        //Drops item
+        room->additem(new Item(position, room->getcharacter()->getlevel()));
+        //Awards player XP
+        room->getcharacter()->givexp(xponkill);
+        room->deactivateSprite(sprite);
+    }
 }
 
 // Constructors for melee and ranged monster classes.
@@ -256,7 +259,6 @@ void MeleeMonster::monsterai(Character& player, float elapsed){
 
 //Creates a random ranged monster at position determined by the position input.
 RangedMonster::RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli){
-    srand(time(NULL));
 
     monstername = "PewPew the Dastardly";
 	health = (rand() % 3) + leveli;
@@ -279,7 +281,6 @@ RangedMonster::RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli){
 }
 
 MeleeMonster::MeleeMonster(sf::Vector2f positioni, Room* roomi, int leveli){
-    srand (time(NULL));
 
     monstername = "ChopChop the Dangerous";
 	health = (rand() % 4)+leveli;

@@ -120,9 +120,6 @@ Item::Item (std::string namei, int typei, float valuei, int textureIndexi, sf::V
 
 Item::Item(sf::Vector2f position, int leveli){
 
-    //Initialize random number generator.
-    srand(time(NULL));
-
     type = rand() % 3 + 1;
 
     //1: Gold, 1-100 per drop, 2: Healing, between 20% and 50%, 3: Weapon.

@@ -11,8 +11,8 @@ class Room;
 
 class Monster{
 public:
-  Monster(){};
-  virtual ~Monster(){};
+  Monster();
+  virtual ~Monster();
 /*Constructor similar to the character
 each monster assigned random item at creation
 

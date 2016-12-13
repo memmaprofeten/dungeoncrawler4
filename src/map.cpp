@@ -53,7 +53,6 @@ Room& Map::switchRoom(int neighbour) {
     if (roomMap[atRoom].type == open) {     // Load static (open) room from file
         room = Room(roomMap[atRoom].roomPath, character);
     } else {                                // Generate a random dungeon room
-        srand(time(NULL));
         float p = (float)(rand() % 1000) / 999.0f * 0.13f + 0.6f;
         std::cout << "Generating dungeon with p = " << p << "." << std::endl;
         room = Room(60, 60, p, 3, std::vector<bool>{
@@ -68,8 +67,8 @@ Room& Map::switchRoom(int neighbour) {
 		sf::Vector2f position;
 		// Iterate to find a free place in the room:
 		while(!found){
-			position = sf::Vector2f((float) (rand() % (room.getWidth() * (int) s::blockDim)) + 0.5f * s::blockDim, (float) (rand() % (room.getHeight() * (int) s::blockDim)) + 0.5f * s::blockDim);
-			if(room.getTile(position).isPenetrable()){
+            position = sf::Vector2f((float) (rand() % (room.getWidth() * (int) s::blockDim)) + 0.5f * s::blockDim, (float) (rand() % (room.getHeight() * (int) s::blockDim)) + 0.5f * s::blockDim);
+            if(room.getTile(position).isPenetrable()){
 				found = true;
 				// Create a random monster:
 				if(rand() % 2 == 0){

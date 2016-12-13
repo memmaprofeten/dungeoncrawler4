@@ -26,6 +26,8 @@ void switchRoom(int neighbour, Map& map, Character& character);
 int main()
 {
 
+    srand(time(0));     // Initialize the randomizer once, for the rest of the program to use
+
     /* === FILES === */
     sf::Font standardFont;
     if (!standardFont.loadFromFile("../resources/fonts/Sansation-Regular.ttf")) {
@@ -154,7 +156,7 @@ int main()
     // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
     //CreateMonster(sf::Vector2f(75,75), &room, 1);
     //CreateMonster(sf::Vector2f(50,50), &room, 1);
-    map.getRoom().addmonster( new MeleeMonster(sf::Vector2f(20,20), &(map.getRoom()), 1) );
+    //map.getRoom().addmonster( new MeleeMonster(sf::Vector2f(20,20), &(map.getRoom()), 1) );
     map.getRoom().addNpc(new Shopkeeper(0, sf::Vector2f(40,70)));
 
 
@@ -274,7 +276,6 @@ int main()
 
             /* === EVENT HANDLING FOR ATTACKING === */
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {      // Melee attack
-                //std::cout << "===" << room.getitems().size() << std::endl;
                 if (elapsedSinceLastAttack < 0.0f || elapsedSinceLastAttack > character.getmeleeweapon()->getcooldown()) {
                     //Melee attack sound sf::Sound newsound;
                     newsound.setBuffer(s::soundbuffers[0]);
