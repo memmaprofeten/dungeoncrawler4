@@ -5,7 +5,6 @@
 #include <vector>
 #include "room.hpp"
 
-//class Room;
 class Character;
 class Item;
 class Weapon;
@@ -63,7 +62,11 @@ private:
 	int atRoom;							// The index of the room that the character is currently in
 	Room room;							// The object itself of the current room
 	Character* character;				// A pointer to the character
-	void defineRooms();					// Defines the topology of the map. NB! This function is to be called only once, by the constructor.
+
+	/**
+	 * Defines the topology of the map. NB! This function is to be called only once, by the constructor.
+	 */
+	void defineRooms();
 };
 
 #endif

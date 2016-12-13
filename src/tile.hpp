@@ -2,35 +2,48 @@
 #define TILE_HH
 #include <SFML/Graphics.hpp>
 #include <string>
+
+/**
+ * An enum defining the possible tile types.
+ */
 enum TileType{
 	Floor,
 	Wall
 };
-/*For simplicity the tiles are either floor or wall*/
+
+/**
+ * The Tile class represents a cell in a room's grid.
+ * A tile holds information about its texture, position and whether or not it
+ * it can be walked on.
+ */
 class Tile{
 public:
-/*
-Simple constructor: is given char as parameter and returns a tile object
-a couple tiles per room has some kind of item on them
 
-bool isPenetrable; that returns if characters can walk over this tile*/
-
+	/**
+	 * Tile constructor
+	 * Constructs a tile of the given type, at the given index in a Room grid
+	 * and on the given position, using the the given sprite.
+	 */
 	Tile(int type, sf::Vector2f position, sf::Vector2i index, sf::Sprite* freeSprite);
+
+	/**
+	 * Returns whether or not entities can go through this tile.
+	 */
 	bool isPenetrable() const;
-	void draw(sf::RenderWindow& window, float blockDim);
+
+	/**
+	 * Returns a string representation of the tile.
+	 */
 	std::string toString() const;
+
 private:
-/*boolean telling if the tile is penetrabble
-Color of the tile
-position in room
-*/
-	TileType material;
-	bool penetrable;
-	sf::Vector2f tilePosition;
-	sf::Vector2i tileIndex;
-	sf::Texture texture;
-	sf::Sprite* sprite; //pointer to sprite
-	int textureIndex;
+	TileType material;				// The tile type of the tile
+	bool penetrable;				// Whether or not the tile is penetrable
+	sf::Vector2f tilePosition;		// The position of the tile
+	sf::Vector2i tileIndex;			// The index of the tile in the room grid
+	sf::Texture texture;			// The texture of the tile
+	sf::Sprite* sprite;				// A pointer to the tile's sprite
+	int textureIndex;				// The index of the tile's texture
 };
 
 #endif

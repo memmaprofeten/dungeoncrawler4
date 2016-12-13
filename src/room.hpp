@@ -151,9 +151,6 @@ public:
 	 */
 	void deactivateSprite(sf::Sprite* sprite);
 
-
-	//std::vector<Projectile> getProjectiles();
-
 	/**
 	 * Adds a projectile with the input parameters as constructor parameters
 	 * to this room and returns the projectile index of this projectile in the
@@ -165,24 +162,45 @@ public:
 	 */
 	Projectile& createProjectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex);
 
+	/**
+	 * Returns a reference to the monster vector of the room, i.e., pointers to
+	 * all the monsters that are currently in the room (active or inactive).
+	 */
 	std::vector<Monster*>& getmonsters();
+
+	/**
+	 * Returns a reference to the tile vector of the room, i.e. pointers to all
+	 * the items that are currently on the ground in the room.
+	 */
 	std::vector<Item*>& getitems();
+
+	/**
+	 * Returns a pointer to the room's character.
+	 */
 	Character* getcharacter();
+
+	/**
+	 * Adds the given monster to the room.
+	 */
 	void addmonster(Monster* monsteri);
+
+	/**
+	 * Adds the given NPC to the room.
+	 */
 	void addNpc(Npc* npc);
 
 private:
-	int width;
-	int height;
-	Character* character;
-	std::vector<std::vector<Tile>> room;	// 2D-array of tile-objects mapping the game room.
-	std::vector<sf::Sprite> sprites;//all sprites used in the game
-	std::vector<bool> spritesInUse;	//value telling if sprite is to bedrawn
-	std::vector<Projectile> projectiles; //Projectile objects
-	std::vector<int> freeProjectiles;		// A vector of projectile indices that are free for replacing
-	std::vector<Monster*> monsters; //Vector containing pointers to monsters on the level.
-	std::vector<Npc*> npcs; // Vector of NPC:s
-	std::vector<Item*> itemstorage; //Vector containing items in level.
+	int width;									// The room's width, in terms of cells (tiles)
+	int height;									// The rooms' height, in terms of cells (tiles)
+	Character* character;						// A pointer to the character
+	std::vector<std::vector<Tile>> room;		// A 2D-array of tile-objects mapping the game room.
+	std::vector<sf::Sprite> sprites;			// All sprites belonging to different objects in this room
+	std::vector<bool> spritesInUse;				// A vector of flags telling if the sprite at that index is to be drawn
+	std::vector<Projectile> projectiles;		// The rooms' projectiles
+	std::vector<int> freeProjectiles;			// A vector of projectile indices that are free for replacement
+	std::vector<Monster*> monsters;				// Vector containing pointers to monsters in the room
+	std::vector<Npc*> npcs;						// Vector of NPC:s
+	std::vector<Item*> itemstorage;				// Vector containing items in the room
 };
 
 #endif

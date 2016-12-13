@@ -166,7 +166,6 @@ std::vector<sf::Vector2i> Room::getNeighbours(int x, int y, bool includingSelf, 
 }
 
 void Room::performAttack(bool byPlayer, sf::Vector2f source, sf::Vector2f direction, const Weapon& weapon) {
-	// TODO: Get weapon's min/max radius and angle.
 	float minRadius = weapon.getMinRadius();
 	float maxRadius = weapon.getMaxRadius();
 	float angle = 60.0f;
@@ -184,19 +183,12 @@ void Room::performAttack(bool byPlayer, sf::Vector2f source, sf::Vector2f direct
 		sf::Vector2f cVec = character->getPosition() - source;
 		float d = cv::norm(cVec);
 		if (d <= maxRadius && d >= minRadius) {
-			// TODO: Check direction?
 			character->reducehealth(weapon.getDamage());
 		}
 	}
 }
 
 void Room::draw(sf::RenderWindow& window) {
-/*	for (int j = 0; j < height; ++j) {
-        for (int i = 0; i < width; ++i) {
-			getTile(i, j).draw(window, blockDim);
-        }
-    }
-*/
 	for (unsigned int i = 0; i < sprites.size(); i++){
 		if (spritesInUse[i]) {
 			window.draw(sprites[i]);
@@ -214,7 +206,6 @@ void Room::drawProjectiles(sf::RenderWindow& window, float elapsed) {
 				character->reducehealth(projectile.getdamage()); // character takes damage
 				projectile.deactivate();
 			}
-			// TODO: Monster hit detection
 			for (auto monster : monsters){
 				if(monster->isactive()){
 					if(projectile.isfiredbyplayer() && cv::distance(monster->getPosition(), projectile.getPosition()) <= s::projectileRadius) {
@@ -231,17 +222,17 @@ void Room::drawProjectiles(sf::RenderWindow& window, float elapsed) {
 }
 
 void Room::drawmonsters(float elapsed){
-  for (auto it = monsters.begin(); it != monsters.end(); it++){
-    if ((*it)->isactive()){
-      (*it)->monsterai(*character, elapsed);
-    }
-  }
+	for (auto it = monsters.begin(); it != monsters.end(); it++){
+		if ((*it)->isactive()){
+			(*it)->monsterai(*character, elapsed);
+		}
+	}
 }
 
 void Room::drawnpcs(sf::RenderWindow& window){
-  for (auto it = npcs.begin(); it != npcs.end(); it++){
-    (*it)->draw(window, *character);
-  }
+	for (auto it = npcs.begin(); it != npcs.end(); it++){
+		(*it)->draw(window, *character);
+	}
 }
 
 std::vector<Npc*>& Room::getNpcs() {
@@ -250,11 +241,9 @@ std::vector<Npc*>& Room::getNpcs() {
 
 void Room::drawitems(sf::RenderWindow& window){
 	checkDrops();
-  for (auto it = itemstorage.begin(); it != itemstorage.end(); it++){
-    //if ((*it)->isactive()){
-      (*it)->draw(window, *character);
-    //}
-  }
+	for (auto it = itemstorage.begin(); it != itemstorage.end(); it++){
+		(*it)->draw(window, *character);
+	}
 }
 
 void Room::additem(Item* newitem){
@@ -301,7 +290,6 @@ sf::Sprite* Room::getSprite() {
 		}
 
 	}
-
 	sf::Sprite sprite;
 	sprites.push_back(sprite);
 	spritesInUse.push_back(true);
@@ -310,9 +298,6 @@ sf::Sprite* Room::getSprite() {
 void Room::deactivateSprite(sf::Sprite* sprite) {
 	spritesInUse[sprite - &sprites[0]] = false;
 }
-/*std::vector<Projectile> Room::getProjectiles() {
-	return projectiles;
-}*/
 
 Projectile& Room::createProjectile(bool shotbyplayer, int damagein, int radiusin, float speedin, int txtrIndex) {
 	if (freeProjectiles.size() > 0) {
