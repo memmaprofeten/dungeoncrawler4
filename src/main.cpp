@@ -66,7 +66,7 @@ int main()
     character.setRoom(&room);
 
     /* === TESTING === */
-    RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
+    //RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
 
     character.addItem(new Item("Doughnut", 2, 3, 7, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Bread", 2, 2, 12, sf::Vector2f(0, 0),1));
@@ -74,11 +74,11 @@ int main()
     character.addItem(new Item("Trophy", 4, 0, 19, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Potion of wisdom", 2, 8, 16, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Potion of strength", 2, 6, 17, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Reissumies TM", 2, 12, 18, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Reissumies (TM)", 2, 12, 18, sf::Vector2f(0, 0),1));
 
     /* ADD STARTING WEAPONS FOR PLAYER */
-    RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 0.8f * s::blockDim, 4);
-    MeleeWeapon* startingmeleeweapon = new MeleeWeapon("Novice's Sword", 3, 0.8f*s::blockDim, 8);
+    RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 4);
+    MeleeWeapon* startingmeleeweapon = new MeleeWeapon("Novice's Sword", 3, 0.0f, 2 * s::blockDim, 8);
     Item* startingrangedweaponitem = new Item("Novice's Bow", startingrangedweapon, 1, 8,sf::Vector2f(0,0));
     Item* startingmeleeweaponitem = new Item("Novice's Sword", startingmeleeweapon, 1, 8,sf::Vector2f(0,0));
     character.addItem(startingrangedweaponitem);

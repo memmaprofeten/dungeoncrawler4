@@ -71,7 +71,7 @@ namespace s {
 	float blockDim = 10.0f;
 	int viewHeight = 150;
 	float relativeInventoryBackgroundWidth = 0.8f;
-	int itemsPerRow = 8;
+	int itemsPerRow = 12;
 	float relativeItemMargin = 0.01f;
 	int standardEntrancePosX = 17;
 	int standardEntrancePosY = 17;

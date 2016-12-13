@@ -7,11 +7,13 @@
 #include <cmath>
 
 Weapon::~Weapon(){}
+
 RangedWeapon::~RangedWeapon(){}
+
 MeleeWeapon::~MeleeWeapon(){}
 
-Weapon::Weapon(std::string n, int t, int d, float r, int txtrIndex) :
-        name(n), type(t), damage(d), radius(r), textureIndex(txtrIndex) { }
+Weapon::Weapon(std::string n, int t, int d, int txtrIndex) :
+        name(n), type(t), damage(d), textureIndex(txtrIndex) { }
 
 Weapon::Weapon(int level, float seed){
     levels = level;
@@ -24,10 +26,6 @@ int Weapon::getType() const { return type; }
 
 int Weapon::getDamage() const { return damage; }
 
-//int Weapon::getRange() const { return range; }
-
-float Weapon::getRadius() const { return radius; }
-
 float Weapon::getMinRadius() const { return -1.0f; }
 
 float Weapon::getMaxRadius() const { return -1.0f; }
@@ -35,7 +33,7 @@ float Weapon::getMaxRadius() const { return -1.0f; }
 int Weapon::getProjectilespeed() const { return projectilespeed; }
 
 Projectile& Weapon::createProjectile(Room& room) {
-    return room.createProjectile(true, damage, radius, 250.0f, textureIndex);
+    return room.createProjectile(true, damage, s::projectileRadius, 250.0f, textureIndex);
 }
 
 int Weapon::gettextureindex() const{
@@ -49,13 +47,13 @@ float Weapon::getcooldown() const{
 }
 
 
-RangedWeapon::RangedWeapon(const std::string name, int damage, int radius, int txtrIndex) : Weapon(name, 2, damage, radius, txtrIndex) { cooldown = 0.8f; }
+RangedWeapon::RangedWeapon(const std::string name, int damage, int txtrIndex) : Weapon(name, 2, damage, txtrIndex) { cooldown = 0.8f; }
 
 RangedWeapon::RangedWeapon(int level, float seed) : Weapon (level, seed){
     type = 2;
-
     int generalname =(( rand()%2)+1);
     int nameaccent = ((rand()%5)+1);
+
     switch (generalname){
         case 1:{
             textureIndex = 1;
@@ -111,37 +109,28 @@ RangedWeapon::RangedWeapon(int level, float seed) : Weapon (level, seed){
         }
     }
 
-    //Speed of projectile vs. damage, faster projectiles should hurt more.
-    int fast = ((rand()%100)+1); //How fast the projectile is.
-    int heavy = 100-fast; //How much damage t he projectile should do.
+    //Speed of projectile vs. damage, faster projectiles should hurt more:
+    int fast = ((rand()%100)+1);    // How fast the projectile is.
+    int heavy = 100-fast;           // How much damage the projectile should do.
 
     damage = rand() % 3 + 1 + int(float(heavy) / 100.0f * 2.0f * (float)level);
     projectilespeed = 150.0f + float(fast);
     cooldown = 0.5f + (float(heavy)/100);
-    radius = 7.0f + 5.0f*(float(heavy)/100);
 }
-
 
 void RangedWeapon::attack() { }
 
-//float RangedWeapon::getMinRadius() const { return 0.0f; }
-
-//float RangedWeapon::getMaxRadius() const { return 0.0f; }
-
-
-MeleeWeapon::MeleeWeapon(const std::string name, int damage, int radius, int txtrIndex) : Weapon(name, 1, damage, radius, txtrIndex) {
+MeleeWeapon::MeleeWeapon(const std::string name, int damage, float minR, float maxR, int txtrIndex) : Weapon(name, 1, damage, txtrIndex) {
     cooldown = 0.8f;
-    minradius = 0;
-    maxradius = 20.0f;
+    minradius = minR;
+    maxradius = maxR;
     angle = 120.0f;
 }
 
 MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
     type = 1;
-
     int type = rand()%4+1;
     int nameaccent = rand()%5+1;
-
     int fast = ((rand()%100)+1);
     int heavy = 100 - fast;
 
@@ -178,7 +167,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
             }
             break;
         }
-        case 2:{//Dagger
+        case 2:{ //Dagger
             cooldown = 0.3f + (float(heavy)/100);
             damage = rand() % 2 + 1 + int(float(heavy) / 100.0f * 2.0f * (float)level);
             minradius = 0;
@@ -212,7 +201,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
             break;
         }
 
-        case 3:{//Polearm
+        case 3:{ //Polearm
             cooldown = 0.5f + (float(heavy)/100);
             damage = rand() % 5 + 1 + int(float(heavy) / 100.0f * 2.0f * (float)level);
             minradius = 10.0f;
@@ -244,7 +233,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
             }
             break;
         }
-        case 4:{//Flails/maces/etc
+        case 4:{ //Flails/maces/etc
             cooldown = 0.6f + (float(heavy)/100);
             damage = rand() % 3 + 1 + int(float(heavy) / 100.0f * 2.0f * (float)level);
             minradius = 0;
@@ -278,7 +267,6 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
         }
     }
 
-    radius = 0;
     projectilespeed = 0;
 }
 
