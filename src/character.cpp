@@ -95,14 +95,6 @@ void Character::addItem(Item* item) {
 
 bool Character::consumeItem(int i) {
     if (i < 0 || i >= (int)inventory.size()) return false;
-    // TODO: Check if item can be consumed
-    // TODO: If it can, get the perks and remove it from the inventory. If not, return false.
-    //inventory[i]->dothing(*this);
-    /*if (inventory[i]->gettype() == 2){
-      delete inventory[i];
-      inventory.erase(inventory.begin() + i);
-      return true;
-    }*/
     Item* item = inventory[i];
     bool res = false;
     switch(item->gettype()) {
@@ -140,6 +132,7 @@ void Character::reducehealth(int damage){
         majorcharactersound.setBuffer(s::soundbuffers[5]);
         majorcharactersound.play();
     }
+    // TODO: Check if dead
 }
 
 void Character::teleport(sf::Vector2f dpos){

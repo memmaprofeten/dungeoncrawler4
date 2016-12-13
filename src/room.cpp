@@ -266,7 +266,7 @@ void Room::checkDrops() {
 	for (unsigned i=0; i<itemstorage.size(); ++i) {
 		if (cv::approxDistance(itemstorage[i]->getpos(), cPos) < s::blockDim) {	// Check if within reach of player
 			if (itemstorage[i]->gettype() == 1) {
-				itemstorage[i]->dogoldthingy(*character);
+				itemstorage[i]->applyGoldEffects(*character);
 			} else {
 				character->addItem(itemstorage[i]);
 			}

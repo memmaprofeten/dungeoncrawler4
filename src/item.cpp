@@ -27,13 +27,13 @@ float Item::getvalue() const{
 void Item::dothing(Character& player){
     switch(type){
         case 1:
-            dogoldthingy(player);
+            applyGoldEffects(player);
             break;
         case 2:
-            dohealythingy(player);
+            applyConsumableEffects(player);
             break;
         case 3:
-            doweaponthingy(player);
+            applyWeaponEffects(player);
             break;
     }
 }
@@ -46,19 +46,19 @@ sf::Sprite& Item::getDropSprite() { return dropSprite; }
 
 sf::Sprite& Item::getInventorySprite() { return inventorySprite; }
 
-void Item::dogoldthingy(Character& player){
+void Item::applyGoldEffects(Character& player){
     //Gives player gold equal to value of the item:
     std::cout<< "Player picked up " << value << " gold!" << std::endl;
     player.givegold(value);
 }
 
-void Item::dohealythingy(Character& player){
+void Item::applyConsumableEffects(Character& player){
     //Set player health to either their max health, or their health + a percentage of max hp:
     std::cout<< "Player has used a healing item, healing for " << value << "  health." << std::endl;
     player.sethealth(int(std::min(float(player.getMaxHealth()),player.getHealth()+value)));
 }
 
-void Item::doweaponthingy(Character& player){
+void Item::applyWeaponEffects(Character& player){
     std::cout << "Player has equipped weapon " << representedweapon->getName() << "." << std::endl;
     player.equipweapon(representedweapon);
 }

@@ -95,17 +95,17 @@ public:
     /**
      * Applies the effects of gold
      */
-    void dogoldthingy(Character& player);
+    void applyGoldEffects(Character& player);
 
     /**
      * Applies the effects of a consumable
      */
-    void dohealythingy(Character& player);
+    void applyConsumableEffects(Character& player);
 
     /**
      * Applies the effects of a weapon
      */
-    void doweaponthingy(Character& player);
+    void applyWeaponEffects(Character& player);
 
 private:
     std::string name;               // Name, used for message player gets when picking up item
