@@ -88,7 +88,7 @@ void Item::draw(sf::RenderWindow& window, Character& player){
                 break;
         }
     } else {*/
-        window.draw(dropSprite);
+    window.draw(dropSprite);
     //}
 }
 
@@ -121,38 +121,39 @@ Item::Item (std::string namei, int typei, float valuei, int textureIndexi, sf::V
 Item::Item(sf::Vector2f position, int leveli){
 
     type = rand() % 3 + 1;
-
+    representedweapon = NULL;
+    int weapontype;
     //1: Gold, 1-100 per drop, 2: Healing, between 20% and 50%, 3: Weapon.
     switch(type){
         case 1:
             name = "Gold!";
             value = ceil(rand()%100+1);
-            textureIndex = 7;
-            representedweapon = NULL;
+            textureIndex = 15;
             break;
         case 2:
             name = "Potion of Healing!";
             value = float(rand() % (leveli*5) + 1);
-            textureIndex = 7;
-            representedweapon = NULL;
+            textureIndex = 17;
             break;
         case 3:
-            textureIndex = 8;
             value = ((rand() % 255) + 1);
-
-            int weapontype = (rand()%2)+1;
+            weapontype = (rand()%2)+1;
             switch(weapontype){
-                case 1:{
+                case 1:
                     representedweapon = new RangedWeapon(leveli, value);
                     name = representedweapon->getName();
                     break;
-                }
-                case 2:{
+                case 2:
                     representedweapon = new MeleeWeapon(leveli, value);
                     name = representedweapon->getName();
                     break;
-                }
             }
+            textureIndex = representedweapon->gettextureindex();
+            break;
+        default:        // This can't currently be reached by the randomizer, but it could in the future.
+            name = "Trinket";
+            value = 0;
+            textureIndex = 6;
             break;
     }
 

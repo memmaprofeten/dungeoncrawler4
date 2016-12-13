@@ -15,6 +15,7 @@ namespace s {
 	extern std::vector<sf::Texture> textures;
 	void loadTextures();
 
+	extern float floatCorrection;
 	extern float characterSpeed;
     extern std::string defaultProjectileTextureFile;
 	extern int characterRotationOffset;
@@ -28,6 +29,7 @@ namespace s {
 	extern int standardEntranceWidth;		// The standard width of a room entrance (in blocks)
 	extern int startingRoomIndex;
 	extern int monstersPerRoom;
+	extern float projectileRadius;
 
 	extern std::string meleattacksoundstring;
 	extern std::string bowattacksoundstring;

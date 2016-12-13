@@ -19,7 +19,6 @@ Room::Room(std::string const file, Character* character) : character(character) 
 	int x = 0;
 	int y = 0;
 	sf::Sprite dummy;
-	//sf::Sprite* dymmu = dummy; //TODO: Fix this
 	std::string line;
 	std::ifstream mapFile (s::mapPath + file);
 	if (mapFile.is_open()){
@@ -144,11 +143,11 @@ Tile& Room::getTile(int x, int y) {
     if (hasCoordinate(x, y)) {
         return room[x][y];
     }
-    throw std::runtime_error(std::string("The coordinates (") + std::to_string(x) + ", " + std::to_string(y) + ") are out of bounds!");
+    throw std::runtime_error(std::string("In Room::getTile: The coordinates (") + std::to_string(x) + ", " + std::to_string(y) + ") are out of bounds!");
 }
 
 Tile& Room::getTile(sf::Vector2f pos) {
-	return getTile((int)pos.x / s::blockDim, (int)pos.y / s::blockDim);
+	return getTile(int(pos.x / s::blockDim), int(pos.y / s::blockDim));
 }
 
 std::vector<sf::Vector2i> Room::getNeighbours(int x, int y, bool includingSelf, bool includingDiagonals, bool includingOutsiders) {
@@ -211,14 +210,14 @@ void Room::drawProjectiles(sf::RenderWindow& window, float elapsed) {
 		Projectile& projectile = projectiles[i];
 		if (projectile.isActive()) {					// Loop only through active projectiles
 			projectile.draw(window, elapsed);			// Call their draw method which updates their position and draws them
-			if(!projectile.isfiredbyplayer() && cv::distance(character->getPosition(), projectile.getPosition()) < float(projectile.getradius())) {	// Hit detection
+			if(!projectile.isfiredbyplayer() && cv::distance(character->getPosition(), projectile.getPosition()) <= s::projectileRadius) {	// Hit detection
 				character->reducehealth(projectile.getdamage()); // character takes damage
 				projectile.deactivate();
 			}
 			// TODO: Monster hit detection
 			for (auto monster : monsters){
 				if(monster->isactive()){
-					if(projectile.isfiredbyplayer() && cv::distance(monster->getPosition(), projectile.getPosition()) < float(projectile.getradius())) {
+					if(projectile.isfiredbyplayer() && cv::distance(monster->getPosition(), projectile.getPosition()) <= s::projectileRadius) {
 						monster->reducehealth(projectile.getdamage());
 						projectile.deactivate();
 					}

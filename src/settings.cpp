@@ -1,5 +1,7 @@
 #include "settings.hpp"
 
+#define FLOAT_CORRECTION 0.001F     // The Epsilon value to be used to avoid floating point errors
+
 namespace s {
 
 	std::string mapPath = "../resources/rooms/";
@@ -61,6 +63,7 @@ namespace s {
     }
   }
 
+	float floatCorrection = FLOAT_CORRECTION;
 	float characterSpeed = 80.0f;
 	int characterRotationOffset = 270;
 	float blockDim = 10.0f;
@@ -73,6 +76,7 @@ namespace s {
 	int standardEntranceWidth = 3;
 	int startingRoomIndex = 4;
 	int monstersPerRoom = 6;
+	float projectileRadius = 0.6f * blockDim;
 
 	void animation::set(sf::Vector2f p, sf::Vector2f dp, float r, float dr, int textureIndex, sf::Vector2f scale, sf::Vector2f origin, float dur) {
 		rPos = pos = p; dPos = dp; rRot = rot = r; dRot = dr;

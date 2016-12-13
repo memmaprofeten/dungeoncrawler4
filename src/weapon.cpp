@@ -115,8 +115,8 @@ RangedWeapon::RangedWeapon(int level, float seed) : Weapon (level, seed){
   int fast = ((rand()%100)+1); //How fast the projectile is.
   int heavy = 100-fast; //How much damage t he projectile should do.
 
-  damage = ceil((rand()%4) + ((float(heavy)/100)*2*level));
-  projectilespeed = float(150 + float(fast));
+  damage = rand() % 3 + 1 + int(float(heavy) / 100.0f * 2.0f * (float)level);
+  projectilespeed = 150.0f + float(fast);
   cooldown = 0.5f + (float(heavy)/100);
   radius = 7.0f + 5.0f*(float(heavy)/100);
 }
@@ -148,7 +148,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
   switch (type){
   case 1:{ //Sword
     cooldown = 0.4f + (float(heavy)/100) ;
-    damage = ceil((rand()%4) + ((float(heavy)/100)*2*level));
+    damage = rand() % 3 + 1 + int(float(heavy) / 100.0f * 2.0f * (float)level);
     minradius = 0;
     maxradius = 25.0f;
     angle = 120.0f;
@@ -181,7 +181,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
   }
   case 2:{//Dagger
     cooldown = 0.3f + (float(heavy)/100);
-    damage = ceil((rand()%3) + ((float(heavy)/100)*2*level));
+    damage = rand() % 2 + 1 + int(float(heavy) / 100.0f * 2.0f * (float)level);
     minradius = 0;
     maxradius = 15.0f;
     angle = 90.0f;
@@ -215,7 +215,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
 
   case 3:{//Polearm
     cooldown = 0.5f + (float(heavy)/100);
-    damage = ceil((rand()%5) + ((float(heavy)/100)*2*level));
+    damage = rand() % 5 + 1 + int(float(heavy) / 100.0f * 2.0f * (float)level);
     minradius = 10.0f;
     maxradius = 50.0f;
     angle = 60.0f;
@@ -247,7 +247,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
   }
   case 4:{//Flails/maces/etc
     cooldown = 0.6f + (float(heavy)/100);
-    damage = ceil((rand()%3) + ((float(heavy)/100)*2*level));
+    damage = rand() % 3 + 1 + int(float(heavy) / 100.0f * 2.0f * (float)level);
     minradius = 0;
     maxradius = 25.0f;
     angle = 360.0f;

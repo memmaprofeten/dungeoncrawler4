@@ -79,17 +79,19 @@ void Monster::monstermove(sf::Vector2f direction, float elapsed){
     if (room == NULL) {
         throw std::runtime_error("Monster has no room assigned!");
     }
-    sf::Vector2f dposHor = sf::Vector2f(dpos.x, 0);
-    sf::Vector2f dposVer = sf::Vector2f(0, dpos.y);
-    Tile& horTile = room->getTile(position + dposHor);
-    Tile& verTile = room->getTile(position + dposVer);
-    if (horTile.isPenetrable()) {
-        position += dposHor;
+    if (room->hasPosition(position + dpos)) {        // Make sure the monster is not moving out of bounds (monsters can't follow you into new rooms)
+        sf::Vector2f dposHor = sf::Vector2f(dpos.x, 0);
+        sf::Vector2f dposVer = sf::Vector2f(0, dpos.y);
+        Tile& horTile = room->getTile(position + dposHor);
+        Tile& verTile = room->getTile(position + dposVer);
+        if (horTile.isPenetrable()) {
+            position += dposHor;
+        }
+        if (verTile.isPenetrable()) {
+            position += dposVer;
+        }
+        sprite->setPosition(position);
     }
-    if (verTile.isPenetrable()) {
-        position += dposVer;
-    }
-    sprite->setPosition(position);
 
 }
 

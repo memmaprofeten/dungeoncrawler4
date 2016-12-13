@@ -57,7 +57,7 @@ void Character::move(sf::Vector2f dir, float elapsed) {
 }
 
 sf::Vector2f Character::getHypotheticalPosition(sf::Vector2f dir, float elapsed) const {
-    return getPosition() + elapsed * speed * dir;
+    return getPosition() + elapsed * speed * dir + s::floatCorrection * dir;
 }
 
 int Character::getRotation() { return rotation; }
@@ -148,17 +148,19 @@ void Character::teleport(sf::Vector2f dpos){
     }
     sf::Vector2f dposHor = sf::Vector2f(dpos.x, 0);
     sf::Vector2f dposVer = sf::Vector2f(0, dpos.y);
-    Tile& horTile = room->getTile(pos + dposHor);
-    Tile& verTile = room->getTile(pos + dposVer);
-    if (horTile.isPenetrable()) {
-        pos += dposHor;
-        sprite.move(dpos.x, 0);
-        shadowSprite.move(dpos.x, 0);
-    }
-    if (verTile.isPenetrable()) {
-        pos += dposVer;
-        sprite.move(0, dpos.y);
-        shadowSprite.move(0, dpos.y);
+    if (room->hasPosition(pos + dpos)) {      // Make sure the character is not being teleported out of bounds
+        Tile& horTile = room->getTile(pos + dposHor);
+        Tile& verTile = room->getTile(pos + dposVer);
+        if (horTile.isPenetrable()) {
+            pos += dposHor;
+            sprite.move(dpos.x, 0);
+            shadowSprite.move(dpos.x, 0);
+        }
+        if (verTile.isPenetrable()) {
+            pos += dposVer;
+            sprite.move(0, dpos.y);
+            shadowSprite.move(0, dpos.y);
+        }
     }
 }
 

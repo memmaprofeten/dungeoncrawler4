@@ -18,7 +18,6 @@
 #include "npc.hpp"
 
 #define FPS_SAMPLE_COUNT 80
-#define FLOAT_CORRECTION 0.001F     // The Epsilon value to be used to avoid floating point errors
 
 void drawInventory(const sf::Window& window, const sf::RectangleShape& inventoryBackground, std::vector<Item*>& inventory);
 void switchRoom(int neighbour, Map& map, Character& character);
@@ -436,9 +435,8 @@ void drawInventory(const sf::Window& window, const sf::RectangleShape& inventory
     float invMargin = invDim.x * s::relativeItemMargin;
     float itemDim = (invDim.x - float(s::itemsPerRow) * 2.0f * invMargin) / float(s::itemsPerRow);
     for (int i=0; i<(int)inventory.size(); ++i) {
-        Item* item = inventory[i];
-        item->getInventorySprite().setScale(sf::Vector2f(itemDim / 32.0f, itemDim / 32.0f));
-        item->getInventorySprite().setPosition(0.5f * (1.0f - s::relativeInventoryBackgroundWidth) * sf::Vector2f(window.getSize()) + sf::Vector2f((i % s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin, (i / s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin));
+        inventory[i]->getInventorySprite().setScale(sf::Vector2f(itemDim / 32.0f, itemDim / 32.0f));
+        inventory[i]->getInventorySprite().setPosition(0.5f * (1.0f - s::relativeInventoryBackgroundWidth) * sf::Vector2f(window.getSize()) + sf::Vector2f((i % s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin, (i / s::itemsPerRow) * (itemDim + 2.0f * invMargin) + invMargin));
     }
 }
 
@@ -456,16 +454,16 @@ void switchRoom(int neighbour, Map& map, Character& character) {
     sf::Vector2f pos = character.getPosition();
     switch (neighbour) {
         case 0:
-            pos.x = 0 + FLOAT_CORRECTION;
+            pos.x = 0 + s::floatCorrection;
             break;
         case 1:
-            pos.y = 0 + FLOAT_CORRECTION;
+            pos.y = 0 + s::floatCorrection;
             break;
         case 2:
-            pos.x = newRoom.getWidth() * s::blockDim - FLOAT_CORRECTION;
+            pos.x = newRoom.getWidth() * s::blockDim - s::floatCorrection;
             break;
         case 3:
-            pos.y = newRoom.getHeight() * s::blockDim - FLOAT_CORRECTION;
+            pos.y = newRoom.getHeight() * s::blockDim - s::floatCorrection;
             break;
         default:
             pos.x = newRoom.getWidth() * s::blockDim / 2.0f;
