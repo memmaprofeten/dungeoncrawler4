@@ -7,17 +7,10 @@
 class Room;
 
 /**
- * A class representing a projectile fired by player or by an enemy.
+ * A class representing a projectile fired by the player or by an enemy.
  */
 class Projectile {
 public:
-    /*
-    Has:
-    Constructor (xspeed and yspeed. How much the position is iterated per tick/loop/etc. Damage dealt by projectile. Projectile hitradius.)
-    Functions to access said values.
-    Function to iterate per tick that moves projectile, then checks for collision.
-    Function that can be called by player or monster attack that creates the projectile.
-    */
 
     /**
      * Whether not this projectile was fired by a player.
@@ -105,9 +98,9 @@ private:
     int damage;                 // Damage dealt by projectile
     int radius;                 // Radius of projectile for drawing / hit detection
     float rotation;             // Rotation, connected to the direction
-    int textureIndex;
-    sf::Texture texture;
-    sf::Sprite sprite;
+    int textureIndex;           // The texture index of this projectile
+    sf::Texture texture;        // The texture of this projectile
+    sf::Sprite sprite;          // The sprite of this projectile
 };
 
 #endif

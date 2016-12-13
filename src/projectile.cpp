@@ -26,15 +26,15 @@ void Projectile::reset(bool shotbyplayer, int damagein, int radiusin, float spee
 }
 
 sf::Vector2f Projectile::getPosition() {
-  return pos;
+    return pos;
 }
 
 void Projectile::setPosition(sf::Vector2f position) {
-  pos = position;
+    pos = position;
 }
 
 sf::Vector2f Projectile::getVelocity() {
-  return dir * speed;
+    return dir * speed;
 }
 
 void Projectile::setDirection(sf::Vector2f direction) {
@@ -45,19 +45,19 @@ void Projectile::setDirection(sf::Vector2f direction) {
 float Projectile::getSpeed() const { return speed; }
 
 void Projectile::setSpeed(float newSpeed) {
-  speed = newSpeed;
+    speed = newSpeed;
 }
 
 int Projectile::getdamage() const {
-  return damage;
+    return damage;
 }
 
 int Projectile::getradius() const {
-  return radius;
+    return radius;
 }
 
 void Projectile::deactivate() {
-  active = false;
+    active = false;
 }
 
 void Projectile::draw(sf::RenderWindow& window, float elapsed) {
