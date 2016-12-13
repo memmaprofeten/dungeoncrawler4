@@ -8,7 +8,7 @@ class Projectile;
 
 class Weapon {
 public:
-  Weapon(std::string n, int t, int d, float r, int txtrIndex);
+  Weapon(std::string n, int t, int d, float r, int txtrIndex);      // type 1: Melee, type 2: Ranged
   std::string getName() const;
   int getType() const;
   int getDamage() const;

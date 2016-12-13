@@ -54,6 +54,7 @@ namespace s {
 		bool active;			// A flag indicating whether or not this animation is currently in progress.
 		sf::Sprite sprite;		// The sprite of the animation
 		void set(sf::Vector2f p, sf::Vector2f dp, float r, float dr, int textureIndex, sf::Vector2f scale, sf::Vector2f origin, float dur);
+		void updateTexture(int textureIndex, sf::Vector2f scale, sf::Vector2f origin);
 		void restart();
 		void draw(sf::RenderWindow& window, float elapsed);
 	};

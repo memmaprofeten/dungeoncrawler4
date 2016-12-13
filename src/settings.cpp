@@ -77,11 +77,14 @@ namespace s {
 	void animation::set(sf::Vector2f p, sf::Vector2f dp, float r, float dr, int textureIndex, sf::Vector2f scale, sf::Vector2f origin, float dur) {
 		rPos = pos = p; dPos = dp; rRot = rot = r; dRot = dr;
 		duration = dur;
+		updateTexture(textureIndex, scale, origin);
+		accumulator = 0;
+		active = false;
+	}
+	void animation::updateTexture(int textureIndex, sf::Vector2f scale, sf::Vector2f origin) {
 		sprite.setTexture(s::textures[textureIndex]);
 		sprite.setOrigin(origin);
 		sprite.setScale(scale);
-		accumulator = 0;
-		active = false;
 	}
 	void animation::restart() {
 		pos = rPos; rot = rRot;

@@ -73,7 +73,6 @@ int main()
     character.addItem(new Item("Doughnut", 2, 3, 7, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Bread", 2, 2, 12, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Cake", 2, 5, 7, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Gold", 1, 10, 15, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Trophy", 4, 0, 19, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Potion of wisdom", 2, 8, 16, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Potion of strength", 2, 6, 17, sf::Vector2f(0, 0),1));
@@ -81,7 +80,7 @@ int main()
 
     /* ADD STARTING WEAPONS FOR PLAYER */
     RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 0.8f * s::blockDim, 4);
-    MeleeWeapon* startingmeleeweapon = new MeleeWeapon("Novice's Sword", 3, 0.8f*s::blockDim, 1);
+    MeleeWeapon* startingmeleeweapon = new MeleeWeapon("Novice's Sword", 3, 0.8f*s::blockDim, 8);
     Item* startingrangedweaponitem = new Item("Novice's Bow", startingrangedweapon, 1, 8,sf::Vector2f(0,0));
     Item* startingmeleeweaponitem = new Item("Novice's Sword", startingmeleeweapon, 1, 8,sf::Vector2f(0,0));
     character.addItem(startingrangedweaponitem);

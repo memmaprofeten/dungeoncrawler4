@@ -153,6 +153,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
     minradius = 0;
     maxradius = 25.0f;
     angle = 120.0f;
+    textureIndex = 8;
 
     switch(nameaccent){
     case 1:{
@@ -185,6 +186,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
     minradius = 0;
     maxradius = 15.0f;
     angle = 90.0f;
+    textureIndex = 8;
 
     switch(nameaccent){
     case 1:{
@@ -218,6 +220,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
     minradius = 10.0f;
     maxradius = 50.0f;
     angle = 60.0f;
+    textureIndex = 19;
 
     switch(nameaccent){
     case 1:{
@@ -249,6 +252,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
     minradius = 0;
     maxradius = 25.0f;
     angle = 360.0f;
+    textureIndex = 14;
 
     switch(nameaccent){
     case 1:{
@@ -276,7 +280,6 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
   }
   }
 
-  textureIndex = 1;
   radius = 0;
   projectilespeed = 0;
 }

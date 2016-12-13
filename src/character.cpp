@@ -202,11 +202,11 @@ int Character::getlevel(){
 }
 
 void Character::equipweapon(Weapon* newweapon){
-  //Commented out. Causes crash. Will feex. UPDATE: Is feeex.
   int weapontype = newweapon->getType();
   switch(weapontype){
   case 1:
     equippedmeleeweapon = newweapon;
+    weaponAnim.updateTexture(newweapon->gettextureindex(), sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f), sf::Vector2f(32, 32));
     break;
   case 2:
     equippedrangedweapon = newweapon;
