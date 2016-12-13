@@ -13,7 +13,9 @@ public:
   int getType() const;
   int getDamage() const;
   //int getRange() const;
-  float getRadius() const;
+  float getRadius() const;  // TODO: Is this one being used? Remove if it is not.
+  virtual float getMinRadius() const;
+  virtual float getMaxRadius() const;
   int getProjectilespeed() const;
   Projectile& createProjectile(Room& room);
   float getcooldown() const;
@@ -49,7 +51,10 @@ class MeleeWeapon : public Weapon {
 public:
   MeleeWeapon(std::string name, int damage, int radius, int txtrIndex); //Specific weapon constructor.
   MeleeWeapon(int level, float seed); // Random weapon constructor.
-	virtual void attack();
+  virtual void attack();
+
+  virtual float getMinRadius() const override;
+  virtual float getMaxRadius() const override;
 
   ~MeleeWeapon();
 private:

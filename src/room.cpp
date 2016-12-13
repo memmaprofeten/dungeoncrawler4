@@ -88,7 +88,6 @@ Room::Room(int width, int height, float p, int randomGenIterations, std::vector<
 			sf::Vector2i(s::standardEntrancePosX + s::standardEntranceWidth / 2, 0)					// North
 		});
 
-		//std::cout << reachesEntrances[0] << "," << reachesEntrances[1] << "," << reachesEntrances[2] << "," << reachesEntrances[3] << std::endl;
 		if ((!entrances[0] || reachesEntrances[0]) &&
 			(!entrances[1] || reachesEntrances[1]) &&
 			(!entrances[2] || reachesEntrances[2]) &&
@@ -169,10 +168,9 @@ std::vector<sf::Vector2i> Room::getNeighbours(int x, int y, bool includingSelf, 
 }
 
 void Room::performAttack(bool byPlayer, sf::Vector2f source, sf::Vector2f direction, const Weapon& weapon) {
-	std::cout << "performAttack called" << std::endl;
 	// TODO: Get weapon's min/max radius and angle.
-	float minRadius = 0.0f;
-	float maxRadius = 12.5f;
+	float minRadius = weapon.getMinRadius();
+	float maxRadius = weapon.getMaxRadius();
 	float angle = 60.0f;
 	if (byPlayer) {		// Target all monsters within range
 		for (unsigned i=0; i<monsters.size(); ++i) {

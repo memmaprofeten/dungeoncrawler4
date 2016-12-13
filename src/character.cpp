@@ -91,6 +91,7 @@ void Character::draw(sf::RenderWindow& window, float elapsed) {
 }
 
 void Character::initiateMeleeAttack() {
+    weaponAnim.rRot = rotation;
     weaponAnim.restart();
 }
 

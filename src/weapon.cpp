@@ -27,6 +27,10 @@ int Weapon::getDamage() const { return damage; }
 
 float Weapon::getRadius() const { return radius; }
 
+float Weapon::getMinRadius() const { return -1.0f; }
+
+float Weapon::getMaxRadius() const { return -1.0f; }
+
 int Weapon::getProjectilespeed() const { return projectilespeed; }
 
 Projectile& Weapon::createProjectile(Room& room) {
@@ -119,6 +123,10 @@ RangedWeapon::RangedWeapon(int level, float seed) : Weapon (level, seed){
 
 
 void RangedWeapon::attack() { }
+
+//float RangedWeapon::getMinRadius() const { return 0.0f; }
+
+//float RangedWeapon::getMaxRadius() const { return 0.0f; }
 
 
 MeleeWeapon::MeleeWeapon(const std::string name, int damage, int radius, int txtrIndex) : Weapon(name, 1, damage, radius, txtrIndex) {
@@ -274,3 +282,7 @@ MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
 }
 
 void MeleeWeapon::attack() { }
+
+float MeleeWeapon::getMinRadius() const { return minradius; }
+
+float MeleeWeapon::getMaxRadius() const { return maxradius; }
