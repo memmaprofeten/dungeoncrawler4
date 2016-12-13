@@ -108,13 +108,12 @@ int main()
     fpsIndicator.setColor(sf::Color::Green);
     fpsIndicator.setPosition(sf::Vector2f(10, 10));
 
-    sf::Text pausedIndicator;
-    pausedIndicator.setString("GAME PAUSED");
-    pausedIndicator.setFont(sketchFont);
-    pausedIndicator.setCharacterSize(256);
-    pausedIndicator.setScale(60.0f / 256.0f * sf::Vector2f(1, 1));
-    pausedIndicator.setOrigin(sf::Vector2f(pausedIndicator.getLocalBounds().width / 2.0f, pausedIndicator.getLocalBounds().height / 2.0f));
-    pausedIndicator.setColor(sf::Color::Green);
+    sf::Text mainTextIndicator;
+    mainTextIndicator.setFont(sketchFont);
+    mainTextIndicator.setCharacterSize(256);
+    mainTextIndicator.setScale(60.0f / 256.0f * sf::Vector2f(1, 1));
+    mainTextIndicator.setOrigin(sf::Vector2f(mainTextIndicator.getLocalBounds().width / 2.0f, mainTextIndicator.getLocalBounds().height / 2.0f));
+    mainTextIndicator.setColor(sf::Color::Green);
 
     sf::RectangleShape inventoryBackground;
     inventoryBackground.setFillColor(sf::Color(20, 10, 10, 200));
@@ -199,7 +198,7 @@ int main()
                     healthBar.setPosition(eventSize - healthBarMargin);
                     healthBarBackground.setPosition(eventSize - healthBarMargin);
                     hpContainer.setPosition(eventSize - healthBarMargin);
-                    pausedIndicator.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
+                    mainTextIndicator.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
                     // Inventory:
                     inventoryBackground.setSize(s::relativeInventoryBackgroundWidth * sf::Vector2f(window.getSize()));
                     inventoryBackground.setOrigin(sf::Vector2f(inventoryBackground.getLocalBounds().width / 2.0f, inventoryBackground.getLocalBounds().height / 2.0f));
@@ -419,7 +418,11 @@ int main()
                     for (Item* itemPtr : renderInventory) window.draw(itemPtr->getInventorySprite());
                     if (tooltipShowing) window.draw(tooltip);
                 }
-                else window.draw(pausedIndicator);
+                else {
+                    mainTextIndicator.setString("GAME PAUSED");
+                    mainTextIndicator.setOrigin(sf::Vector2f(mainTextIndicator.getLocalBounds().width / 2.0f, mainTextIndicator.getLocalBounds().height / 2.0f));
+                    window.draw(mainTextIndicator);
+                }
                 window.display();
             }
         }
