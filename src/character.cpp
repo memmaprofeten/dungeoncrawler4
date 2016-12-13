@@ -7,17 +7,11 @@
 #include <SFML/Audio.hpp>
 
 Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, int textureIndex, int shadowIndex, int l) : name(n), type(t), level(l), speed(s), pos(p) {
-    /*if (!texture.loadFromFile(texturePath)) {
-        throw std::runtime_error("Could not load character texture.");
-    }*/
     sprite.setTexture(s::textures[textureIndex]);
     setRotation(s::characterRotationOffset);
     sprite.setOrigin(16, 16);
     sprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
     sprite.setPosition(p);
-    /*if (!shadowTexture.loadFromFile(shadowPath)) {
-        throw std::runtime_error("Could not load character shadow.");
-    }*/
     shadowSprite.setTexture(s::textures[shadowIndex]);
     shadowSprite.setOrigin(16, 8);
     shadowSprite.setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
@@ -56,11 +50,9 @@ void Character::move(sf::Vector2f dir, float elapsed) {
     Tile& verTile = room->getTile(pos + dposVer);
     if (horTile.isPenetrable()) {
         pos += dposHor;
-        //sprite.move(dpos.x, 0);
     }
     if (verTile.isPenetrable()) {
         pos += dposVer;
-        //sprite.move(0, dpos.y);
     }
 }
 
@@ -138,16 +130,16 @@ int Character::getMaxHealth() const {
 }
 
 void Character::reducehealth(int damage){
-  health -= damage;
+    health -= damage;
 
-  if (health <= 0){
-    minorcharactersound.setBuffer(s::soundbuffers[4]);
-    minorcharactersound.play();
-  }
-  else{
-    majorcharactersound.setBuffer(s::soundbuffers[5]);
-    majorcharactersound.play();
-  }
+    if (health <= 0){
+        minorcharactersound.setBuffer(s::soundbuffers[4]);
+        minorcharactersound.play();
+    }
+    else{
+        majorcharactersound.setBuffer(s::soundbuffers[5]);
+        majorcharactersound.play();
+    }
 }
 
 void Character::teleport(sf::Vector2f dpos){
@@ -171,53 +163,53 @@ void Character::teleport(sf::Vector2f dpos){
 }
 
 void Character::givegold(int goldin){
-  gold += goldin;
+    gold += goldin;
 }
 
 int Character::getgold() const{
-  return gold;
+    return gold;
 }
 
 void Character::sethealth(int newhealth){
-  health = newhealth;
+    health = newhealth;
 }
 
 void Character::givexp(int amount){
-  if (xp + amount >= xpfornextlevel){
-    xp = (xp+amount)-xpfornextlevel;
-    level += 1;
-    health = 9 + level;
-    xpfornextlevel += 10;
+    if (xp + amount >= xpfornextlevel){
+        xp = (xp+amount)-xpfornextlevel;
+        level += 1;
+        health = 9 + level;
+        xpfornextlevel += 10;
 
-    majorcharactersound.setBuffer(s::soundbuffers[3]);
-    majorcharactersound.play();
-  }
-  else{
-    xp += amount;
-  }
+        majorcharactersound.setBuffer(s::soundbuffers[3]);
+        majorcharactersound.play();
+    }
+    else{
+        xp += amount;
+    }
 }
 
 int Character::getlevel(){
-  return level;
+    return level;
 }
 
 void Character::equipweapon(Weapon* newweapon){
-  int weapontype = newweapon->getType();
-  switch(weapontype){
-  case 1:
-    equippedmeleeweapon = newweapon;
-    weaponAnim.updateTexture(newweapon->gettextureindex(), sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f), sf::Vector2f(32, 32));
-    break;
-  case 2:
-    equippedrangedweapon = newweapon;
-    break;
+    int weapontype = newweapon->getType();
+    switch(weapontype){
+        case 1:
+            equippedmeleeweapon = newweapon;
+            weaponAnim.updateTexture(newweapon->gettextureindex(), sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f), sf::Vector2f(32, 32));
+            break;
+        case 2:
+            equippedrangedweapon = newweapon;
+            break;
     }
 }
 
 Weapon* Character::getmeleeweapon() const{
-  return equippedmeleeweapon;
+    return equippedmeleeweapon;
 }
 
 Weapon* Character::getrangedweapon() const{
-  return equippedrangedweapon;
+    return equippedrangedweapon;
 }

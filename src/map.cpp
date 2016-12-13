@@ -7,7 +7,7 @@
 #include "item.hpp"
 #include "weapon.hpp"
 
-Map::Map(Character& c) : room("welcome_room.txt", &c) {        // TODO: Replace with "welcome_room.txt"
+Map::Map(Character& c) : room("welcome_room.txt", &c) {
     atRoom = s::startingRoomIndex;
     character = &c;
     defineRooms();
@@ -50,29 +50,33 @@ Room& Map::switchRoom(int neighbour) {
     currentRoom.active = false;
     atRoom = newRoomIndex;
     roomMap[atRoom].active = true;
-    // TODO: Clean old room? Copy constructor?
-    if (roomMap[atRoom].type == open) {
+    if (roomMap[atRoom].type == open) {     // Load static (open) room from file
         room = Room(roomMap[atRoom].roomPath, character);
-    } else {
+    } else {                                // Generate a random dungeon room
         srand(time(NULL));
         float p = (float)(rand() % 1000) / 999.0f * 0.13f + 0.6f;
         std::cout << "Generating dungeon with p = " << p << "." << std::endl;
-        room = Room(60, 60, p, 3, std::vector<bool>{true, true, true, true}, character);
+        room = Room(60, 60, p, 3, std::vector<bool>{
+                roomMap[atRoom].neighbourEast >= 0,
+                roomMap[atRoom].neighbourSouth >= 0,
+                roomMap[atRoom].neighbourWest >= 0,
+                roomMap[atRoom].neighbourNorth >= 0
+            }, character);
     }
 	for (int i=0; i < s::monstersPerRoom; i++){
 		bool found = false;
 		sf::Vector2f position;
-		//Iterate to find a free place in the room
+		// Iterate to find a free place in the room:
 		while(!found){
-			position = sf::Vector2f((float) (rand() % (room.getWidth() * (int) s::blockDim)), (float) (rand() % (room.getHeight() * (int) s::blockDim)));
+			position = sf::Vector2f((float) (rand() % (room.getWidth() * (int) s::blockDim)) + 0.5f * s::blockDim, (float) (rand() % (room.getHeight() * (int) s::blockDim)) + 0.5f * s::blockDim);
 			if(room.getTile(position).isPenetrable()){
 				found = true;
-				//random monster created
+				// Create a random monster:
 				if(rand() % 2 == 0){
-					room.addmonster(new MeleeMonster(position, &room, 1));
+					room.addmonster(new MeleeMonster(position, &room, character->getlevel()));
 				}
 				else {
-					room.addmonster(new RangedMonster(position, &room, 1));
+					room.addmonster(new RangedMonster(position, &room, character->getlevel()));
 				}
 			}
 		}

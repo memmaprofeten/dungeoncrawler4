@@ -74,41 +74,41 @@ public:
 
 	void givexp(int amount);
 
-  int getlevel();
+	int getlevel();
 
-  void equipweapon(Weapon* newweapon);
+	void equipweapon(Weapon* newweapon);
 
-  Weapon* getmeleeweapon() const;
+	Weapon* getmeleeweapon() const;
 
-  Weapon* getrangedweapon() const;
+	Weapon* getrangedweapon() const;
 
 private:
-  std::string name; 				//Name of player. User input or based on class?
-  bool type;						// TODO: Is this supposed to define anything?
-  int level;						//Character level of player. Starts at 1
-  //std::vector<Weapon> weapons;	//List of weapons carried by player.
-  std::vector<Item*> inventory;	//List of items carried by the player
-  Weapon* equippedrangedweapon; 		//currently equipped weapon.
-  Weapon* equippedmeleeweapon;
-  int health;						//Player's current health.
-  float speed;					//Players movement speed.
-  int xp;							//Player's current experience amount.
-  int xpfornextlevel;				//amount required for player to level up.
+	std::string name; 				//Name of player. User input or based on class?
+	bool type;						// TODO: Is this supposed to define anything?
+	int level;						//Character level of player. Starts at 1
+	//std::vector<Weapon> weapons;	//List of weapons carried by player.
+	std::vector<Item*> inventory;	//List of items carried by the player
+	Weapon* equippedrangedweapon; 		//currently equipped weapon.
+	Weapon* equippedmeleeweapon;
+	int health;						//Player's current health.
+	float speed;					//Players movement speed.
+	int xp;							//Player's current experience amount.
+	int xpfornextlevel;				//amount required for player to level up.
 
-  int gold;						//Amount of gold player has.
+	int gold;						//Amount of gold player has.
 
-  Room* room;
-  sf::Vector2f pos;
-  int rotation;
+	Room* room;
+	sf::Vector2f pos;
+	int rotation;
 
-  sf::Texture texture;
-  sf::Sprite sprite;
-  sf::Texture shadowTexture;
-  sf::Sprite shadowSprite;
-  s::animation weaponAnim;
+	sf::Texture texture;
+	sf::Sprite sprite;
+	sf::Texture shadowTexture;
+	sf::Sprite shadowSprite;
+	s::animation weaponAnim;
 
-  sf::Sound minorcharactersound;
-  sf::Sound majorcharactersound;
+	sf::Sound minorcharactersound;
+	sf::Sound majorcharactersound;
 };
 
 #endif

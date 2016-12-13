@@ -1,6 +1,3 @@
-#include <math.h>
-#include <string.h>
-#include <vector>
 #include "monster.hpp"
 #include "convenience.hpp"
 #include "settings.hpp"
@@ -11,6 +8,9 @@
 #include "item.hpp"
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
+#include <string.h>
+#include <vector>
 
 /*
 Basic functions. There's probably some brainfarting going on since I have the memory of a goldfish.
@@ -81,11 +81,9 @@ void Monster::monstermove(sf::Vector2f direction, float elapsed){
     Tile& verTile = room->getTile(position + dposVer);
     if (horTile.isPenetrable()) {
         position += dposHor;
-        //sprite.move(dpos.x, 0);
     }
     if (verTile.isPenetrable()) {
         position += dposVer;
-        //sprite.move(0, dpos.y);
     }
     sprite->setPosition(position);
 
@@ -103,16 +101,6 @@ void Monster::reducehealth(int reducedby){
     //Awards player XP
     room->getcharacter()->givexp(xponkill);
     room->deactivateSprite(sprite);
-    /*
-    for(auto iter=monsters->begin(); iter != monsters->end(); iter++){
-      //if (monstername == iter->getname()){
-      if (this == &(*iter)){ //Yes, this works.
-	//std::cout << "DING DING DING"<<std::endl;
-	monsters->erase(iter);
-	return temp;
-      }
-      }  */
-
   }
 }
 
@@ -128,7 +116,6 @@ RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int 
   attackrange = attackrangei;
   aggrostate = false;
   room = roomi;
-  //projectiles = projectilesi;
   timebetweenattacks = timebetweenattacksi;
   attacktimer = 0.0;
   active = true;
@@ -201,8 +188,6 @@ void MeleeMonster::monsterattack(Character& player){
   if (getdistancetoplayer(player) <= attackrange){
     player.reducehealth(attackdamage);
     player.teleport(cv::normalized(player.getPosition() - position) * 2.0f);
-    //std::cout << "Damage dealt: " << attackdamage << std::endl;
-    //std::cout << "Playerhealth: " <<  player.getHealth()<<std::endl;
   }
 }
 
@@ -240,7 +225,6 @@ void RangedMonster::monsterai(Character& player, float elapsed){
       monsterattack(player);
     }
   }
-  //draw(window);
 }
 
 void MeleeMonster::monsterai(Character& player, float elapsed){
@@ -255,7 +239,6 @@ void MeleeMonster::monsterai(Character& player, float elapsed){
   if(aggrostate){
 //Determines direction. Will be replaced by pathfinding later.
     direction = player.getPosition() - position;
-//  direction.y = player.getPosition().y - position.y;
     direction = cv::normalized(direction);
 
 //Moves enemy in chosen direction.
@@ -269,26 +252,17 @@ void MeleeMonster::monsterai(Character& player, float elapsed){
     }
   }
 
-  //draw(window);
 }
-/*
-void Monster::draw(sf::RenderWindow& window){
-  sf::CircleShape tile(3.0f);
-  tile.setOrigin(1.5f, 1.5f);
-  tile.setPosition(position.x, position.y);
-  tile.setFillColor(sf::Color::Blue);
-  window.draw(tile);
-}
-*/
+
 //Creates a random ranged monster at position determined by the position input.
 RangedMonster::RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli){
-  srand(time(NULL));
+    srand(time(NULL));
 
-    	monstername = "PewPew the Dastardly";
+    monstername = "PewPew the Dastardly";
 	health = (rand() % 3) + leveli;
 	xponkill = leveli + 3;
 	attackdamage =  (rand() % 4) + leveli;
-	movespeed = ((rand()%3))*50.0f;
+	movespeed = ((rand()%2)+1)*35.0f;
 	aggrorange = 200.0f;
 	projectilespeed = ((rand() % 3) + 1)*90.0f;
 	attackrange = ((rand() % 5)+10)*50;
@@ -305,9 +279,9 @@ RangedMonster::RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli){
 }
 
 MeleeMonster::MeleeMonster(sf::Vector2f positioni, Room* roomi, int leveli){
-  srand (time(NULL));
+    srand (time(NULL));
 
-  monstername = "ChopChop the Dangerous";
+    monstername = "ChopChop the Dangerous";
 	health = (rand() % 4)+leveli;
 	xponkill = leveli + 2;
 	attackdamage = (rand()%3)+leveli;

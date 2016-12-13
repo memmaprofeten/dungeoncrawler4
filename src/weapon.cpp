@@ -14,8 +14,9 @@ Weapon::Weapon(std::string n, int t, int d, float r, int txtrIndex) :
         name(n), type(t), damage(d), radius(r), textureIndex(txtrIndex) { }
 
 Weapon::Weapon(int level, float seed){
-  levels = level;
-  seeds = seed;}
+    levels = level;
+    seeds = seed;
+}
 
 std::string Weapon::getName() const { return name; }
 
@@ -38,13 +39,13 @@ Projectile& Weapon::createProjectile(Room& room) {
 }
 
 int Weapon::gettextureindex() const{
-  return textureIndex;
+    return textureIndex;
 }
 
 void Weapon::attack() {}
 
 float Weapon::getcooldown() const{
-  return cooldown;
+    return cooldown;
 }
 
 
@@ -130,10 +131,10 @@ void RangedWeapon::attack() { }
 
 
 MeleeWeapon::MeleeWeapon(const std::string name, int damage, int radius, int txtrIndex) : Weapon(name, 1, damage, radius, txtrIndex) {
-  cooldown = 0.8f;
-  minradius = 0;
-  maxradius = 20.0f;
-  angle = 120.0f;
+    cooldown = 0.8f;
+    minradius = 0;
+    maxradius = 20.0f;
+    angle = 120.0f;
 }
 
 MeleeWeapon::MeleeWeapon(int level, float seed) : Weapon(level, seed){
