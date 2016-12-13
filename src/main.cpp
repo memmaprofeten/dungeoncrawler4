@@ -173,7 +173,6 @@ int main()
     /* === THE MAIN GAME LOOP === */
     while (window.isOpen())
     {
-
         /* === GENERAL EVENT HANDLING === */
         sf::Event event;
         while (window.pollEvent(event))
@@ -183,11 +182,9 @@ int main()
                     window.close();
                     break;
                 case sf::Event::LostFocus:
-                    std::cout << "Lost focus" << std::endl;
                     focused = false;
                     break;
                 case sf::Event::GainedFocus:
-                    std::cout << "Gained focus" << std::endl;
                     focused = true;
                     break;
                 case sf::Event::Resized:
@@ -277,6 +274,7 @@ int main()
 
             /* === EVENT HANDLING FOR ATTACKING === */
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {      // Melee attack
+                //std::cout << "===" << room.getitems().size() << std::endl;
                 if (elapsedSinceLastAttack < 0.0f || elapsedSinceLastAttack > character.getmeleeweapon()->getcooldown()) {
                     //Melee attack sound sf::Sound newsound;
                     newsound.setBuffer(s::soundbuffers[0]);

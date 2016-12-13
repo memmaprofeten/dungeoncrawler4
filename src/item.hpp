@@ -20,7 +20,7 @@ public:
   int gettype() const;
   float getvalue() const;
   void dothing(Character& player); //Does a thing.
-  bool isactive() const;
+  //bool isactive() const;
   sf::Vector2f getpos() const;
   sf::Sprite& getDropSprite();
   sf::Sprite& getInventorySprite();
@@ -54,8 +54,8 @@ type, uses switch in order to have to track multiple types of item in play.
   int textureIndex;
   sf::Sprite inventorySprite;
   sf::Sprite dropSprite;
-  sf::Vector2f pos; //Item XY Positiony
-  bool active; //To track if the item is active.
+  sf::Vector2f pos; //Item XY Position
+  //bool active; //To track if the item is active.  // What exactly is this used for?
   int type; // Type of item. Elaborated on above.
   float value; // Used for consumeables for amount of whatever it does.
   int level; //Used to save what level the item is. Used in generation functions.

@@ -38,9 +38,9 @@ void Item::dothing(Character& player){
     }
 }
 
-bool Item::isactive() const{
+/*bool Item::isactive() const{
     return active;
-}
+}*/
 
 sf::Vector2f Item::getpos() const{
     return pos;
@@ -70,25 +70,26 @@ void Item::doweaponthingy(Character& player){
 void Item::draw(sf::RenderWindow& window, Character& player){
 
     //Checks if player's xy position is within the item's area. If it is, calls the relevant "do thing" function, and disables the item.
-    if (((pos.x - 5.0f)< player.getPosition().x) && (player.getPosition().x < (pos.x + 5.0f)) && ((pos.y - 5.0f) < player.getPosition().y) && (player.getPosition().y < (pos.y + 5.0f))){
-        //if (cv::distance(pos, player.getPosition()) < 1.5f){
-            switch(type){
-                case 1:
-                    dogoldthingy(player);
-                    active = false;
-                    break;
-                case 2:
-                    player.addItem(this);
-                    active = false;
-                    break;
-                case 3:
-                    player.addItem(this);
-                    active = false;
-                    break;
-            }
-        //}
-    }
-    window.draw(dropSprite);
+    //if (((pos.x - 0.75f * s::blockDim) < player.getPosition().x) && (player.getPosition().x < (pos.x + 0.75f * s::blockDim)) && ((pos.y - 0.75f * s::blockDim) < player.getPosition().y) && (player.getPosition().y < (pos.y + 0.75f * s::blockDim))){
+    /*if (cv::approxDistance(pos, player.getPosition()) < s::blockDim) {
+        std::cout << "::: item picked up: " << this << std::endl;
+        switch(type){
+            case 1:
+                dogoldthingy(player);
+                active = false;
+                break;
+            case 2:
+                player.addItem(this);
+                active = false;
+                break;
+            case 3:
+                player.addItem(this);
+                active = false;
+                break;
+        }
+    } else {*/
+        window.draw(dropSprite);
+    //}
 }
 
 //sf::Texture Item::getTexture() const { return texture; }
@@ -100,7 +101,7 @@ Item::Item (std::string namei, int typei, float valuei, int textureIndexi, sf::V
     //textureFile = texturefilei;
     textureIndex = textureIndexi;
     pos = posi;
-    active = true;
+    //active = true;
     level = leveli;
     representedweapon = NULL;
     /*if (!texture.loadFromFile(textureFile)) {
@@ -160,7 +161,7 @@ Item::Item(sf::Vector2f position, int leveli){
 
     pos = position;
     level = leveli;
-    active = true;
+    //active = true;
     sellable = true;
     baseprice = rand()%400+1;
 
@@ -179,7 +180,7 @@ Item::Item(std::string namei, Weapon* weaponi, int leveli, int textureIndexi, sf
     textureIndex = textureIndexi;
     pos = posi;
     level = leveli;
-    active = true;
+    //active = true;
     type = 3;
     value = 0;
     sellable = false;

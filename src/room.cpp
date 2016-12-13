@@ -156,7 +156,7 @@ std::vector<sf::Vector2i> Room::getNeighbours(int x, int y, bool includingSelf, 
     std::vector<sf::Vector2i> res;
     for (int dx = -1; dx <= 1; ++dx) {
         for (int dy = -1; dy <= 1; ++dy) {
-            if ((includingSelf || !(dx == 0 && dy == 0)) &&          // Check if this neighbour is the original coordinate
+            if ((includingSelf || !(dx == 0 && dy == 0)) &&         // Check if this neighbour is the original coordinate
                 (includingDiagonals || dx == 0 || dy == 0) &&       // Check if this neighbour is a diagonal neighbour
                 (includingOutsiders || (dx >= 0 && dy >= 0 && dx < width && dy < height))   // Check if this neighbour is out of bounds
             ) {
@@ -245,20 +245,36 @@ void Room::drawnpcs(sf::RenderWindow& window){
   }
 }
 
-std::vector<Npc*> Room::getNpcs() {
+std::vector<Npc*>& Room::getNpcs() {
 	return npcs;
 }
 
 void Room::drawitems(sf::RenderWindow& window){
+	checkDrops();
   for (auto it = itemstorage.begin(); it != itemstorage.end(); it++){
-    if ((*it)->isactive()){
+    //if ((*it)->isactive()){
       (*it)->draw(window, *character);
-    }
+    //}
   }
 }
 
 void Room::additem(Item* newitem){
 	itemstorage.push_back(newitem);
+}
+
+void Room::checkDrops() {
+	sf::Vector2f cPos = character->getPosition();
+	for (unsigned i=0; i<itemstorage.size(); ++i) {
+		if (cv::approxDistance(itemstorage[i]->getpos(), cPos) < s::blockDim) {	// Check if within reach of player
+			if (itemstorage[i]->gettype() == 1) {
+				itemstorage[i]->dogoldthingy(*character);
+			} else {
+				character->addItem(itemstorage[i]);
+			}
+			itemstorage.erase(itemstorage.begin() + i);
+			return;
+		}
+	}
 }
 
 void Room::print() {

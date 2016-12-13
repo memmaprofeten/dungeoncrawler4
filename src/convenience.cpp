@@ -24,6 +24,10 @@ namespace cv
         return norm(a - b);
     }
 
+    float approxDistance(sf::Vector2f a, sf::Vector2f b) {
+        return abs(b.x - a.x) + abs(b.y - a.y);
+    }
+
     float dotP(sf::Vector2f a, sf::Vector2f b) {
         return a.x * b.x + a.y * b.y;
     }

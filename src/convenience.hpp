@@ -30,6 +30,12 @@ namespace cv
     float distance(sf::Vector2f a, sf::Vector2f b);
 
     /**
+     * Returns the approximate (square based) distance between two points in
+     * the plane.
+     */
+    float approxDistance(sf::Vector2f a, sf::Vector2f b);
+
+    /**
      * Returns the dot product of two 2D vectors.
      */
     float dotP(sf::Vector2f a, sf::Vector2f b);

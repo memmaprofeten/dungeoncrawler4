@@ -96,11 +96,38 @@ public:
 	 */
 	void drawProjectiles(sf::RenderWindow& window, float elapsed);
 
-  // Runs the monster AI
-  void drawmonsters(float elapsed);
+	/**
+	 * Calls the monster AI for each monster in this room and draws them.
+	 */
+	void drawmonsters(float elapsed);
 
+	/**
+	 * Calls any necessary frame calls for the NPCs in this room and draws them.
+	 */
 	void drawnpcs(sf::RenderWindow& window);
-	std::vector<Npc*> getNpcs();
+
+	/**
+	 * Returns a reference to the vector containing pointers to all the NPCs in
+	 * this room.
+	 */
+	std::vector<Npc*>& getNpcs();
+
+	/**
+	 * Draws the items on the ground.
+	 */
+	void drawitems(sf::RenderWindow& window);
+
+	/**
+	 * Adds an item to the ground.
+	 */
+	void additem(Item* newitem);
+
+	/**
+	 * Identifies if there is any item on the ground within reach from the
+	 * the player. If one such item is found, it is picked up. Therefore, a
+	 * maximum of 1 item can be picked up each frame.
+	 */
+	void checkDrops();
 
 	/**
 	 * Prints the room to std::cout.
@@ -114,11 +141,14 @@ public:
 	 */
 	std::vector<std::vector<bool>> getPenetrabilityMap();
 
-//Sprite resuse ecosystem
-	//Returns refernce to a sprite
+	/**
+	 * Returns refernce to a sprite for the sprite resuse ecosystem.
+	 */
 	sf::Sprite* getSprite();
 
-	//Deactivates sprite for other instances to use
+	/**
+	 * Deactivates a sprite for other instances to use.
+	 */
 	void deactivateSprite(sf::Sprite* sprite);
 
 
@@ -140,8 +170,6 @@ public:
 	Character* getcharacter();
 	void addmonster(Monster* monsteri);
 	void addNpc(Npc* npc);
-	void additem(Item* newitem);
-	void drawitems(sf::RenderWindow& window);
 
 private:
 	int width;
