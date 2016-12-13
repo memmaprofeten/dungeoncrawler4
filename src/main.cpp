@@ -405,8 +405,6 @@ int main()
                             std::cout << "Using " + renderInventory[itemIndex]->getname() << "." << std::endl;
                             bool couldConsume = character.consumeItem(itemIndex);
                             if (couldConsume) {
-                                //testItemTextureVector.erase(testItemTextureVector.begin() + itemIndex);
-                                //testItemSpriteVector.erase(testItemSpriteVector.begin() + itemIndex);
                                 character.consumeItem(itemIndex);
                                 drawInventory(window, inventoryBackground, renderInventory);
                             }
@@ -417,7 +415,6 @@ int main()
                     }
 
                     window.draw(inventoryBackground);
-                    //for (const auto& sprite : testItemSpriteVector) window.draw(sprite);
                     for (Item* itemPtr : renderInventory) window.draw(itemPtr->getInventorySprite());
                     if (tooltipShowing) window.draw(tooltip);
                 }
@@ -430,6 +427,9 @@ int main()
     return 0;
 }
 
+/**
+ * Sets the given inventory ready for drawing
+ */
 void drawInventory(const sf::Window& window, const sf::RectangleShape& inventoryBackground, std::vector<Item*>& inventory) {
     sf::Vector2f invDim = inventoryBackground.getSize();
     float invMargin = invDim.x * s::relativeItemMargin;
