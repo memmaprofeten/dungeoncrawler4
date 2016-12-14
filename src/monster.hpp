@@ -102,7 +102,7 @@ public:
     /**
      * Calls the monster AI depending on subclass.
      */
-    virtual void monsterai(Character& player, float elapsed) =0;
+    virtual void monsterai(Character& player, float elapsed, sf::RenderWindow& window) =0;
 
     /**
      * Moves the monster in the given direction depending on the elapsed time.
@@ -125,6 +125,7 @@ protected:
     sf::Sprite* sprite;                 // Pointer to sprite object
     int textureIndex;                   // The texture index of the monster
     sf::Sound sound;                    // The monster's sound object
+    float rotation;			// Rotation of the monster relative to the room
 };
 
 /**
@@ -160,7 +161,7 @@ public:
     /**
      * Tries to find the player and advance towards them.
      */
-    void monsterai(Character& player, float elapsed);
+    void monsterai(Character& player, float elapsed, sf::RenderWindow& window);
 
 private:
     float projectilespeed;          // How fast the projectile fired by the enemy moves
@@ -200,10 +201,11 @@ public:
     /**
      * Tries to find the player and advance towards them.
      */
-    void monsterai(Character& player, float elapsed);
+    void monsterai(Character& player, float elapsed, sf::RenderWindow& window);
 
 private:
     int attackrange;                // Radius of the enemy's attack swing
+    s::animation weaponAnimation;   // Melee weapon animation
 };
 
 #endif

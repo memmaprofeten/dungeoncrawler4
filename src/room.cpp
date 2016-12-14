@@ -227,10 +227,10 @@ void Room::drawProjectiles(sf::RenderWindow& window, float elapsed) {
 	}
 }
 
-void Room::drawmonsters(float elapsed){
+void Room::drawmonsters(float elapsed, sf::RenderWindow& window){
 	for (auto it = monsters.begin(); it != monsters.end(); it++){
 		if ((*it)->isactive()){
-			(*it)->monsterai(*character, elapsed);
+			(*it)->monsterai(*character, elapsed, window);
 		}
 	}
 }

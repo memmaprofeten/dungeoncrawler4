@@ -30,7 +30,8 @@ namespace s {
 			"spear1_32.png",			// 19
 			"cursor1_33.png",			// 20
 			"meelemonster_32.png",			// 21
-			"rangedmonster_32.png"			// 22
+			"rangedmonster_32.png",			// 22
+			"meeleweapon_32.png"			// 23
 		};
 
 	std::vector<sf::Texture> textures;

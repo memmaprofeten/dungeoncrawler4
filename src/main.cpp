@@ -362,7 +362,7 @@ int main()
             view.setCenter(character.getPosition());
             window.setView(view);
             room.draw(window);
-            map.getRoom().drawmonsters(elapsed);
+            map.getRoom().drawmonsters(elapsed, window);
             map.getRoom().drawnpcs(window);
             map.getRoom().drawitems(window);
             character.draw(window, elapsed);

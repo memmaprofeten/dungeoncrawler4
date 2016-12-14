@@ -99,7 +99,7 @@ public:
 	/**
 	 * Calls the monster AI for each monster in this room and draws them.
 	 */
-	void drawmonsters(float elapsed);
+	void drawmonsters(float elapsed, sf::RenderWindow& window);
 
 	/**
 	 * Calls any necessary frame calls for the NPCs in this room and draws them.

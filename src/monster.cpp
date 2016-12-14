@@ -71,8 +71,8 @@ void Monster::monstermove(sf::Vector2f direction, float elapsed){
             position += dposVer;
         }
         sprite->setPosition(position);
-	float rotation = (atan2(direction.y,direction.x)) * 180 / cv::PI;
-	sprite->setRotation(s::monsterRotationOffset + rotation);
+	rotation = (atan2(direction.y,direction.x)) * 180 / cv::PI + s::monsterRotationOffset;
+	sprite->setRotation(rotation);
     }
 
 }
@@ -132,6 +132,7 @@ MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int at
     sprite->setOrigin(16.0f,16.0f);
     sprite->setTexture(s::textures[textureIndex]);
     sprite->setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
+    weaponAnimation.set(position, sf::Vector2f(0, 0), 0.0f, 600.0f,  23, sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f), sf::Vector2f(32, 32), 0.2f);
 }
 
 MeleeMonster::~MeleeMonster() {}
@@ -163,7 +164,7 @@ void MeleeMonster::monsterattack(Character& player){
     }
 }
 
-void RangedMonster::monsterai(Character& player, float elapsed){
+void RangedMonster::monsterai(Character& player, float elapsed, sf::RenderWindow& window){
     /* Code for the AI of the monsters. Essentially. It first checks if the player is within aggrorange. If it is, it flips the aggrostate to true.
     Then, the monster will move towards the player.
     After that, it attacks the player if it is within range. */
@@ -194,7 +195,9 @@ void RangedMonster::monsterai(Character& player, float elapsed){
     }
 }
 
-void MeleeMonster::monsterai(Character& player, float elapsed){
+void MeleeMonster::monsterai(Character& player, float elapsed, sf::RenderWindow& window){
+    weaponAnimation.pos = position;
+    weaponAnimation.draw(window,elapsed);
     sf::Vector2f direction;
     if(!active){
         return;
@@ -215,6 +218,9 @@ void MeleeMonster::monsterai(Character& player, float elapsed){
         attacktimer += elapsed;
         if (getdistancetoplayer(player)<attackrange && attacktimer >= timebetweenattacks){
             attacktimer = 0.0;
+	    weaponAnimation.rRot = rotation;
+	    weaponAnimation.restart();
+            std::cout << "Weapon should swing" << std::endl;
             monsterattack(player);
         }
     }
@@ -260,4 +266,5 @@ MeleeMonster::MeleeMonster(sf::Vector2f positioni, Room* roomi, int leveli){
 	sprite->setOrigin(16.0f,16.0f);
 	sprite->setTexture(s::textures[textureIndex]);
 	sprite->setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
+	weaponAnimation.set(position, sf::Vector2f(0, 0), 0.0f, 600.0f,  23, sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f), sf::Vector2f(32, 32), 0.2f);
 }
