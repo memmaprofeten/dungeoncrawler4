@@ -109,6 +109,11 @@ public:
      */
     void monstermove(sf::Vector2f direction, float elapsed);
 
+    /**
+     * Teleports the monster from their current position based on the vector given as an input.   
+     */
+     void teleport(sf::Vector2f dpos);
+  
 protected:
     std::string monstername;            // Enemy name.
     int health;                         // Enemy health.

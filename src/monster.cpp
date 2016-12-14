@@ -148,7 +148,7 @@ float Monster::getdistancetoplayer(const Character& player) const {
 
 void RangedMonster::monsterattack(Character& player){
     if (getdistancetoplayer(player) < attackrange){
-        Projectile& projectile = room->createProjectile(false, 2, 0.8f * s::blockDim, projectilespeed, 4);
+        Projectile& projectile = room->createProjectile(false, attackdamage, 0.8f * s::blockDim, projectilespeed, 4);
         projectile.setPosition(position);
         projectile.setDirection(cv::normalized(player.getPosition() - position));
     }
@@ -181,8 +181,9 @@ void RangedMonster::monsterai(Character& player, float elapsed){
         direction = cv::normalized(direction);
 
         //Moves enemy in chosen direction:
-        monstermove(direction, elapsed);
-
+	if (getdistancetoplayer(player) >= 12){
+	  monstermove(direction, elapsed);
+	}
         //Attacks player if in range, then for timer:
         attacktimer += elapsed;
         if (getdistancetoplayer(player)<attackrange && attacktimer >= timebetweenattacks){
@@ -207,7 +208,9 @@ void MeleeMonster::monsterai(Character& player, float elapsed){
         direction = cv::normalized(direction);
 
         //Moves enemy in chosen direction:
-        monstermove(direction, elapsed);
+	if (getdistancetoplayer(player) >=8){
+	  monstermove(direction, elapsed);
+	}
 
         //Attacks player if in range:
         attacktimer += elapsed;
@@ -223,7 +226,7 @@ RangedMonster::RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli){
     monstername = "PewPew the Dastardly";
 	health = (rand() % 3) + leveli;
 	xponkill = leveli + 3;
-	attackdamage =  (rand() % 4) + leveli;
+	attackdamage =  (rand() % 3) + leveli/2;
 	movespeed = ((rand()%2)+1)*35.0f;
 	aggrorange = 200.0f;
 	projectilespeed = ((rand() % 3) + 1)*90.0f;
@@ -244,7 +247,7 @@ MeleeMonster::MeleeMonster(sf::Vector2f positioni, Room* roomi, int leveli){
     monstername = "ChopChop the Dangerous";
 	health = (rand() % 4)+leveli;
 	xponkill = leveli + 2;
-	attackdamage = (rand()%3)+leveli;
+	attackdamage = (rand()%2)+leveli/2;
 	movespeed = ((rand()%2)+1)*20.0f;
 	aggrorange = 200.0f;
 	attackrange = (rand()%5)+10;
@@ -258,4 +261,27 @@ MeleeMonster::MeleeMonster(sf::Vector2f positioni, Room* roomi, int leveli){
 	sprite->setOrigin(16.0f,16.0f);
 	sprite->setTexture(s::textures[textureIndex]);
 	sprite->setScale(sf::Vector2f(s::blockDim / 32.0f, s::blockDim / 32.0f));
+}
+
+void Monster::teleport(sf::Vector2f dpos){
+  if (room == NULL){
+    throw std::runtime_error("Monster has no room assigned!");
+  }
+  
+  if(room->hasPosition(position+dpos)){
+    sf::Vector2f dposhor = sf::Vector2f(dpos.x, 0);
+    sf::Vector2f dposver = sf::Vector2f(0, dpos.y);
+
+    Tile& horTile = room->getTile(position + dposhor);
+    Tile& verTile = room->getTile(position + dposver);
+
+    if (horTile.isPenetrable()){
+      position += dposhor;
+      sprite->move(dpos.x,0);
+    }
+    if (verTile.isPenetrable()){
+      position += dposver;
+      sprite->move(0,dpos.y);
+    }
+  }
 }
