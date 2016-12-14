@@ -69,7 +69,7 @@ void Projectile::draw(sf::RenderWindow& window, float elapsed) {
     		speed = 0.0f;
     		active = firedbyplayer;
     	 }
-        if (active) {
+        if (active && !(textureIndex == 1 && speed == 0.0f)) {
             pos += speed * elapsed * dir;
         	sprite.setPosition(pos.x, pos.y);
         	sprite.setRotation(rotation+90);

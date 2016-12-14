@@ -118,8 +118,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a49fec631bd3d85756b8bdbdaed16529a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8466f4d9b79b6d459b39584ee6f244f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacter.html#ad8466f4d9b79b6d459b39584ee6f244f">givexp</a> (int amount)</td></tr>
 <tr class="separator:ad8466f4d9b79b6d459b39584ee6f244f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5904def7a0f09eaf930946548a4dde8f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacter.html#a5904def7a0f09eaf930946548a4dde8f">getlevel</a> ()</td></tr>
-<tr class="separator:a5904def7a0f09eaf930946548a4dde8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acae83a02cf3697ed916cdca7cfc2ecee"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacter.html#acae83a02cf3697ed916cdca7cfc2ecee">getlevel</a> () const</td></tr>
+<tr class="separator:acae83a02cf3697ed916cdca7cfc2ecee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27bd2cb672cd1d8a4fd3e18a0c278c18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacter.html#a27bd2cb672cd1d8a4fd3e18a0c278c18">setLevel</a> (int newLevel)</td></tr>
+<tr class="separator:a27bd2cb672cd1d8a4fd3e18a0c278c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecc08b75f337e32dfb4e44f7334edc45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacter.html#aecc08b75f337e32dfb4e44f7334edc45">equipweapon</a> (<a class="el" href="classWeapon.html">Weapon</a> *newweapon)</td></tr>
 <tr class="separator:aecc08b75f337e32dfb4e44f7334edc45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cfdaf0602cd1cd9b3a35792503ee6ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classWeapon.html">Weapon</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacter.html#a9cfdaf0602cd1cd9b3a35792503ee6ab">getmeleeweapon</a> () const</td></tr>
@@ -377,8 +379,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5904def7a0f09eaf930946548a4dde8f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5904def7a0f09eaf930946548a4dde8f">&sect;&nbsp;</a></span>getlevel()</h2>
+<a id="acae83a02cf3697ed916cdca7cfc2ecee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acae83a02cf3697ed916cdca7cfc2ecee">&sect;&nbsp;</a></span>getlevel()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -387,7 +389,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname">int Character::getlevel </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -641,6 +643,25 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Sets the character's health to the given new health. </p>
+
+</div>
+</div>
+<a id="a27bd2cb672cd1d8a4fd3e18a0c278c18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27bd2cb672cd1d8a4fd3e18a0c278c18">&sect;&nbsp;</a></span>setLevel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Character::setLevel </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>newLevel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the player's level to the given value and zeros the offset xp. </p>
 
 </div>
 </div>
