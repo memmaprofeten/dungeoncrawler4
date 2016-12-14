@@ -15,9 +15,9 @@ Map::Map(Character& c) : room("welcome_room.txt", &c) {
 
 void Map::defineRooms() {
     roomMap.push_back(roomContainer { open,     true, "main_cave1.txt",             1,  2,  4,  5 });       // 0    (default room)
-    roomMap.push_back(roomContainer { open,     true, "main_cave2.txt",             -1, 3,  0,  -1 });      // 1
-    roomMap.push_back(roomContainer { open,     true, "main_cave3.txt",             3,  -1, -1, 0 });       // 2
-    roomMap.push_back(roomContainer { open,     true, "main_cave4.txt",             -1, -1, 2,  1 });       // 3
+    roomMap.push_back(roomContainer { open,     true, "main_cave2.txt",             -1, 3,  0,  -1 });      // 1    (friendly room, not currently in use)
+    roomMap.push_back(roomContainer { open,     true, "main_cave3.txt",             3,  -1, -1, 0 });       // 2    (friendly room, not currently in use)
+    roomMap.push_back(roomContainer { open,     true, "main_cave4.txt",             -1, -1, 2,  1 });       // 3    (friendly room, not currently in use)
     roomMap.push_back(roomContainer { open,     true, "welcome_room.txt",           0,  0,  -1, -1 });      // 4    (welcome room)
     roomMap.push_back(roomContainer { dungeon,  true, "",                           5,  0,  5,  5 });       // 5    (random dungeon)
 }
@@ -62,23 +62,25 @@ Room& Map::switchRoom(int neighbour) {
                 roomMap[atRoom].neighbourNorth >= 0
             }, character);
     }
-	for (int i=0; i < s::monstersPerRoom; i++){
-		bool found = false;
-		sf::Vector2f position;
-		// Iterate to find a free place in the room:
-		while(!found){
-            position = sf::Vector2f((float) (rand() % ((room.getWidth() - 1) * (int) s::blockDim)) + 0.5f * s::blockDim, (float) (rand() % ((room.getHeight() - 1) * (int) s::blockDim)) + 0.5f * s::blockDim);
-            if(room.getTile(position).isPenetrable()){
-				found = true;
-				// Create a random monster:
-				if(rand() % 2 == 0){
-					room.addmonster(new MeleeMonster(position, &room, character->getlevel()));
-				}
-				else {
-					room.addmonster(new RangedMonster(position, &room, character->getlevel()));
-				}
-			}
-		}
-	}
+    if (roomMap[atRoom].type == dungeon) {
+    	for (int i=0; i < s::monstersPerRoom; i++){
+    		bool found = false;
+    		sf::Vector2f position;
+    		// Iterate to find a free place in the room:
+    		while(!found){
+                position = sf::Vector2f((float) (rand() % ((room.getWidth() - 1) * (int) s::blockDim)) + 0.5f * s::blockDim, (float) (rand() % ((room.getHeight() - 1) * (int) s::blockDim)) + 0.5f * s::blockDim);
+                if(room.getTile(position).isPenetrable()){
+    				found = true;
+    				// Create a random monster:
+    				if(rand() % 2 == 0){
+    					room.addmonster(new MeleeMonster(position, &room, character->getlevel()));
+    				}
+    				else {
+    					room.addmonster(new RangedMonster(position, &room, character->getlevel()));
+    				}
+    			}
+    		}
+    	}
+    }
     return room;
 }
