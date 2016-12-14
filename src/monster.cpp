@@ -77,6 +77,10 @@ void Monster::monstermove(sf::Vector2f direction, float elapsed){
 
 void Monster::reducehealth(int reducedby){
     health -= reducedby;
+    if (reducedby > 0) {
+        sound.setBuffer(s::soundbuffers[7 + rand() % 2]);
+        sound.play();
+    }
     if(health <= 0){
         active = false;     // Sets monster as inactive
         room->additem(new Item(position, room->getcharacter()->getlevel()));    // Drops item:

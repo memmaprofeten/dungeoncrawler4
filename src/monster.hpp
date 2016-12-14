@@ -1,9 +1,10 @@
 #ifndef MONSTER_HH
 #define MONSTER_HH
 
+#include "projectile.hpp"
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "projectile.hpp"
+#include <SFML/Audio.hpp>
 
 class Character;
 class Item;
@@ -122,7 +123,8 @@ protected:
     float timebetweenattacks;           // The attack cooldown
     bool active;                        // Whether or not the monster is currently active
     sf::Sprite* sprite;                 // Pointer to sprite object
-    int textureIndex;
+    int textureIndex;                   // The texture index of the monster
+    sf::Sound sound;                    // The monster's sound object
 };
 
 /**

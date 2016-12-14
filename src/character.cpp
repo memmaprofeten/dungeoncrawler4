@@ -176,7 +176,7 @@ void Character::givexp(int amount){
         health = 9 + level;
         xpfornextlevel += 10;
 
-        majorcharactersound.setBuffer(s::soundbuffers[3]);
+        majorcharactersound.setBuffer(s::soundbuffers[6]);
         majorcharactersound.play();
     }
     else{

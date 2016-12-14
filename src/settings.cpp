@@ -54,7 +54,10 @@ namespace s {
 				fireballattacksoundstring,
 				levelupsoundstring,
 				deathsoundstring,
-				hitsoundstring
+				hitsoundstring,
+				"../resources/sound/Ta_Da-SoundBible.wav",
+				"../resources/sound/Monster_Gigante-Doberman-1334685792_1.wav",
+				"../resources/sound/Monster_Gigante-Doberman-1334685792_2.wav",
 			};
 	std::vector<sf::SoundBuffer>soundbuffers;
 
