@@ -216,8 +216,9 @@ int main()
             //sf::sleep(sf::seconds(0.05f));                // Uncomment this to simulate worse fps
             if (character.getHealth() <= 0) {
                 deathMessageCountdown = s::deathMessageDuration;
+                character.setLevel(std::max(1, character.getlevel() - 1));
                 character.sethealth(character.getMaxHealth());
-                // TODO: Apply death penalties
+                character.givegold(int(round(s::percentageOfGoldLostAtDeath * (float)character.getgold())));
                 switchRoom(-1, map, character);
             }
 

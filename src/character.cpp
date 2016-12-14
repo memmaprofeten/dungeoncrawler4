@@ -172,7 +172,7 @@ void Character::givexp(int amount){
     if (xp + amount >= xpfornextlevel){
         xp = (xp+amount)-xpfornextlevel;
         level += 1;
-        health = 9 + level;
+        health = getMaxHealth();
         xpfornextlevel += 10;
 
         majorcharactersound.setBuffer(s::soundbuffers[6]);
@@ -183,8 +183,13 @@ void Character::givexp(int amount){
     }
 }
 
-int Character::getlevel(){
+int Character::getlevel() const {
     return level;
+}
+
+void Character::setLevel(int newLevel) {
+    level = newLevel;
+    xp = 0;
 }
 
 void Character::equipweapon(Weapon* newweapon){

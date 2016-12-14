@@ -152,7 +152,12 @@ public:
 	/**
 	 * Returns the character's current level.
 	 */
-	int getlevel();
+	int getlevel() const;
+
+	/**
+	 * Sets the player's level to the given value and zeros the offset xp.
+	 */
+	 void setLevel(int newLevel);
 
 	/**
  	 * Equips the given weapon.
