@@ -72,6 +72,7 @@ namespace s {
 	int viewHeight = 150;
 	float relativeInventoryBackgroundWidth = 0.8f;
 	int itemsPerRow = 12;
+	float deathMessageDuration = 3.0f;
 	float relativeItemMargin = 0.01f;
 	int standardEntrancePosX = 17;
 	int standardEntrancePosY = 17;

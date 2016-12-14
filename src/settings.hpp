@@ -23,6 +23,7 @@ namespace s {
 	extern int viewHeight;									// The height of the view, in points
 	extern float relativeInventoryBackgroundWidth;			// The ratio between the inventory width and the window width
 	extern int itemsPerRow;									// The number of items per inventory row
+	extern float deathMessageDuration;						// The duration (in seconds) that the death message should be displayed
 	extern float relativeItemMargin;						// The ratio between the distance between items in the inventory and the width of an item in the inventory
 	extern int standardEntrancePosX;						// The standard X coordinate of a horizontal room entrance
 	extern int standardEntrancePosY;						// The standard Y coordinate of a vertical room entrance

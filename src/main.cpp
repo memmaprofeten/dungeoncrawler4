@@ -112,7 +112,6 @@ int main()
     mainTextIndicator.setCharacterSize(256);
     mainTextIndicator.setScale(60.0f / 256.0f * sf::Vector2f(1, 1));
     mainTextIndicator.setOrigin(sf::Vector2f(mainTextIndicator.getLocalBounds().width / 2.0f, mainTextIndicator.getLocalBounds().height / 2.0f));
-    mainTextIndicator.setColor(sf::Color::Green);
 
     sf::RectangleShape inventoryBackground;
     inventoryBackground.setFillColor(sf::Color(20, 10, 10, 200));
@@ -314,6 +313,7 @@ int main()
 
             healthBar.setSize(sf::Vector2f(std::max(0.0f, 300.0f * float(character.getHealth()) / float(character.getMaxHealth())), 20));
 
+
             /* === RENDERING === */
             window.clear();
             view.setCenter(character.getPosition());
@@ -330,6 +330,12 @@ int main()
             window.draw(healthBarBackground);
             window.draw(healthBar);
             window.draw(hpContainer);
+            if (false) {        // TODO: *If died
+                mainTextIndicator.setString("YOU DIED!");
+                mainTextIndicator.setOrigin(sf::Vector2f(mainTextIndicator.getLocalBounds().width / 2.0f, mainTextIndicator.getLocalBounds().height / 2.0f));
+                mainTextIndicator.setColor(sf::Color(255, 0, 0));
+                window.draw(mainTextIndicator);
+            }
             window.draw(fpsIndicator);
 
             window.display();
@@ -416,6 +422,7 @@ int main()
                 else {
                     mainTextIndicator.setString("GAME PAUSED");
                     mainTextIndicator.setOrigin(sf::Vector2f(mainTextIndicator.getLocalBounds().width / 2.0f, mainTextIndicator.getLocalBounds().height / 2.0f));
+                    mainTextIndicator.setColor(sf::Color(30, 200, 30));
                     window.draw(mainTextIndicator);
                 }
                 window.display();
