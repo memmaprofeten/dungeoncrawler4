@@ -63,7 +63,7 @@ Room& Map::switchRoom(int neighbour) {
             }, character);
     }
     if (roomMap[atRoom].type == dungeon) {
-    	for (int i=0; i < s::monstersPerRoom; i++){
+    	for (int i=0; i < 3 + character->getlevel() / 2; i++){
     		bool found = false;
     		sf::Vector2f position;
     		// Iterate to find a free place in the room:
