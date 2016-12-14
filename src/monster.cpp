@@ -71,6 +71,8 @@ void Monster::monstermove(sf::Vector2f direction, float elapsed){
             position += dposVer;
         }
         sprite->setPosition(position);
+	float rotation = (atan2(direction.y,direction.x)) * 180 / cv::PI;
+	sprite->setRotation(s::monsterRotationOffset + rotation);
     }
 
 }

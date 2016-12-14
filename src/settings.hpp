@@ -17,8 +17,9 @@ namespace s {
 
 	extern float floatCorrection;							// The Epsilon value to be used to avoid floating point errors
 	extern float characterSpeed;							// The base speed of the character, in points per second
-    extern std::string defaultProjectileTextureFile;		// The path of the default projectile texture file
+	extern std::string defaultProjectileTextureFile;		// The path of the default projectile texture file
 	extern int characterRotationOffset;						// The base offset of the character rotation ("rest rotation")
+	extern int monsterRotationOffset;						// Same as for characters
 	extern float blockDim;         							// The dimension (length=width) of each block (tile)
 	extern int viewHeight;									// The height of the view, in points
 	extern float relativeInventoryBackgroundWidth;			// The ratio between the inventory width and the window width

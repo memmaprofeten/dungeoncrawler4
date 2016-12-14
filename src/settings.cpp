@@ -74,6 +74,7 @@ namespace s {
 	float floatCorrection = FLOAT_CORRECTION;
 	float characterSpeed = 80.0f;
 	int characterRotationOffset = 270;
+	int monsterRotationOffset = 90;
 	float blockDim = 10.0f;
 	int viewHeight = 150;
 	float relativeInventoryBackgroundWidth = 0.8f;
