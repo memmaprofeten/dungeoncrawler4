@@ -29,6 +29,10 @@ std::vector<Item*>& Npc::getInventory() {
     return inventory;
 }
 
+void Npc::removeFromInventory(int i) {
+    inventory.erase(inventory.begin() + i);
+}
+
 void Npc::draw(sf::RenderWindow& window, Character& player) {
     //shadowSprite.setPosition(pos.x, pos.y);
     sprite.setPosition(pos.x, pos.y);
@@ -45,7 +49,7 @@ void Npc::draw(sf::RenderWindow& window, Character& player) {
 }
 
 Shopkeeper::Shopkeeper(int texture, sf::Vector2f pos) : Npc(texture, pos) {
-    inventory.push_back(new Item("Doughnut", 4, 3, 7, sf::Vector2f(0, 0),1));
-    inventory.push_back(new Item("Ice cream", 4, 2, 8, sf::Vector2f(0, 0),1));
-    inventory.push_back(new Item("Cake", 4, 5, 8, sf::Vector2f(0, 0),1));
+    inventory.push_back(new Item("Doughnut", 2, 3, 7, sf::Vector2f(0, 0),1));
+    inventory.push_back(new Item("Reissumies TM", 2, 12, 18, sf::Vector2f(0, 0),1));
+    inventory.push_back(new Item("Cake", 2, 5, 8, sf::Vector2f(0, 0),1));
 }

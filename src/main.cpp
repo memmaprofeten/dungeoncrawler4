@@ -74,7 +74,6 @@ int main()
     character.addItem(new Item("Trophy", 4, 0, 19, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Potion of wisdom", 2, 8, 16, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Potion of strength", 2, 6, 17, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Reissumies (TM)", 2, 12, 18, sf::Vector2f(0, 0),1));
 
     /* ADD STARTING WEAPONS FOR PLAYER */
     RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 4);
@@ -390,11 +389,19 @@ int main()
                     }
                     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                         if (tooltipShowing && mouseReleased) {
-                            std::cout << "Using " + renderInventory[itemIndex]->getname() << "." << std::endl;
-                            bool couldConsume = character.consumeItem(itemIndex);
-                            if (couldConsume) {
-                                character.consumeItem(itemIndex);
-                                drawInventory(window, inventoryBackground, renderInventory);
+                            if(inventory) {                         // Item action for player's inventory
+                                std::cout << "Using " + renderInventory[itemIndex]->getname() << "." << std::endl;
+                                bool couldConsume = character.consumeItem(itemIndex);
+                                if (couldConsume) {
+                                    character.consumeItem(itemIndex);
+                                    drawInventory(window, inventoryBackground, renderInventory);
+                                }
+                            }
+                            else if(shopInventory) {                // Item action for NPC's inventory
+                                std::cout << "Bought " + renderInventory[itemIndex]->getname() << "." << std::endl;
+                                character.getInventory().push_back(renderInventory[itemIndex]); // Add item to player's inventory...
+                                closestNpc->removeFromInventory(itemIndex);                     // and remove it from NPC's inventory (buying an item)
+                                paused = false;                                                 // Refresh inventory screen
                             }
                         }
                         mouseReleased = false;
