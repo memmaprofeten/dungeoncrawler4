@@ -207,7 +207,7 @@ int main()
                     hpContainer.setPosition(eventSize - healthBarMargin);
                     mainTextIndicator.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
                     levelIndicator.setPosition(sf::Vector2f(window.getSize()) - sf::Vector2f(100, 100));
-                    goldIndicator.setPosition(sf::Vector2f(window.getSize()) - sf::Vector2f(240, 100));
+                    goldIndicator.setPosition(sf::Vector2f(window.getSize()) - sf::Vector2f(280, 100));
                     // Inventory:
                     inventoryBackground.setSize(s::relativeInventoryBackgroundWidth * sf::Vector2f(window.getSize()));
                     inventoryBackground.setOrigin(sf::Vector2f(inventoryBackground.getLocalBounds().width / 2.0f, inventoryBackground.getLocalBounds().height / 2.0f));
