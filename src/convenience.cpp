@@ -10,6 +10,10 @@ namespace cv
 
     float PI = PI_DEF;
 
+    bool isZero(sf::Vector2f v) {
+        return v.x == 0.0f && v.y == 0.0f;
+    }
+
     float norm(sf::Vector2f v) {
         return sqrt(v.x * v.x + v.y * v.y);
     }

@@ -14,6 +14,11 @@ namespace cv
     extern float PI;
 
     /**
+     * Returns whether or not the given vector is zero.
+     */
+    bool isZero(sf::Vector2f v);
+
+    /**
      * Calculates the norm, or length, of a vector.
      */
     float norm(sf::Vector2f v);

@@ -202,13 +202,19 @@ void Room::drawProjectiles(sf::RenderWindow& window, float elapsed) {
 		Projectile& projectile = projectiles[i];
 		if (projectile.isActive()) {					// Loop only through active projectiles
 			projectile.draw(window, elapsed);			// Call their draw method which updates their position and draws them
-			if(!projectile.isfiredbyplayer() && cv::distance(character->getPosition(), projectile.getPosition()) <= s::projectileRadius) {	// Hit detection
-				character->reducehealth(projectile.getdamage()); // character takes damage
+			if(!projectile.isfiredbyplayer() &&
+					cv::distance(character->getPosition(), projectile.getPosition()) <= s::projectileRadius &&
+					!cv::isZero(projectile.getVelocity())
+			) {		// Hit detection
+				character->reducehealth(projectile.getdamage());
 				projectile.deactivate();
 			}
 			for (auto monster : monsters){
 				if(monster->isactive()){
-					if(projectile.isfiredbyplayer() && cv::distance(monster->getPosition(), projectile.getPosition()) <= s::projectileRadius) {
+					if(projectile.isfiredbyplayer() &&
+							cv::distance(monster->getPosition(), projectile.getPosition()) <= s::projectileRadius &&
+							!cv::isZero(projectile.getVelocity())
+					) {		// Hit detection
 						monster->reducehealth(projectile.getdamage());
 						projectile.deactivate();
 					}
