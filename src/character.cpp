@@ -118,21 +118,20 @@ bool Character::consumeItem(int i) {
 int Character::getHealth() const { return health; }
 
 int Character::getMaxHealth() const {
-    return 9 + level;      // NB! This algorithm can be changed for something more complex if there is need for it.
+    return 9 + level;
 }
 
 void Character::reducehealth(int damage){
     health -= damage;
-
     if (health <= 0){
         minorcharactersound.setBuffer(s::soundbuffers[4]);
         minorcharactersound.play();
+        // NB! Game defining death logic is handled by the main function.
     }
     else{
         majorcharactersound.setBuffer(s::soundbuffers[5]);
         majorcharactersound.play();
     }
-    // TODO: Check if dead
 }
 
 void Character::teleport(sf::Vector2f dpos){
@@ -166,7 +165,7 @@ int Character::getgold() const{
 }
 
 void Character::sethealth(int newhealth){
-    health = newhealth;
+    health = std::min(newhealth, getMaxHealth());
 }
 
 void Character::givexp(int amount){

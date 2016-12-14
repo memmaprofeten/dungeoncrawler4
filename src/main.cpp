@@ -143,6 +143,7 @@ int main()
     bool tooltipShowing = true;
     sf::Clock frameClock;
     float elapsed;
+    float deathMessageCountdown = 0.0f;
     float elapsedSinceLastAttack = 1000.0f;
     float elapsedSinceLastShot = 1000.0f;
     float fpsSamples[FPS_SAMPLE_COUNT];
@@ -209,9 +210,16 @@ int main()
 
             window.setMouseCursorVisible(false);
             elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame
+            deathMessageCountdown -= elapsed;
             elapsedSinceLastAttack += elapsed;
             elapsedSinceLastShot += elapsed;                // The time elapsed since player's last shot
             //sf::sleep(sf::seconds(0.05f));                // Uncomment this to simulate worse fps
+            if (character.getHealth() <= 0) {
+                deathMessageCountdown = s::deathMessageDuration;
+                character.sethealth(character.getMaxHealth());
+                // TODO: Apply death penalties
+                switchRoom(-1, map, character);
+            }
 
             /* === FPS COUNTER === */
             fpsValue -= fpsSamples[fpsIndex];
@@ -341,7 +349,7 @@ int main()
             window.draw(healthBarBackground);
             window.draw(healthBar);
             window.draw(hpContainer);
-            if (false) {        // TODO: *If died
+            if (deathMessageCountdown > 0.0f) {
                 mainTextIndicator.setString("YOU DIED!");
                 mainTextIndicator.setOrigin(sf::Vector2f(mainTextIndicator.getLocalBounds().width / 2.0f, mainTextIndicator.getLocalBounds().height / 2.0f));
                 mainTextIndicator.setColor(sf::Color(255, 0, 0));
