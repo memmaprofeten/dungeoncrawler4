@@ -40,6 +40,10 @@ int Weapon::gettextureindex() const{
     return textureIndex;
 }
 
+int Weapon::getprojectiletextureindex() const{
+    return projectileTextureIndex;
+}
+
 void Weapon::attack() {}
 
 float Weapon::getcooldown() const{

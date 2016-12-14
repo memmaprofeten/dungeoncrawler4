@@ -9,7 +9,7 @@ namespace s {
 
 	std::vector<std::string> texturePaths = {		// NB! Do not switch the order of these. Their indexes are being used.
 			"character_32.png",			// 0
-			"fireball_32.png",			// 1
+			"fire_arrow_32.png",		// 1
 			"floor_32_2.png",			// 2
 			"hp_container1.png",		// 3
 			"projectile_32.png",		// 4

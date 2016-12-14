@@ -81,6 +81,11 @@ public:
     int gettextureindex() const;
 
     /**
+     * Returns the texture index of this weapon's projectile.
+     */
+    int getprojectiletextureindex() const;
+
+    /**
      * Performs an attack.
      */
     virtual void attack();
