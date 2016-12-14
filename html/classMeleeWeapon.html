@@ -65,6 +65,8 @@ $(function() {
 <div class="title">MeleeWeapon Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="weapon_8hpp_source.html">weapon.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for MeleeWeapon:</div>
 <div class="dyncontent">
@@ -84,55 +86,42 @@ Collaboration diagram for MeleeWeapon:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab67379f9c8d251191b325790369b9ca3"><td class="memItemLeft" align="right" valign="top"><a id="ab67379f9c8d251191b325790369b9ca3"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>MeleeWeapon</b> (std::string name, int damage, int radius, int txtrIndex)</td></tr>
-<tr class="separator:ab67379f9c8d251191b325790369b9ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56e6df24213b400bdbdfb4bbfb39cc1c"><td class="memItemLeft" align="right" valign="top"><a id="a56e6df24213b400bdbdfb4bbfb39cc1c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>MeleeWeapon</b> (int level, float seed)</td></tr>
+<tr class="memitem:ab5efc2bf5cea9fe7bbd14a44a473905b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMeleeWeapon.html#ab5efc2bf5cea9fe7bbd14a44a473905b">MeleeWeapon</a> (std::string name, int damage, float minR, float maxR, int txtrIndex)</td></tr>
+<tr class="separator:ab5efc2bf5cea9fe7bbd14a44a473905b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56e6df24213b400bdbdfb4bbfb39cc1c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMeleeWeapon.html#a56e6df24213b400bdbdfb4bbfb39cc1c">MeleeWeapon</a> (int level, float seed)</td></tr>
 <tr class="separator:a56e6df24213b400bdbdfb4bbfb39cc1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f2eca0166461cbb0ffd92f014eb6556"><td class="memItemLeft" align="right" valign="top"><a id="a9f2eca0166461cbb0ffd92f014eb6556"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>attack</b> ()</td></tr>
+<tr class="memitem:a3883980d12e78a0e49bfad65531c54b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMeleeWeapon.html#a3883980d12e78a0e49bfad65531c54b3">~MeleeWeapon</a> ()</td></tr>
+<tr class="separator:a3883980d12e78a0e49bfad65531c54b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f2eca0166461cbb0ffd92f014eb6556"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMeleeWeapon.html#a9f2eca0166461cbb0ffd92f014eb6556">attack</a> ()</td></tr>
 <tr class="separator:a9f2eca0166461cbb0ffd92f014eb6556"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8db68e2e5c575e0d01d1fe90c3a7ee9"><td class="memItemLeft" align="right" valign="top"><a id="aa8db68e2e5c575e0d01d1fe90c3a7ee9"></a>
-virtual float&#160;</td><td class="memItemRight" valign="bottom"><b>getMinRadius</b> () const override</td></tr>
+<tr class="memitem:aa8db68e2e5c575e0d01d1fe90c3a7ee9"><td class="memItemLeft" align="right" valign="top">virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMeleeWeapon.html#aa8db68e2e5c575e0d01d1fe90c3a7ee9">getMinRadius</a> () const override</td></tr>
 <tr class="separator:aa8db68e2e5c575e0d01d1fe90c3a7ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64427d658ef54a174bc2a773750aa989"><td class="memItemLeft" align="right" valign="top"><a id="a64427d658ef54a174bc2a773750aa989"></a>
-virtual float&#160;</td><td class="memItemRight" valign="bottom"><b>getMaxRadius</b> () const override</td></tr>
+<tr class="memitem:a64427d658ef54a174bc2a773750aa989"><td class="memItemLeft" align="right" valign="top">virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMeleeWeapon.html#a64427d658ef54a174bc2a773750aa989">getMaxRadius</a> () const override</td></tr>
 <tr class="separator:a64427d658ef54a174bc2a773750aa989"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classWeapon"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classWeapon')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classWeapon.html">Weapon</a></td></tr>
-<tr class="memitem:ab9fde4dce5c32622de8b3641a640b7fc inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="ab9fde4dce5c32622de8b3641a640b7fc"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Weapon</b> (std::string n, int t, int d, float r, int txtrIndex)</td></tr>
-<tr class="separator:ab9fde4dce5c32622de8b3641a640b7fc inherit pub_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fd25a76f90d089cccb067b6171322e8 inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="a4fd25a76f90d089cccb067b6171322e8"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const</td></tr>
+<tr class="memitem:a89a04151e5737abf0e029b3b2e205a1a inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeapon.html#a89a04151e5737abf0e029b3b2e205a1a">Weapon</a> (std::string n, int t, int d, int txtrIndex)</td></tr>
+<tr class="separator:a89a04151e5737abf0e029b3b2e205a1a inherit pub_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a420e7ba3d2017e6de3e93eb579cfd3fa inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeapon.html#a420e7ba3d2017e6de3e93eb579cfd3fa">~Weapon</a> ()</td></tr>
+<tr class="separator:a420e7ba3d2017e6de3e93eb579cfd3fa inherit pub_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fd25a76f90d089cccb067b6171322e8 inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeapon.html#a4fd25a76f90d089cccb067b6171322e8">getName</a> () const</td></tr>
 <tr class="separator:a4fd25a76f90d089cccb067b6171322e8 inherit pub_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f2cdbe609d9b15090253a3c39bcf6f5 inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="a7f2cdbe609d9b15090253a3c39bcf6f5"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getType</b> () const</td></tr>
+<tr class="memitem:a7f2cdbe609d9b15090253a3c39bcf6f5 inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeapon.html#a7f2cdbe609d9b15090253a3c39bcf6f5">getType</a> () const</td></tr>
 <tr class="separator:a7f2cdbe609d9b15090253a3c39bcf6f5 inherit pub_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f1941efbf38c5719cf75e4a138e92d4 inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="a5f1941efbf38c5719cf75e4a138e92d4"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getDamage</b> () const</td></tr>
+<tr class="memitem:a5f1941efbf38c5719cf75e4a138e92d4 inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeapon.html#a5f1941efbf38c5719cf75e4a138e92d4">getDamage</a> () const</td></tr>
 <tr class="separator:a5f1941efbf38c5719cf75e4a138e92d4 inherit pub_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad0dda94f26065151849097e47e01674 inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="aad0dda94f26065151849097e47e01674"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>getRadius</b> () const</td></tr>
-<tr class="separator:aad0dda94f26065151849097e47e01674 inherit pub_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2da351e4c5c8b4b29b5d93427b5ae56 inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="ab2da351e4c5c8b4b29b5d93427b5ae56"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getProjectilespeed</b> () const</td></tr>
+<tr class="memitem:ab2da351e4c5c8b4b29b5d93427b5ae56 inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeapon.html#ab2da351e4c5c8b4b29b5d93427b5ae56">getProjectilespeed</a> () const</td></tr>
 <tr class="separator:ab2da351e4c5c8b4b29b5d93427b5ae56 inherit pub_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf97f6993e943ad0802411fdc8ee00ec inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="abf97f6993e943ad0802411fdc8ee00ec"></a>
-<a class="el" href="classProjectile.html">Projectile</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>createProjectile</b> (<a class="el" href="classRoom.html">Room</a> &amp;room)</td></tr>
+<tr class="memitem:abf97f6993e943ad0802411fdc8ee00ec inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classProjectile.html">Projectile</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeapon.html#abf97f6993e943ad0802411fdc8ee00ec">createProjectile</a> (<a class="el" href="classRoom.html">Room</a> &amp;room)</td></tr>
 <tr class="separator:abf97f6993e943ad0802411fdc8ee00ec inherit pub_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b062fb2d04a67984c289b1e048e3947 inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="a6b062fb2d04a67984c289b1e048e3947"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>getcooldown</b> () const</td></tr>
+<tr class="memitem:a6b062fb2d04a67984c289b1e048e3947 inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeapon.html#a6b062fb2d04a67984c289b1e048e3947">getcooldown</a> () const</td></tr>
 <tr class="separator:a6b062fb2d04a67984c289b1e048e3947 inherit pub_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe06fb1be11b42ff30d706819d0a0f1a inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="afe06fb1be11b42ff30d706819d0a0f1a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>gettextureindex</b> () const</td></tr>
+<tr class="memitem:afe06fb1be11b42ff30d706819d0a0f1a inherit pub_methods_classWeapon"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeapon.html#afe06fb1be11b42ff30d706819d0a0f1a">gettextureindex</a> () const</td></tr>
 <tr class="separator:afe06fb1be11b42ff30d706819d0a0f1a inherit pub_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_classWeapon"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classWeapon')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classWeapon.html">Weapon</a></td></tr>
-<tr class="memitem:af9a648eead94340c277c6be2be2537ba inherit pro_methods_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="af9a648eead94340c277c6be2be2537ba"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Weapon</b> (int level, float seed)</td></tr>
+<tr class="memitem:af9a648eead94340c277c6be2be2537ba inherit pro_methods_classWeapon"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWeapon.html#af9a648eead94340c277c6be2be2537ba">Weapon</a> (int level, float seed)</td></tr>
 <tr class="separator:af9a648eead94340c277c6be2be2537ba inherit pro_methods_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classWeapon"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classWeapon')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classWeapon.html">Weapon</a></td></tr>
 <tr class="memitem:a8bc12bf0ac8e3cdea9c8657ccb6217b5 inherit pro_attribs_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="a8bc12bf0ac8e3cdea9c8657ccb6217b5"></a>
@@ -144,9 +133,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
 <tr class="memitem:abb463127151d807804c556ddbd767e18 inherit pro_attribs_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="abb463127151d807804c556ddbd767e18"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>damage</b></td></tr>
 <tr class="separator:abb463127151d807804c556ddbd767e18 inherit pro_attribs_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc88c2b023ba810243f78c90ce1014a0 inherit pro_attribs_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="adc88c2b023ba810243f78c90ce1014a0"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>radius</b></td></tr>
-<tr class="separator:adc88c2b023ba810243f78c90ce1014a0 inherit pro_attribs_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4aa443fbb32da3c06ab9c449a4f4824 inherit pro_attribs_classWeapon"><td class="memItemLeft" align="right" valign="top"><a id="af4aa443fbb32da3c06ab9c449a4f4824"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>textureIndex</b></td></tr>
 <tr class="separator:af4aa443fbb32da3c06ab9c449a4f4824 inherit pro_attribs_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,6 +149,188 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>levels</b></td></tr>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>seeds</b></td></tr>
 <tr class="separator:aeb8dde48f73c0a59d00e8b61fb229a25 inherit pro_attribs_classWeapon"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The <a class="el" href="classMeleeWeapon.html">MeleeWeapon</a> class represents a close combat weapon, such as a sword or a spear, whose primary attack is direct melee strikes. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ab5efc2bf5cea9fe7bbd14a44a473905b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5efc2bf5cea9fe7bbd14a44a473905b">&sect;&nbsp;</a></span>MeleeWeapon() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MeleeWeapon::MeleeWeapon </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>damage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>minR</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>maxR</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>txtrIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The general <a class="el" href="classMeleeWeapon.html">MeleeWeapon</a> constructor Constructs a specific melee weapon based on the given parameters. </p>
+
+</div>
+</div>
+<a id="a56e6df24213b400bdbdfb4bbfb39cc1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56e6df24213b400bdbdfb4bbfb39cc1c">&sect;&nbsp;</a></span>MeleeWeapon() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MeleeWeapon::MeleeWeapon </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>seed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The randomized <a class="el" href="classMeleeWeapon.html">MeleeWeapon</a> constructor Constructs a random melee weapon based on the player's level. </p>
+
+</div>
+</div>
+<a id="a3883980d12e78a0e49bfad65531c54b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3883980d12e78a0e49bfad65531c54b3">&sect;&nbsp;</a></span>~MeleeWeapon()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MeleeWeapon::~MeleeWeapon </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The <a class="el" href="classMeleeWeapon.html">MeleeWeapon</a> destructor </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9f2eca0166461cbb0ffd92f014eb6556"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f2eca0166461cbb0ffd92f014eb6556">&sect;&nbsp;</a></span>attack()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MeleeWeapon::attack </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Performs an attack. </p>
+
+<p>Reimplemented from <a class="el" href="classWeapon.html#adc1d2f4577f583a6ecad3be14b9ee459">Weapon</a>.</p>
+
+</div>
+</div>
+<a id="a64427d658ef54a174bc2a773750aa989"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64427d658ef54a174bc2a773750aa989">&sect;&nbsp;</a></span>getMaxRadius()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float MeleeWeapon::getMaxRadius </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the maximum radius of the weapon (e.g. the radius of the circle within which the weapon is effective, as long as it is outside the circle defined by minRadius). </p>
+
+<p>Reimplemented from <a class="el" href="classWeapon.html#ad84cff217570adf923f78ab7293f7ab0">Weapon</a>.</p>
+
+</div>
+</div>
+<a id="aa8db68e2e5c575e0d01d1fe90c3a7ee9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8db68e2e5c575e0d01d1fe90c3a7ee9">&sect;&nbsp;</a></span>getMinRadius()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float MeleeWeapon::getMinRadius </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the minimum radius of the weapon (e.g. the radius of the circle within which the weapon is ineffective). </p>
+
+<p>Reimplemented from <a class="el" href="classWeapon.html#acdf4fa8b479fffb63691fbd0fd1ae1dd">Weapon</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="weapon_8hpp_source.html">weapon.hpp</a></li>
 <li>src/weapon.cpp</li>

@@ -67,6 +67,12 @@ $(function() {
 <li>additem()
 : <a class="el" href="classRoom.html#a60dcd7346ed4f7f61bf4c2b53aa2f326">Room</a>
 </li>
+<li>addmonster()
+: <a class="el" href="classRoom.html#a81fdaa7c53e3df23d82bb8f79298ce8a">Room</a>
+</li>
+<li>addNpc()
+: <a class="el" href="classRoom.html#a497799bfdb07df356a7905462815abb8">Room</a>
+</li>
 <li>applyConsumableEffects()
 : <a class="el" href="classItem.html#ab40fc78a0ff156e8f365aab775ecdcfe">Item</a>
 </li>
@@ -75,6 +81,11 @@ $(function() {
 </li>
 <li>applyWeaponEffects()
 : <a class="el" href="classItem.html#a57207f9db0173286d64fa2a050e88ce2">Item</a>
+</li>
+<li>attack()
+: <a class="el" href="classMeleeWeapon.html#a9f2eca0166461cbb0ffd92f014eb6556">MeleeWeapon</a>
+, <a class="el" href="classRangedWeapon.html#a541d977dabc25ccd00a0e9fa0e8206bc">RangedWeapon</a>
+, <a class="el" href="classWeapon.html#adc1d2f4577f583a6ecad3be14b9ee459">Weapon</a>
 </li>
 </ul>
 
@@ -91,6 +102,7 @@ $(function() {
 </li>
 <li>createProjectile()
 : <a class="el" href="classRoom.html#ad8fdcca5c56d99f9ad5b860164530dd4">Room</a>
+, <a class="el" href="classWeapon.html#abf97f6993e943ad0802411fdc8ee00ec">Weapon</a>
 </li>
 </ul>
 
@@ -105,6 +117,7 @@ $(function() {
 <li>draw()
 : <a class="el" href="classCharacter.html#ab913e01eb26632f765a61858ad664db1">Character</a>
 , <a class="el" href="classItem.html#a579500604002ad0d6a14f82856e9abaf">Item</a>
+, <a class="el" href="classNpc.html#a6c258ccc1987e8d8177ac67ddcac0360">Npc</a>
 , <a class="el" href="classProjectile.html#a92b44b67f73e83e863e47eaa77b518a7">Projectile</a>
 , <a class="el" href="classRoom.html#af8d0a907948cb0877442af11c559da5c">Room</a>
 , <a class="el" href="structs_1_1animation.html#aaa1fc1b2c97915ee1822caafb6ddce48">s::animation</a>
@@ -138,8 +151,17 @@ $(function() {
 <li>getattackdamage()
 : <a class="el" href="classMonster.html#ac70ccb0345627046e1ee7357ab55f077">Monster</a>
 </li>
+<li>getcharacter()
+: <a class="el" href="classRoom.html#afe022844c1e2795b43e6dbfa3f76d0c3">Room</a>
+</li>
+<li>getcooldown()
+: <a class="el" href="classWeapon.html#a6b062fb2d04a67984c289b1e048e3947">Weapon</a>
+</li>
 <li>getdamage()
 : <a class="el" href="classProjectile.html#a49e0cb53ed707dc5b4af8feb0b9728c5">Projectile</a>
+</li>
+<li>getDamage()
+: <a class="el" href="classWeapon.html#a5f1941efbf38c5719cf75e4a138e92d4">Weapon</a>
 </li>
 <li>getdistancetoplayer()
 : <a class="el" href="classMonster.html#a00d305796f20eafe88cb2197b36d5738">Monster</a>
@@ -164,18 +186,33 @@ $(function() {
 </li>
 <li>getInventory()
 : <a class="el" href="classCharacter.html#a0c7fa7508446cb415584dc0c5bb65b8b">Character</a>
+, <a class="el" href="classNpc.html#affb2c5751b7d8cd72137b82939fc991f">Npc</a>
 </li>
 <li>getInventorySprite()
 : <a class="el" href="classItem.html#a822e02caae63af597364c81888bcfc64">Item</a>
 </li>
+<li>getitems()
+: <a class="el" href="classRoom.html#a0004a8cac86d3c108773526183307178">Room</a>
+</li>
 <li>getlevel()
-: <a class="el" href="classCharacter.html#a5904def7a0f09eaf930946548a4dde8f">Character</a>
+: <a class="el" href="classCharacter.html#acae83a02cf3697ed916cdca7cfc2ecee">Character</a>
 </li>
 <li>getMaxHealth()
 : <a class="el" href="classCharacter.html#ae12ef6c4c8cd51cc84b03b487c98b4d5">Character</a>
 </li>
+<li>getMaxRadius()
+: <a class="el" href="classMeleeWeapon.html#a64427d658ef54a174bc2a773750aa989">MeleeWeapon</a>
+, <a class="el" href="classWeapon.html#ad84cff217570adf923f78ab7293f7ab0">Weapon</a>
+</li>
 <li>getmeleeweapon()
 : <a class="el" href="classCharacter.html#a9cfdaf0602cd1cd9b3a35792503ee6ab">Character</a>
+</li>
+<li>getMinRadius()
+: <a class="el" href="classMeleeWeapon.html#aa8db68e2e5c575e0d01d1fe90c3a7ee9">MeleeWeapon</a>
+, <a class="el" href="classWeapon.html#acdf4fa8b479fffb63691fbd0fd1ae1dd">Weapon</a>
+</li>
+<li>getmonsters()
+: <a class="el" href="classRoom.html#ab427ca934177a0fa4677bd9d65837c29">Room</a>
 </li>
 <li>getmovespeed()
 : <a class="el" href="classMonster.html#acdf66082ceefb772bd6fa1a9d98b428c">Monster</a>
@@ -186,6 +223,9 @@ $(function() {
 <li>getname()
 : <a class="el" href="classItem.html#ab7f937576f90a5c6db057c2b3784a048">Item</a>
 , <a class="el" href="classMonster.html#ab0bd8c1affa77772a566c04cb4bf0c61">Monster</a>
+</li>
+<li>getName()
+: <a class="el" href="classWeapon.html#a4fd25a76f90d089cccb067b6171322e8">Weapon</a>
 </li>
 <li>getNeighbours()
 : <a class="el" href="classRoom.html#ab14d79f393a3cc934668e65578a0d628">Room</a>
@@ -207,6 +247,9 @@ $(function() {
 , <a class="el" href="classMonster.html#ab042c6ec98cda8f9a883fae331328148">Monster</a>
 , <a class="el" href="classProjectile.html#a88ed5be04ec9eddeb83deb201607368c">Projectile</a>
 </li>
+<li>getProjectilespeed()
+: <a class="el" href="classWeapon.html#ab2da351e4c5c8b4b29b5d93427b5ae56">Weapon</a>
+</li>
 <li>getradius()
 : <a class="el" href="classProjectile.html#a63164c6b5469c05976d29f634ec6a70f">Projectile</a>
 </li>
@@ -225,11 +268,17 @@ $(function() {
 <li>getSprite()
 : <a class="el" href="classRoom.html#a9bc7d677929dfa684df4ac5a77eddb84">Room</a>
 </li>
+<li>gettextureindex()
+: <a class="el" href="classWeapon.html#afe06fb1be11b42ff30d706819d0a0f1a">Weapon</a>
+</li>
 <li>getTile()
 : <a class="el" href="classRoom.html#a47eb351ec528de421bd6a482ada57e7e">Room</a>
 </li>
 <li>gettype()
 : <a class="el" href="classItem.html#a12839c141c633c2a3692bbaae3c11b26">Item</a>
+</li>
+<li>getType()
+: <a class="el" href="classWeapon.html#a7f2cdbe609d9b15090253a3c39bcf6f5">Weapon</a>
 </li>
 <li>getvalue()
 : <a class="el" href="classItem.html#a157942e6a2d0e473dad7c1bcbd324f93">Item</a>
@@ -275,8 +324,14 @@ $(function() {
 <li>isfiredbyplayer()
 : <a class="el" href="classProjectile.html#a8cc89fb8f2e165eb5d67bb91dd86ebad">Projectile</a>
 </li>
+<li>isInRange()
+: <a class="el" href="classNpc.html#a455a8400429c3fde9c8eb1871cfac1b0">Npc</a>
+</li>
+<li>isPenetrable()
+: <a class="el" href="classTile.html#a8f0f81f8a606ef89b2d5380477c0f17c">Tile</a>
+</li>
 <li>Item()
-: <a class="el" href="classItem.html#adcaad591e0bebe1fad71ef642332374c">Item</a>
+: <a class="el" href="classItem.html#a15bc48616b34fea55f5ca75f76d26c00">Item</a>
 </li>
 </ul>
 
@@ -284,6 +339,9 @@ $(function() {
 <h3><a id="index_m"></a>- m -</h3><ul>
 <li>MeleeMonster()
 : <a class="el" href="classMeleeMonster.html#a58a7b1529697cfcdbe6599f5fe682253">MeleeMonster</a>
+</li>
+<li>MeleeWeapon()
+: <a class="el" href="classMeleeWeapon.html#ab5efc2bf5cea9fe7bbd14a44a473905b">MeleeWeapon</a>
 </li>
 <li>Monster()
 : <a class="el" href="classMonster.html#a3dfc253fbec8331d42ac13c20bf9425f">Monster</a>
@@ -311,6 +369,13 @@ $(function() {
 </ul>
 
 
+<h3><a id="index_n"></a>- n -</h3><ul>
+<li>Npc()
+: <a class="el" href="classNpc.html#a907867c821aebbca4360cc48d6e88240">Npc</a>
+</li>
+</ul>
+
+
 <h3><a id="index_p"></a>- p -</h3><ul>
 <li>performAttack()
 : <a class="el" href="classRoom.html#a562927d0d9949f3f9356b4c34aeec937">Room</a>
@@ -328,9 +393,15 @@ $(function() {
 <li>RangedMonster()
 : <a class="el" href="classRangedMonster.html#addb08bbbd5087b7f7bf368291aa7efc7">RangedMonster</a>
 </li>
+<li>RangedWeapon()
+: <a class="el" href="classRangedWeapon.html#aab68fd6056ed23da254e06382a825e62">RangedWeapon</a>
+</li>
 <li>reducehealth()
 : <a class="el" href="classCharacter.html#a6e30a559650c3e9dc2cd96303cc59917">Character</a>
 , <a class="el" href="classMonster.html#af2777341ef6a40175972cac9e16c8032">Monster</a>
+</li>
+<li>removeFromInventory()
+: <a class="el" href="classNpc.html#aad7cbf41dfe08a9724f13272537d6b3f">Npc</a>
 </li>
 <li>reset()
 : <a class="el" href="classProjectile.html#a8a8a04e1606050277f803da65413b1ff">Projectile</a>
@@ -354,9 +425,13 @@ $(function() {
 <li>sethealth()
 : <a class="el" href="classCharacter.html#a3eabbec32935d12ea156b6c114f87a98">Character</a>
 </li>
+<li>setLevel()
+: <a class="el" href="classCharacter.html#a27bd2cb672cd1d8a4fd3e18a0c278c18">Character</a>
+</li>
 <li>setPosition()
 : <a class="el" href="classCharacter.html#aa9a49a2243305db4ee90c2bceafb088b">Character</a>
 , <a class="el" href="classMonster.html#a44d2719a95a1403c3e2b8dcabcb7bb59">Monster</a>
+, <a class="el" href="classNpc.html#a7161ea8aaf495a2b868f3423e38fb181">Npc</a>
 , <a class="el" href="classProjectile.html#ae07f879ff7091e007f89e1e875f08962">Projectile</a>
 </li>
 <li>setRoom()
@@ -364,6 +439,7 @@ $(function() {
 </li>
 <li>setRotation()
 : <a class="el" href="classCharacter.html#a6c96e6a03acba8313deabbba937932c2">Character</a>
+, <a class="el" href="classNpc.html#ac68139ea3ae2d73fcf9c5073448e6a0b">Npc</a>
 </li>
 <li>setSpeed()
 : <a class="el" href="classProjectile.html#af1660a08a6ed6b0c5b2ca47c8ff85260">Projectile</a>
@@ -375,12 +451,28 @@ $(function() {
 <li>teleport()
 : <a class="el" href="classCharacter.html#a0549b8985f5546f95bfcf079813d031d">Character</a>
 </li>
+<li>Tile()
+: <a class="el" href="classTile.html#ab6f94e31f46443af897db1e7cb4a6431">Tile</a>
+</li>
+<li>toString()
+: <a class="el" href="classTile.html#a57c6649d2af3d5fb8758ef5851e08dfd">Tile</a>
+</li>
+<li>type
+: <a class="el" href="classNpc.html#a71b8b355c6e97df954bc996206a1e46e">Npc</a>
+</li>
 </ul>
 
 
 <h3><a id="index_u"></a>- u -</h3><ul>
 <li>updateTexture()
 : <a class="el" href="structs_1_1animation.html#ac2ec1570208948139e392fbe8f1f818d">s::animation</a>
+</li>
+</ul>
+
+
+<h3><a id="index_w"></a>- w -</h3><ul>
+<li>Weapon()
+: <a class="el" href="classWeapon.html#a89a04151e5737abf0e029b3b2e205a1a">Weapon</a>
 </li>
 </ul>
 
@@ -395,14 +487,23 @@ $(function() {
 <li>~MeleeMonster()
 : <a class="el" href="classMeleeMonster.html#a18dfc80fe0592ead17cf96a4bd961909">MeleeMonster</a>
 </li>
+<li>~MeleeWeapon()
+: <a class="el" href="classMeleeWeapon.html#a3883980d12e78a0e49bfad65531c54b3">MeleeWeapon</a>
+</li>
 <li>~Monster()
 : <a class="el" href="classMonster.html#a21619ba1759b910cd2fd50d858aab338">Monster</a>
 </li>
 <li>~RangedMonster()
 : <a class="el" href="classRangedMonster.html#a57373b6cda7d035de6b80b9c60e1c193">RangedMonster</a>
 </li>
+<li>~RangedWeapon()
+: <a class="el" href="classRangedWeapon.html#a631579ba140d377f8db681cc1e73e941">RangedWeapon</a>
+</li>
 <li>~Room()
 : <a class="el" href="classRoom.html#a67d5da09983cc53097807fd43ba5481a">Room</a>
+</li>
+<li>~Weapon()
+: <a class="el" href="classWeapon.html#a420e7ba3d2017e6de3e93eb579cfd3fa">Weapon</a>
 </li>
 </ul>
 </div><!-- contents -->
