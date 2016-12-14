@@ -119,7 +119,7 @@ bool Character::consumeItem(int i) {
 int Character::getHealth() const { return health; }
 
 int Character::getMaxHealth() const {
-    return 9 + level;
+    return int((10 + level)*1.4);
 }
 
 void Character::reducehealth(int damage){
