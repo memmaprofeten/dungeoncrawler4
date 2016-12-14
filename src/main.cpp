@@ -66,6 +66,7 @@ int main()
     Map map(character);
     Room& room = map.getRoom();
     character.setRoom(&room);
+    character.givegold(s::startingGold);
 
     /* === TESTING === */
     //RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
@@ -113,6 +114,18 @@ int main()
     fpsIndicator.setColor(sf::Color::Green);
     fpsIndicator.setPosition(sf::Vector2f(10, 10));
 
+    sf::Text levelIndicator;
+    levelIndicator.setFont(standardFont);
+    levelIndicator.setCharacterSize(256);
+    levelIndicator.setScale(30.0f / 256.0f * sf::Vector2f(1, 1));
+    levelIndicator.setColor(sf::Color(0, 255, 255));
+
+    sf::Text goldIndicator;
+    goldIndicator.setFont(standardFont);
+    goldIndicator.setCharacterSize(256);
+    goldIndicator.setScale(30.0f / 256.0f * sf::Vector2f(1, 1));
+    goldIndicator.setColor(sf::Color::Yellow);
+
     sf::Text mainTextIndicator;
     mainTextIndicator.setFont(sketchFont);
     mainTextIndicator.setCharacterSize(256);
@@ -143,6 +156,7 @@ int main()
     bool tooltipShowing = true;
     sf::Clock frameClock;
     float elapsed;
+    float deathMessageCountdown = 0.0f;
     float elapsedSinceLastAttack = 1000.0f;
     float elapsedSinceLastShot = 1000.0f;
     float fpsSamples[FPS_SAMPLE_COUNT];
@@ -192,6 +206,8 @@ int main()
                     healthBarBackground.setPosition(eventSize - healthBarMargin);
                     hpContainer.setPosition(eventSize - healthBarMargin);
                     mainTextIndicator.setPosition(sf::Vector2f(window.getSize()) / 2.0f);
+                    levelIndicator.setPosition(sf::Vector2f(window.getSize()) - sf::Vector2f(100, 100));
+                    goldIndicator.setPosition(sf::Vector2f(window.getSize()) - sf::Vector2f(240, 100));
                     // Inventory:
                     inventoryBackground.setSize(s::relativeInventoryBackgroundWidth * sf::Vector2f(window.getSize()));
                     inventoryBackground.setOrigin(sf::Vector2f(inventoryBackground.getLocalBounds().width / 2.0f, inventoryBackground.getLocalBounds().height / 2.0f));
@@ -209,9 +225,25 @@ int main()
 
             window.setMouseCursorVisible(false);
             elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame
+            deathMessageCountdown -= elapsed;
             elapsedSinceLastAttack += elapsed;
             elapsedSinceLastShot += elapsed;                // The time elapsed since player's last shot
             //sf::sleep(sf::seconds(0.05f));                // Uncomment this to simulate worse fps
+            if (character.getHealth() <= 0) {
+                deathMessageCountdown = s::deathMessageDuration;
+                character.setLevel(std::max(1, character.getlevel() - 1));
+                character.sethealth(character.getMaxHealth());
+                character.givegold(int(round(s::percentageOfGoldLostAtDeath * (float)character.getgold())));
+                switchRoom(-1, map, character);
+            }
+
+            /* === Level and gold indicators === */
+            std::stringstream lvlSs;
+            lvlSs << "Lvl " << character.getlevel();
+            levelIndicator.setString(lvlSs.str());
+            std::stringstream goldSs;
+            goldSs << "Gold " << character.getgold();
+            goldIndicator.setString(goldSs.str());
 
             /* === FPS COUNTER === */
             fpsValue -= fpsSamples[fpsIndex];
@@ -341,12 +373,14 @@ int main()
             window.draw(healthBarBackground);
             window.draw(healthBar);
             window.draw(hpContainer);
-            if (false) {        // TODO: *If died
+            if (deathMessageCountdown > 0.0f) {
                 mainTextIndicator.setString("YOU DIED!");
                 mainTextIndicator.setOrigin(sf::Vector2f(mainTextIndicator.getLocalBounds().width / 2.0f, mainTextIndicator.getLocalBounds().height / 2.0f));
                 mainTextIndicator.setColor(sf::Color(255, 0, 0));
                 window.draw(mainTextIndicator);
             }
+            window.draw(levelIndicator);
+            window.draw(goldIndicator);
             window.draw(fpsIndicator);
             window.draw(cursor);
 
