@@ -78,6 +78,7 @@ namespace s {
 	int itemsPerRow = 12;
 	float deathMessageDuration = 3.0f;
 	float percentageOfGoldLostAtDeath = 0.8f;
+	int startingGold = 100;
 	float relativeItemMargin = 0.01f;
 	int standardEntrancePosX = 17;
 	int standardEntrancePosY = 17;

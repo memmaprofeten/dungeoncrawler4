@@ -25,6 +25,7 @@ namespace s {
 	extern int itemsPerRow;									// The number of items per inventory row
 	extern float deathMessageDuration;						// The duration (in seconds) that the death message should be displayed
 	extern float percentageOfGoldLostAtDeath;				// The percentage ([0:1]) of gold that the player loses when they die
+	extern int startingGold;								// The amount of gold the player starts with
 	extern float relativeItemMargin;						// The ratio between the distance between items in the inventory and the width of an item in the inventory
 	extern int standardEntrancePosX;						// The standard X coordinate of a horizontal room entrance
 	extern int standardEntrancePosY;						// The standard Y coordinate of a vertical room entrance
