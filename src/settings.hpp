@@ -17,14 +17,16 @@ namespace s {
 
 	extern float floatCorrection;							// The Epsilon value to be used to avoid floating point errors
 	extern float characterSpeed;							// The base speed of the character, in points per second
-    extern std::string defaultProjectileTextureFile;		// The path of the default projectile texture file
+	extern std::string defaultProjectileTextureFile;		// The path of the default projectile texture file
 	extern int characterRotationOffset;						// The base offset of the character rotation ("rest rotation")
+	extern int monsterRotationOffset;						// Same as for characters
 	extern float blockDim;         							// The dimension (length=width) of each block (tile)
 	extern int viewHeight;									// The height of the view, in points
 	extern float relativeInventoryBackgroundWidth;			// The ratio between the inventory width and the window width
 	extern int itemsPerRow;									// The number of items per inventory row
 	extern float deathMessageDuration;						// The duration (in seconds) that the death message should be displayed
 	extern float percentageOfGoldLostAtDeath;				// The percentage ([0:1]) of gold that the player loses when they die
+	extern int startingGold;								// The amount of gold the player starts with
 	extern float relativeItemMargin;						// The ratio between the distance between items in the inventory and the width of an item in the inventory
 	extern int standardEntrancePosX;						// The standard X coordinate of a horizontal room entrance
 	extern int standardEntrancePosY;						// The standard Y coordinate of a vertical room entrance
