@@ -80,7 +80,7 @@ int main()
     character.addItem(new Item("Potion of strength", 2, 6, 17, sf::Vector2f(0, 0),1));
 
     /* ADD STARTING WEAPONS FOR PLAYER */
-    RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 4);
+    RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 23, 4);
     MeleeWeapon* startingmeleeweapon = new MeleeWeapon("Novice's Sword", 3, 0.0f, 2 * s::blockDim, 8);
     Item* startingrangedweaponitem = new Item("Novice's Bow", startingrangedweapon, 1, 23,sf::Vector2f(0,0));
     Item* startingmeleeweaponitem = new Item("Novice's Sword", startingmeleeweapon, 1, 8,sf::Vector2f(0,0));
