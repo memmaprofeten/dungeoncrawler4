@@ -223,7 +223,6 @@ void MeleeMonster::monsterai(Character& player, float elapsed, sf::RenderWindow&
             attacktimer = 0.0;
 	    weaponAnimation.rRot = rotation;
 	    weaponAnimation.restart();
-            std::cout << "Weapon should swing" << std::endl;
             monsterattack(player);
         }
     }
