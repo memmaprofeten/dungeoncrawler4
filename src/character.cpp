@@ -175,7 +175,7 @@ void Character::givexp(int amount){
         xp -= xpfornextlevel;
         level += 1;
         health = getMaxHealth();
-        xpfornextlevel += 18;
+        xpfornextlevel = (xpfornextlevel+14)*1.2;
 
         majorcharactersound.setBuffer(s::soundbuffers[6]);
         majorcharactersound.play();
