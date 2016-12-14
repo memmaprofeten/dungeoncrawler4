@@ -22,7 +22,8 @@ Character::Character(const std::string& n, bool t, float s, sf::Vector2f p, int 
     health = getMaxHealth();
     gold = 0;
     room = NULL;
-    xpfornextlevel = 10;
+    xpfornextlevel = 12;
+    xp = 0;
 }
 
 Character::~Character() {
@@ -118,7 +119,7 @@ bool Character::consumeItem(int i) {
 int Character::getHealth() const { return health; }
 
 int Character::getMaxHealth() const {
-    return 9 + level;
+    return int((10 + level)*1.4);
 }
 
 void Character::reducehealth(int damage){
@@ -169,17 +170,15 @@ void Character::sethealth(int newhealth){
 }
 
 void Character::givexp(int amount){
-    if (xp + amount >= xpfornextlevel){
-        xp = (xp+amount)-xpfornextlevel;
+  xp += amount;
+  if (xp >= xpfornextlevel){
+        xp -= xpfornextlevel;
         level += 1;
         health = getMaxHealth();
-        xpfornextlevel += 10;
+        xpfornextlevel = (xpfornextlevel+14)*1.2;
 
         majorcharactersound.setBuffer(s::soundbuffers[6]);
         majorcharactersound.play();
-    }
-    else{
-        xp += amount;
     }
 }
 

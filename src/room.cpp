@@ -176,6 +176,7 @@ void Room::performAttack(bool byPlayer, sf::Vector2f source, sf::Vector2f direct
 				float d = cv::norm(cVec);
 				if (d <= maxRadius && d >= minRadius && acos(cv::dotP(direction, cv::normalized(cVec))) * 180.0f / cv::PI <= angle / 2.0f) {
 					monsters[i]->reducehealth(weapon.getDamage());
+					monsters[i]->teleport(cv::normalized(monsters[i]->getPosition() - source)*20.0f); //KNOCKBACK WHEN MONSTER IS HIT TWEAK HERE
 				}
 			}
 		}
@@ -216,6 +217,7 @@ void Room::drawProjectiles(sf::RenderWindow& window, float elapsed) {
 							!cv::isZero(projectile.getVelocity())
 					) {		// Hit detection
 						monster->reducehealth(projectile.getdamage());
+						monster->teleport(cv::normalized(projectile.getVelocity())*20.0f);
 						projectile.deactivate();
 					}
 				}
