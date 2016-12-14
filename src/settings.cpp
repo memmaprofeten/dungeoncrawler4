@@ -7,28 +7,30 @@ namespace s {
 	std::string mapPath = "../resources/rooms/";
 	std::string texturePath = "../resources/img/";
 
-	std::vector<std::string> texturePaths = {	// NB! Do not switch the order of these. Their indexes are being used.
-			"character_32.png",				// 0
-			"fireball_32.png",				// 1
-			"floor_32_2.png",				// 2
+	std::vector<std::string> texturePaths = {		// NB! Do not switch the order of these. Their indexes are being used.
+			"character_32.png",			// 0
+			"fireball_32.png",			// 1
+			"floor_32_2.png",			// 2
 			"hp_container1.png",			// 3
 			"projectile_32.png",			// 4
-			"shadowtest2.png",				// 5
-			"wall_32.png",					// 6
-			"doughnut_32.png",				// 7
-			"sword1_32.png",				// 8
-			"shadowtest1.png",				// 9
-			"shadowtest2.png",				// 10
+			"shadowtest2.png",			// 5
+			"wall_32.png",				// 6
+			"doughnut_32.png",			// 7
+			"sword1_32.png",			// 8
+			"shadowtest1.png",			// 9
+			"shadowtest2.png",			// 10
 			"monstertest1_32.png",			// 11
-			"bread1_32.png",				// 12
+			"bread1_32.png",			// 12
 			"character2_32.png",			// 13
-			"flail1_32.png",				// 14
-			"gold1_32.png",					// 15
+			"flail1_32.png",			// 14
+			"gold1_32.png",				// 15
 			"potion_blue1_32.png",			// 16
 			"potion_red1_32.png",			// 17
 			"reissumies_32.png",			// 18
-			"spear1_32.png",				// 19
-			"cursor1_33.png",				// 20
+			"spear1_32.png",			// 19
+			"cursor1_33.png",			// 20
+			"meelemonster_32.png",			// 21
+			"rangedmonster_32.png"			// 22
 		};
 
 	std::vector<sf::Texture> textures;

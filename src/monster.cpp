@@ -103,7 +103,7 @@ RangedMonster::RangedMonster(std::string namei, int healthi, int xponkilli, int 
     timebetweenattacks = timebetweenattacksi;
     attacktimer = 0.0;
     active = true;
-    textureIndex = 11;
+    textureIndex = 22;
     sprite = room->getSprite();
     sprite->setOrigin(16.0f,16.0f);
     sprite->setTexture(s::textures[textureIndex]);
@@ -125,7 +125,7 @@ MeleeMonster::MeleeMonster(std::string namei, int healthi, int xponkilli, int at
     timebetweenattacks = timebetweenattacksi;
     attacktimer = 0.0;
     active = true;
-    textureIndex = 11;
+    textureIndex = 21;
     sprite = room->getSprite();
     sprite->setOrigin(16.0f,16.0f);
     sprite->setTexture(s::textures[textureIndex]);
@@ -233,7 +233,7 @@ RangedMonster::RangedMonster(sf::Vector2f positioni, Room* roomi, int leveli){
 	position = positioni;
 	active = true;
 	attacktimer = 0;
-	textureIndex = 11;
+	textureIndex = 22;
 	sprite = room->getSprite();
 	sprite->setOrigin(16.0f,16.0f);
 	sprite->setTexture(s::textures[textureIndex]);
@@ -253,7 +253,7 @@ MeleeMonster::MeleeMonster(sf::Vector2f positioni, Room* roomi, int leveli){
 	position = positioni;
 	active = true;
 	attacktimer = 0;
-	textureIndex = 11;
+	textureIndex = 21;
 	sprite = room->getSprite();
 	sprite->setOrigin(16.0f,16.0f);
 	sprite->setTexture(s::textures[textureIndex]);
