@@ -65,22 +65,99 @@ $(function() {
 <div class="title">Tile Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="tile_8hpp_source.html">tile.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab6f94e31f46443af897db1e7cb4a6431"><td class="memItemLeft" align="right" valign="top"><a id="ab6f94e31f46443af897db1e7cb4a6431"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Tile</b> (int type, sf::Vector2f position, sf::Vector2i index, sf::Sprite *freeSprite)</td></tr>
+<tr class="memitem:ab6f94e31f46443af897db1e7cb4a6431"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTile.html#ab6f94e31f46443af897db1e7cb4a6431">Tile</a> (int type, sf::Vector2f position, sf::Vector2i index, sf::Sprite *freeSprite)</td></tr>
 <tr class="separator:ab6f94e31f46443af897db1e7cb4a6431"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f0f81f8a606ef89b2d5380477c0f17c"><td class="memItemLeft" align="right" valign="top"><a id="a8f0f81f8a606ef89b2d5380477c0f17c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isPenetrable</b> () const</td></tr>
+<tr class="memitem:a8f0f81f8a606ef89b2d5380477c0f17c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTile.html#a8f0f81f8a606ef89b2d5380477c0f17c">isPenetrable</a> () const</td></tr>
 <tr class="separator:a8f0f81f8a606ef89b2d5380477c0f17c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4624b6735e16679fd3cf246b8a6b744"><td class="memItemLeft" align="right" valign="top"><a id="ab4624b6735e16679fd3cf246b8a6b744"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>draw</b> (sf::RenderWindow &amp;window, float blockDim)</td></tr>
-<tr class="separator:ab4624b6735e16679fd3cf246b8a6b744"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57c6649d2af3d5fb8758ef5851e08dfd"><td class="memItemLeft" align="right" valign="top"><a id="a57c6649d2af3d5fb8758ef5851e08dfd"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> () const</td></tr>
+<tr class="memitem:a57c6649d2af3d5fb8758ef5851e08dfd"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTile.html#a57c6649d2af3d5fb8758ef5851e08dfd">toString</a> () const</td></tr>
 <tr class="separator:a57c6649d2af3d5fb8758ef5851e08dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The <a class="el" href="classTile.html">Tile</a> class represents a cell in a room's grid. A tile holds information about its texture, position and whether or not it it can be walked on. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ab6f94e31f46443af897db1e7cb4a6431"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6f94e31f46443af897db1e7cb4a6431">&sect;&nbsp;</a></span>Tile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Tile::Tile </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sf::Vector2f&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sf::Vector2i&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sf::Sprite *&#160;</td>
+          <td class="paramname"><em>freeSprite</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="classTile.html">Tile</a> constructor Constructs a tile of the given type, at the given index in a <a class="el" href="classRoom.html">Room</a> grid and on the given position, using the the given sprite. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8f0f81f8a606ef89b2d5380477c0f17c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f0f81f8a606ef89b2d5380477c0f17c">&sect;&nbsp;</a></span>isPenetrable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Tile::isPenetrable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns whether or not entities can go through this tile. </p>
+
+</div>
+</div>
+<a id="a57c6649d2af3d5fb8758ef5851e08dfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57c6649d2af3d5fb8758ef5851e08dfd">&sect;&nbsp;</a></span>toString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Tile::toString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns a string representation of the tile. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="tile_8hpp_source.html">tile.hpp</a></li>
 <li>src/tile.cpp</li>
