@@ -28,6 +28,8 @@ int main()
     srand(time(0));     // Initialize the randomizer once, for the rest of the program to use
 
     /* === FILES === */
+    s::loadTextures();
+    s::loadsounds();
     sf::Font standardFont;
     if (!standardFont.loadFromFile("../resources/fonts/Sansation-Regular.ttf")) {
         throw std::runtime_error("Could not load font.");
@@ -36,12 +38,11 @@ int main()
     if (!sketchFont.loadFromFile("../resources/fonts/FFF_Tusj.ttf")) {
         throw std::runtime_error("Could not load font.");
     }
+    sf::Texture cursorTexture = s::textures[20];
     sf::Texture hpContainerTexture;
     if (!hpContainerTexture.loadFromFile("../resources/img/hp_container1.png")) {
         throw std::runtime_error("Could not load hp container texture.");
     }
-    s::loadTextures();
-    s::loadsounds();
 
     /* == MUSIC == */
     // Load and loop background music.
@@ -54,7 +55,8 @@ int main()
     sf::Sound newsound;
 
     /* === WINDOW === */
-   	sf::RenderWindow window(sf::VideoMode(800, 600), "Lost in pohjanmaa!");
+    sf::Vector2i defaultWindowSize(800, 600);
+   	sf::RenderWindow window(sf::VideoMode(defaultWindowSize.x, defaultWindowSize.y), "Lost in pohjanmaa!");
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(4.0f / 3.0f * s::viewHeight, s::viewHeight));
     sf::View guiView(sf::Vector2f(window.getSize()) / 2.0f, sf::Vector2f(window.getSize()));
 
@@ -68,6 +70,7 @@ int main()
     /* === TESTING === */
     //RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
 
+    /* === INITIAL INVENTORY FILL === */
     character.addItem(new Item("Doughnut", 2, 3, 7, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Bread", 2, 2, 12, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Cake", 2, 5, 7, sf::Vector2f(0, 0),1));
@@ -86,6 +89,9 @@ int main()
     startingmeleeweaponitem->dothing(character);
 
     /* === GUI === */
+    sf::Sprite cursor(cursorTexture);
+    cursor.setOrigin(16, 16);
+
     sf::Vector2f healthBarMargin(15, 15);
 
     sf::RectangleShape healthBar(sf::Vector2f(300, 20));
@@ -181,6 +187,7 @@ int main()
                     // GUI:
                     guiView.setSize(eventSize);
                     guiView.setCenter(eventSize / 2.0f);
+                    cursor.setScale(sf::Vector2f((float)eventSize.y / (float)defaultWindowSize.y, (float)eventSize.y / (float)defaultWindowSize.y));
                     healthBar.setPosition(eventSize - healthBarMargin);
                     healthBarBackground.setPosition(eventSize - healthBarMargin);
                     hpContainer.setPosition(eventSize - healthBarMargin);
@@ -199,6 +206,8 @@ int main()
 
         /* === GAMEPLAY LOOP === */
         if (!paused && focused) {
+
+            window.setMouseCursorVisible(false);
             elapsed = frameClock.restart().asSeconds();     // The time elapsed since the last frame
             elapsedSinceLastAttack += elapsed;
             elapsedSinceLastShot += elapsed;                // The time elapsed since player's last shot
@@ -221,7 +230,9 @@ int main()
 
             window.setView(view);
 
-
+            /* === CURSOR === */
+            sf::Vector2i windowMousePos = sf::Mouse::getPosition(window);
+            cursor.setPosition(static_cast<sf::Vector2f>(windowMousePos));
 
             /* === GENERAL EVENT HANDLING === */
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) if (pauseReleased) {
@@ -253,7 +264,7 @@ int main()
 
             /* === EVENT HANDLING FOR TURNING === */
             sf::Vector2f charpos = character.getPosition();
-            sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+            sf::Vector2f mousepos = window.mapPixelToCoords(windowMousePos);
             float dx = charpos.x - mousepos.x;
             float dy = charpos.y - mousepos.y;
             float rotation = (atan2(dy,dx)) * 180 / cv::PI;
@@ -337,11 +348,14 @@ int main()
                 window.draw(mainTextIndicator);
             }
             window.draw(fpsIndicator);
+            window.draw(cursor);
 
             window.display();
 
         /* === PAUSED LOOP === */
         } else {
+
+            window.setMouseCursorVisible(true);
 
             tooltipShowing = false;
 

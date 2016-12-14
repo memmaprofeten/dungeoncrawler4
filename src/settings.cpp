@@ -28,6 +28,7 @@ namespace s {
 			"potion_red1_32.png",			// 17
 			"reissumies_32.png",			// 18
 			"spear1_32.png",				// 19
+			"cursor1_33.png",				// 20
 		};
 
 	std::vector<sf::Texture> textures;
