@@ -81,6 +81,11 @@ public:
     int gettextureindex() const;
 
     /**
+     * Returns the texture index of this weapon's projectile.
+     */
+    int getprojectiletextureindex() const;
+
+    /**
      * Performs an attack.
      */
     virtual void attack();
@@ -96,6 +101,7 @@ protected:
     int type;                               // The (main) type of weapon (1 for melee, 2 for ranged)
     int damage;                             // The weapon damage
     int textureIndex;                       // The texture index of the weapon
+    int projectileTextureIndex;             // The texture index of the projectiles fired by this weapon (to be disregarded if this weapon does not create projectiles)
     float projectilespeed;                  // The speed of projectiles fired by the weapon
     float cooldown;                         // The weapon cooldown
     int levels;                             // The player's level when the weapon was generated (for progress-based random generation purposes)
@@ -113,7 +119,7 @@ public:
      * The general RangedWeapon constructor
      * Constructs a specific ranged weapon based on the given parameters.
      */
-    RangedWeapon(std::string name, int damage, int txtrIndex);
+    RangedWeapon(std::string name, int damage, int txtrIndex, int projectileTxtrIndex);
 
     /**
      * The randomized RangedWeapon constructor
@@ -125,7 +131,7 @@ public:
      * The RangedWeapon destructor
      */
     ~RangedWeapon();
-    
+
     /**
      * Performs an attack.
      */

@@ -33,11 +33,15 @@ float Weapon::getMaxRadius() const { return -1.0f; }
 int Weapon::getProjectilespeed() const { return projectilespeed; }
 
 Projectile& Weapon::createProjectile(Room& room) {
-    return room.createProjectile(true, damage, s::projectileRadius, 250.0f, textureIndex);
+    return room.createProjectile(true, damage, s::projectileRadius, 250.0f, projectileTextureIndex);
 }
 
 int Weapon::gettextureindex() const{
     return textureIndex;
+}
+
+int Weapon::getprojectiletextureindex() const{
+    return projectileTextureIndex;
 }
 
 void Weapon::attack() {}
@@ -47,7 +51,9 @@ float Weapon::getcooldown() const{
 }
 
 
-RangedWeapon::RangedWeapon(const std::string name, int damage, int txtrIndex) : Weapon(name, 2, damage, txtrIndex) { cooldown = 0.8f; }
+RangedWeapon::RangedWeapon(const std::string name, int damage, int txtrIndex, int projectileTxtrIndex) : Weapon(name, 2, damage, txtrIndex) {
+    cooldown = 0.8f; projectileTextureIndex = projectileTxtrIndex;
+}
 
 RangedWeapon::RangedWeapon(int level, float seed) : Weapon (level, seed){
     type = 2;
@@ -56,7 +62,8 @@ RangedWeapon::RangedWeapon(int level, float seed) : Weapon (level, seed){
 
     switch (generalname){
         case 1:{
-            textureIndex = 1;
+            textureIndex = 23;
+            projectileTextureIndex = 1;
             switch(nameaccent){
                 case 1:{
                     name = "Ebonchill";
@@ -82,7 +89,8 @@ RangedWeapon::RangedWeapon(int level, float seed) : Weapon (level, seed){
             break;
         }
         case 2:{
-            textureIndex = 4;
+            textureIndex = 23;
+            projectileTextureIndex = 4;
             switch (nameaccent){
                 case 1:{
                     name = "Thori'dal";

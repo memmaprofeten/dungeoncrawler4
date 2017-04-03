@@ -70,17 +70,21 @@ int main()
 
     /* === TESTING === */
     //RangedWeapon fireball_weapon("Fireball", 3, 0.8f * s::blockDim, 1);
+    //Monster test code. Comment out later.
+    // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
+    //CreateMonster(sf::Vector2f(75,75), &room, 1);
+    //CreateMonster(sf::Vector2f(50,50), &room, 1);
+    //map.getRoom().addmonster( new MeleeMonster(sf::Vector2f(20,20), &(map.getRoom()), 1) );
 
     /* === INITIAL INVENTORY FILL === */
     character.addItem(new Item("Doughnut", 2, 3, 7, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Bread", 2, 2, 12, sf::Vector2f(0, 0),1));
     character.addItem(new Item("Cake", 2, 5, 24, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Trophy", 4, 0, 19, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Potion of wisdom", 2, 8, 16, sf::Vector2f(0, 0),1));
-    character.addItem(new Item("Potion of strength", 2, 6, 17, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Potion of a lot of health", 2, 14, 16, sf::Vector2f(0, 0),1));
+    character.addItem(new Item("Potion of health", 2, 4, 17, sf::Vector2f(0, 0),1));
 
     /* ADD STARTING WEAPONS FOR PLAYER */
-    RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 4);
+    RangedWeapon* startingrangedweapon = new RangedWeapon("Novice's Bow", 3, 23, 4);
     MeleeWeapon* startingmeleeweapon = new MeleeWeapon("Novice's Sword", 3, 0.0f, 2 * s::blockDim, 8);
     Item* startingrangedweaponitem = new Item("Novice's Bow", startingrangedweapon, 1, 23,sf::Vector2f(0,0));
     Item* startingmeleeweaponitem = new Item("Novice's Sword", startingmeleeweapon, 1, 8,sf::Vector2f(0,0));
@@ -167,12 +171,6 @@ int main()
     Npc* closestNpc; // Pointer to the last NPC the player has been in range to
     std::vector<Item*> renderInventory = character.getInventory(); // The inventory to pass when drawing inventory screen
 
-    /* === CONTAINERS === */        // TODO: Move these out, e.g. into the Room class.
-    //Monster test code. Comment out later.
-    // Creates a few monsters, melee and ranged, then kills a melee monster and prints out the XP the player would gain.
-    //CreateMonster(sf::Vector2f(75,75), &room, 1);
-    //CreateMonster(sf::Vector2f(50,50), &room, 1);
-    //map.getRoom().addmonster( new MeleeMonster(sf::Vector2f(20,20), &(map.getRoom()), 1) );
     map.getRoom().addNpc(new Shopkeeper(0, sf::Vector2f(40,70)));
 
     window.setView(view);
@@ -316,15 +314,13 @@ int main()
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {     // Missile attack
                 if (elapsedSinceLastShot < 0.0f || elapsedSinceLastShot > character.getrangedweapon()->getcooldown()) {
                     //Sound for ranged attacks sf::Sound newsound;
-                    switch(character.getrangedweapon()->gettextureindex()){
-                        case 1:{
+                    switch(character.getrangedweapon()->getprojectiletextureindex()){
+                        case 1:
                             newsound.setBuffer(s::soundbuffers[2]);
                             break;
-                        }
-                        case 4:{
+                        default:
                             newsound.setBuffer(s::soundbuffers[1]);
                             break;
-                        }
                     }
                     newsound.play();
                     elapsedSinceLastShot = 0.0f;

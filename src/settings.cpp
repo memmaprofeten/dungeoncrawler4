@@ -9,31 +9,31 @@ namespace s {
 
 	std::vector<std::string> texturePaths = {		// NB! Do not switch the order of these. Their indexes are being used.
 			"character_32.png",			// 0
-			"fireball_32.png",			// 1
+			"fire_arrow_32.png",		// 1
 			"floor_32_2.png",			// 2
-			"hp_container1.png",			// 3
-			"projectile_32.png",			// 4
+			"hp_container1.png",		// 3
+			"projectile_32.png",		// 4
 			"shadowtest2.png",			// 5
 			"wall_32.png",				// 6
 			"doughnut_32.png",			// 7
 			"sword1_32.png",			// 8
 			"shadowtest1.png",			// 9
 			"shadowtest2.png",			// 10
-			"monstertest1_32.png",			// 11
+			"monstertest1_32.png",		// 11
 			"bread1_32.png",			// 12
-			"character2_32.png",			// 13
+			"character2_32.png",		// 13
 			"flail1_32.png",			// 14
 			"gold1_32.png",				// 15
-			"potion_blue1_32.png",			// 16
-			"potion_red1_32.png",			// 17
-			"reissumies_32.png",			// 18
+			"potion_blue1_32.png",		// 16
+			"potion_red1_32.png",		// 17
+			"reissumies_32.png",		// 18
 			"spear1_32.png",			// 19
 			"cursor1_33.png",			// 20
-			"meelemonster_32.png",			// 21
-			"rangedmonster_32.png",			// 22
-			"bow_32.png",					// 23
-			"pie_32.png",					// 24
-			"meeleweapon_32.png"			// 25
+			"meelemonster_32.png",		// 21
+			"rangedmonster_32.png",		// 22
+			"bow_32.png",				// 23
+			"pie_32.png",				// 24
+			"meeleweapon_32.png"		// 25
 		};
 
 	std::vector<sf::Texture> textures;
